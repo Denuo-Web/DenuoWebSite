@@ -1,0 +1,46 @@
+name: Deploy API to Cloud Run
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "api/**"
+      - ".github/workflows/deploy-cloudrun.yml"
+      - "firebase.json"
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  REGION: ${{ secrets.GCP_REGION }}
+  SERVICE: denuo-api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Build and deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          source: ./api
+          project_id: ${{ env.PROJECT_ID }}
+          allow_unauthenticated: true
+
+      - name: Expose API URL
+        run: |
+          echo "::notice title=Cloud Run::API deployed as ${{ steps.deploy.outputs.url }}"

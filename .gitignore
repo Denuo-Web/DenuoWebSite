@@ -1,0 +1,12 @@
+node_modules
+web/node_modules
+api/node_modules
+web/dist
+web/.env
+web/.env.local
+.env
+.env.local
+.firebase
+google-credentials.json
+.DS_Store
+npm-debug.log
