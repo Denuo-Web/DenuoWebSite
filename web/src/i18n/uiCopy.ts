@@ -35,7 +35,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       contact: 'Contact',
       admin: 'Admin',
       backToSite: 'Back to site',
-      themeToggle: 'Toggle light/dark',
+      themeToggle: 'Open theme panel (press T)',
       languageToggle: 'Switch language (EN/JA)',
     },
     sections: {
@@ -61,7 +61,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       contact: '連絡先',
       admin: '管理',
       backToSite: 'サイトへ戻る',
-      themeToggle: 'ライト／ダーク切り替え',
+      themeToggle: 'テーマパネルを開く（Tキー）',
       languageToggle: '言語を切り替える（英語／日本語）',
     },
     sections: {
