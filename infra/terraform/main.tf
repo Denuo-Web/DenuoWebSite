@@ -11,13 +11,13 @@ locals {
   ]
 
   vite_env_vars = {
-    VITE_FIREBASE_API_KEY            = var.vite_firebase_api_key
-    VITE_FIREBASE_AUTH_DOMAIN        = var.vite_firebase_auth_domain
-    VITE_FIREBASE_PROJECT_ID         = coalesce(var.vite_firebase_project_id, var.firebase_project_id)
-    VITE_FIREBASE_STORAGE_BUCKET     = var.vite_firebase_storage_bucket
-    VITE_FIREBASE_MESSAGING_SENDER_ID = var.vite_firebase_messaging_sender_id
-    VITE_FIREBASE_APP_ID             = var.vite_firebase_app_id
-    VITE_USE_FIREBASE_EMULATORS      = var.vite_use_firebase_emulators
+    VITE_FIREBASE_API_KEY             = try(nonsensitive(var.vite_firebase_api_key), null)
+    VITE_FIREBASE_AUTH_DOMAIN         = try(nonsensitive(var.vite_firebase_auth_domain), null)
+    VITE_FIREBASE_PROJECT_ID          = try(nonsensitive(coalesce(var.vite_firebase_project_id, var.firebase_project_id)), null)
+    VITE_FIREBASE_STORAGE_BUCKET      = try(nonsensitive(var.vite_firebase_storage_bucket), null)
+    VITE_FIREBASE_MESSAGING_SENDER_ID = try(nonsensitive(var.vite_firebase_messaging_sender_id), null)
+    VITE_FIREBASE_APP_ID              = try(nonsensitive(var.vite_firebase_app_id), null)
+    VITE_USE_FIREBASE_EMULATORS       = try(nonsensitive(var.vite_use_firebase_emulators), null)
   }
 }
 
