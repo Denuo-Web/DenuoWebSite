@@ -32,7 +32,7 @@ interface Props {
 }
 
 const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onToggleLanguage, copy }: Props) => {
-  const { hero, stats, services, differentiators, projects, process, contact } = content
+  const { hero, services, differentiators, projects, process, contact } = content
 
   return (
     <Container size="4" px="5" py="6">
@@ -47,7 +47,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
             <RadixLink href="#projects" weight="medium">
               {copy.nav.work}
             </RadixLink>
-            <RadixLink href="#process" weight="medium">
+            <RadixLink href="#offers" weight="medium">
               {copy.nav.process}
             </RadixLink>
             <RadixLink href="#contact" weight="medium">
@@ -109,23 +109,6 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
           <Flex align="center" gap="3" wrap="wrap" mb="4">
             <Badge color="indigo">{hero.badge}</Badge>
           </Flex>
-          <Grid columns={{ initial: '1', sm: '2', lg: '3' }} gap="3">
-            {stats.map((stat) => (
-              <Card key={stat.label} size="3" variant="surface">
-                <Flex direction="column" gap="2">
-                  <Text size="2" color="gray" weight="medium">
-                    {stat.label}
-                  </Text>
-                  <Heading size="5">{stat.value}</Heading>
-                  {stat.helper && (
-                    <Text size="2" color="gray">
-                      {stat.helper}
-                    </Text>
-                  )}
-                </Flex>
-              </Card>
-            ))}
-          </Grid>
         </Box>
         </section>
       </Box>
@@ -221,7 +204,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
 
       <Separator my="4" />
 
-      <Box asChild id="process">
+      <Box asChild id="offers">
         <section>
         <Text color="indigo" size="1" weight="medium">
           {copy.sections.processKicker}
@@ -236,12 +219,13 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
           {process.map((step, idx) => (
             <Card key={step.title + idx} size="3">
               <Flex direction="column" gap="2">
-                <Text weight="medium" color="indigo">
-                  0{idx + 1}
-                </Text>
                 <Heading size="5">{step.title}</Heading>
-                <Text>{step.detail}</Text>
-                <Text color="gray">Outcome: {step.outcome}</Text>
+                {step.detail && <Text>{step.detail}</Text>}
+                {step.outcome && (
+                  <Text color="gray" size="2">
+                    Support: {step.outcome}
+                  </Text>
+                )}
               </Flex>
             </Card>
           ))}

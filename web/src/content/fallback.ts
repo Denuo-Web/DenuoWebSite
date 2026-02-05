@@ -10,15 +10,7 @@ export const fallbackContent: SiteContent = {
     primaryCta: 'Book a build consult',
     secondaryCta: 'See recent work',
   },
-  stats: [
-    {
-      label: 'QuestByCycle launches',
-      value: '4 public games',
-      helper: '~100+ riders onboarded with quests, leaderboards, and web push.',
-    },
-    { label: 'Client honorarium', value: '$2,000', helper: 'Awarded by 350 Eugene for end-to-end delivery.' },
-    { label: 'Cloud coverage', value: 'Firebase · GCP · AWS', helper: 'Comfortable across hosting, auth, and observability.' },
-  ],
+  stats: [],
   services: [
     {
       title: 'Product & delivery leadership',
@@ -83,24 +75,19 @@ export const fallbackContent: SiteContent = {
   ],
   process: [
     {
-      title: 'Discover & scope',
-      detail: 'Work sessions to clarify users, success metrics, and constraints.',
-      outcome: 'A lean spec, timeline, and budget owners can sign off on.',
+      title: 'Offer A: Backend to Production',
+      detail: 'Flask/Python + Postgres/Redis + Linux deploy + CI/CD',
+      outcome: 'QuestByCycle ops ownership.',
     },
     {
-      title: 'Architecture & plan',
-      detail: 'Choose the right stack, data model, and hosting. Diagram auth, observability, and rollout.',
-      outcome: 'An actionable blueprint: tickets, environments, and risks mapped.',
+      title: 'Offer B: Data ingestion + dashboard',
+      detail: 'Cloud pipeline + API + mapping',
+      outcome: 'CrowdPM architecture (ingest, Pub/Sub worker, API), Rosenau resume, and OSU proposer listing.',
     },
     {
-      title: 'Build & validate',
-      detail: 'Iterative sprints with demos. Tests, accessibility, and analytics wired in.',
-      outcome: 'Working software in staging with real data and admin controls.',
-    },
-    {
-      title: 'Launch & support',
-      detail: 'Cutover, smoke tests, and training. Handoffs with docs and dashboards.',
-      outcome: 'A reliable system you can operate—and a partner who can extend it.',
+      title: 'Offer C: Developer tooling / automation',
+      detail: '',
+      outcome: 'ARM64-ADK, DripCopy, and the VS Code extension.',
     },
   ],
   contact: {

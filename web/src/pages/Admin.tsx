@@ -532,8 +532,8 @@ const AdminPage = ({
 
         <Card size="3">
           <Flex direction="column" gap="3">
-            <Heading size="5">Process steps</Heading>
-            <Text color="gray">Four steps recommended.</Text>
+            <Heading size="5">Offers</Heading>
+            <Text color="gray">Use Offer A/B/C naming. Three offers recommended.</Text>
             {draft.process.map((step, idx) => (
               <Card key={`process-${idx}`} variant="surface">
                 <Flex direction="column" gap="2">
@@ -544,7 +544,7 @@ const AdminPage = ({
                       onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateProcess(idx, { title: e.target.value }))}
                     />
                   </Field>
-                  <Field label="Detail" id={`process-${idx}-detail`}>
+                  <Field label="Stack / scope line" id={`process-${idx}-detail`}>
                     <TextArea
                       id={`process-${idx}-detail`}
                       value={step.detail}
@@ -553,7 +553,7 @@ const AdminPage = ({
                       }
                     />
                   </Field>
-                  <Field label="Outcome" id={`process-${idx}-outcome`}>
+                  <Field label="Support line" id={`process-${idx}-outcome`}>
                     <TextField.Root
                       id={`process-${idx}-outcome`}
                       value={step.outcome}
