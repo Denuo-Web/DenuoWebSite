@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { Theme, ThemePanel, useThemeContext, type ThemeProps } from '@radix-ui/themes'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { Button, Theme, ThemePanel, type ThemeProps } from '@radix-ui/themes'
 
 import { useSiteContent } from './hooks/useSiteContent'
 import { uiCopy, type Language } from './i18n/uiCopy'
@@ -29,49 +29,29 @@ type ThemeState = {
 const THEME_KEY = 'denuo-theme'
 const LANGUAGE_KEY = 'denuo-language'
 
-function ThemeStateSync({ onChange }: { onChange: (value: ThemeState) => void }) {
-  const { appearance, accentColor, grayColor, panelBackground, radius, scaling } = useThemeContext()
-
-  useEffect(() => {
-    if (appearance === 'light' || appearance === 'dark') {
-      onChange({
-        appearance,
-        accentColor,
-        grayColor,
-        panelBackground,
-        radius,
-        scaling,
-      })
-    }
-  }, [appearance, accentColor, grayColor, panelBackground, radius, scaling, onChange])
-
-  return null
-}
-
 function App() {
   const { content, loading, error, saveContent } = useSiteContent()
-  const [themeState, setThemeState] = useState<ThemeState>(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const defaultAppearance: Appearance = prefersDark ? 'dark' : 'light'
-    const stored = localStorage.getItem(THEME_KEY)
+  const location = useLocation()
+  const [themeState] = useState<ThemeState>(() => {
+    const stored = typeof window !== 'undefined' ? window.localStorage.getItem(THEME_KEY) : null
     if (stored) {
       try {
         const parsed = JSON.parse(stored) as Partial<ThemeState>
         return {
-          appearance: parsed.appearance === 'light' || parsed.appearance === 'dark' ? parsed.appearance : defaultAppearance,
-          accentColor: (parsed.accentColor as AccentColor) || 'jade',
+          appearance: parsed.appearance === 'light' || parsed.appearance === 'dark' ? parsed.appearance : 'light',
+          accentColor: (parsed.accentColor as AccentColor) || 'indigo',
           grayColor: (parsed.grayColor as GrayColor) || 'auto',
           panelBackground: (parsed.panelBackground as PanelBackground) || 'translucent',
           radius: (parsed.radius as Radius) || 'large',
           scaling: (parsed.scaling as Scaling) || '100%',
         }
-      } catch (err) {
-        console.warn('Unable to read saved theme; using defaults.', err)
+      } catch {
+        // fall through to defaults
       }
     }
     return {
-      appearance: defaultAppearance,
-      accentColor: 'jade',
+      appearance: 'light',
+      accentColor: 'indigo',
       grayColor: 'auto',
       panelBackground: 'translucent',
       radius: 'large',
@@ -79,37 +59,25 @@ function App() {
     }
   })
   const [language, setLanguage] = useState<Language>(() => {
-    const stored = localStorage.getItem(LANGUAGE_KEY) as Language | null
+    const stored = typeof window !== 'undefined' ? (window.localStorage.getItem(LANGUAGE_KEY) as Language | null) : null
     return stored === 'ja' ? 'ja' : 'en'
   })
+  const [themePanelOpen, setThemePanelOpen] = useState(false)
+  const isAdminRoute = location.pathname.startsWith('/admin')
 
   useEffect(() => {
-    localStorage.setItem(THEME_KEY, JSON.stringify(themeState))
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(THEME_KEY, JSON.stringify(themeState))
     document.documentElement.setAttribute('data-appearance', themeState.appearance)
   }, [themeState])
 
   useEffect(() => {
-    localStorage.setItem(LANGUAGE_KEY, language)
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(LANGUAGE_KEY, language)
   }, [language])
 
-  const handleThemeContextChange = (next: ThemeState) => {
-    setThemeState((prev) => {
-      if (
-        prev.appearance === next.appearance &&
-        prev.accentColor === next.accentColor &&
-        prev.grayColor === next.grayColor &&
-        prev.panelBackground === next.panelBackground &&
-        prev.radius === next.radius &&
-        prev.scaling === next.scaling
-      ) {
-        return prev
-      }
-      return next
-    })
-  }
-
   const openThemePanel = () => {
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 't' }))
+    setThemePanelOpen(true)
   }
   const toggleLanguage = () => setLanguage((prev) => (prev === 'en' ? 'ja' : 'en'))
 
@@ -125,8 +93,28 @@ function App() {
       radius={themeState.radius}
       scaling={themeState.scaling}
     >
-      <ThemePanel defaultOpen={false} />
-      <ThemeStateSync onChange={handleThemeContextChange} />
+      {themePanelOpen && !isAdminRoute && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '1rem',
+            right: '1rem',
+            zIndex: 1000,
+            background: 'var(--color-panel-translucent)',
+            padding: '0.75rem',
+            borderRadius: '10px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
+            <strong>Theme</strong>
+            <Button size="1" variant="ghost" onClick={() => setThemePanelOpen(false)}>
+              Close
+            </Button>
+          </div>
+          <ThemePanel defaultOpen />
+        </div>
+      )}
       <Routes>
         <Route
           path="/"

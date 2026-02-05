@@ -22,7 +22,20 @@ export function useSiteContent() {
       (snapshot) => {
         if (snapshot.exists()) {
           const liveContent = snapshot.data() as SiteContent
-          setContent({ ...fallbackContent, ...liveContent })
+          const contact = liveContent.contact
+            ? {
+                headline: liveContent.contact.headline ?? fallbackContent.contact.headline,
+                subhead: liveContent.contact.subhead ?? fallbackContent.contact.subhead,
+                email: liveContent.contact.email ?? fallbackContent.contact.email,
+                note: liveContent.contact.note ?? fallbackContent.contact.note,
+              }
+            : fallbackContent.contact
+
+          setContent({
+            ...fallbackContent,
+            ...liveContent,
+            contact,
+          })
         }
         setLoading(false)
       },
@@ -40,7 +53,7 @@ export function useSiteContent() {
     if (!db) {
       throw new Error('Firebase is not configured. Set VITE_FIREBASE_* env vars to enable saves.')
     }
-    await setDoc(doc(db, 'siteContent', 'public'), next, { merge: true })
+    await setDoc(doc(db, 'siteContent', 'public'), next)
     setContent(next)
     setError(null)
   }

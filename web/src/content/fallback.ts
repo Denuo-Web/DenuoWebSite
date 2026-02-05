@@ -106,10 +106,8 @@ export const fallbackContent: SiteContent = {
   contact: {
     headline: 'Ready for a build sprint or technical partner?',
     subhead:
-      'Email or call directly, or drop details via the contact form. I respond within one business day.',
-    email: 'jaron@rosenau.info',
-    phone: '+1 (920) 292-0431',
-    calendly: 'https://calendly.com/denuoweb/intro',
+      'Email project details and context. I respond within one business day with next steps.',
+    email: 'info@denuoweb.com',
     note: 'Prefer async? I will return a short plan with scope, risks, and timeline.',
   },
 }

@@ -31,8 +31,6 @@ export interface ContactInfo {
   headline: string
   subhead: string
   email: string
-  phone: string
-  calendly?: string
   note?: string
 }
 

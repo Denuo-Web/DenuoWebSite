@@ -16,7 +16,7 @@ import {
   Tooltip,
 } from '@radix-ui/themes'
 import { GlobeIcon } from '@radix-ui/react-icons'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent, FormEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
@@ -43,17 +43,25 @@ const AdminPage = ({
   copy,
 }: AdminProps) => {
   const [draft, setDraft] = useState<SiteContent>(content)
+  const [dirty, setDirty] = useState(false)
+  const contentSignature = useMemo(() => JSON.stringify(content), [content])
   const [user, setUser] = useState<User | null>(null)
   const [status, setStatus] = useState<string>('')
   const [saving, setSaving] = useState(false)
   const [authError, setAuthError] = useState<string>('')
-  const [credentials, setCredentials] = useState({ email: '', password: '' })
+  const credentialsRef = useRef<{ email: string; password: string }>({ email: '', password: '' })
   const [invoiceForm, setInvoiceForm] = useState({ email: '', name: '', amountUsd: '', description: '' })
   const [invoiceStatus, setInvoiceStatus] = useState<string>('')
 
   useEffect(() => {
-    setDraft(content)
-  }, [content])
+    if (!dirty) {
+      setDraft(content)
+    }
+  }, [contentSignature, dirty])
+
+  const markDirty = () => {
+    if (!dirty) setDirty(true)
+  }
 
   useEffect(() => {
     if (!auth) return
@@ -68,7 +76,7 @@ const AdminPage = ({
       return
     }
     try {
-      await signInWithEmailAndPassword(auth, credentials.email, credentials.password)
+      await signInWithEmailAndPassword(auth, credentialsRef.current.email, credentialsRef.current.password)
       setAuthError('')
       setStatus('Signed in.')
     } catch (err) {
@@ -125,6 +133,7 @@ const AdminPage = ({
     setStatus('')
     try {
       await onSave(draft)
+      setDirty(false)
       setStatus('Content saved to Firestore.')
     } catch (err) {
       console.error(err)
@@ -215,7 +224,7 @@ const AdminPage = ({
         <Card size="4">
           <Flex direction="column" gap="4">
             <Flex direction="column" gap="2">
-              <Text color="green" size="2" weight="medium">
+              <Text color="indigo" size="2" weight="medium">
                 Content dashboard
               </Text>
               <Heading size="7">Admin sign in</Heading>
@@ -229,27 +238,45 @@ const AdminPage = ({
             <form onSubmit={handleLogin}>
               <Flex direction="column" gap="3">
                 <Field label="Admin email" id="admin-email">
-                  <TextField.Root
+                  <input
                     id="admin-email"
                     type="email"
-                    value={credentials.email}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setCredentials({ ...credentials, email: e.target.value })
-                    }
+                    defaultValue={credentialsRef.current.email}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      credentialsRef.current.email = e.target.value
+                    }}
                     placeholder="admin email"
                     required
+                    autoComplete="username"
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--gray-6)',
+                      background: 'var(--color-surface)',
+                      outline: 'none',
+                      fontSize: '15px',
+                    }}
                   />
                 </Field>
                 <Field label="Password" id="admin-password">
-                  <TextField.Root
+                  <input
                     id="admin-password"
                     type="password"
-                    value={credentials.password}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      setCredentials({ ...credentials, password: e.target.value })
-                    }
+                    defaultValue={credentialsRef.current.password}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      credentialsRef.current.password = e.target.value
+                    }}
                     placeholder="password"
                     required
+                    autoComplete="current-password"
+                    style={{
+                      padding: '10px',
+                      borderRadius: '8px',
+                      border: '1px solid var(--gray-6)',
+                      background: 'var(--color-surface)',
+                      outline: 'none',
+                      fontSize: '15px',
+                    }}
                   />
                 </Field>
                 <Button type="submit" disabled={!isConfigured}>
@@ -275,7 +302,7 @@ const AdminPage = ({
   }
 
   return (
-    <Container size="4" px="5" py="6">
+    <Container size="4" px="5" py="6" onInput={() => setDirty(true)}>
       <Header>
         <Button asChild variant="ghost" size="2">
           <Link to="/">{copy.nav.backToSite}</Link>
@@ -285,7 +312,7 @@ const AdminPage = ({
       <Card size="4" mb="4">
         <Flex align="center" justify="between" wrap="wrap" gap="3">
           <Box>
-            <Text color="green" size="2" weight="medium">
+            <Text color="indigo" size="2" weight="medium">
               Content dashboard
             </Text>
             <Heading size="7" mt="1">
@@ -316,7 +343,7 @@ const AdminPage = ({
                 id="hero-eyebrow"
                 value={draft.hero.eyebrow}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setDraft({ ...draft, hero: { ...draft.hero, eyebrow: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, hero: { ...draft.hero, eyebrow: e.target.value } }))
                 }
               />
             </Field>
@@ -325,7 +352,7 @@ const AdminPage = ({
                 id="hero-title"
                 value={draft.hero.title}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setDraft({ ...draft, hero: { ...draft.hero, title: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, hero: { ...draft.hero, title: e.target.value } }))
                 }
               />
             </Field>
@@ -334,7 +361,7 @@ const AdminPage = ({
                 id="hero-subtitle"
                 value={draft.hero.subtitle}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                  setDraft({ ...draft, hero: { ...draft.hero, subtitle: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, hero: { ...draft.hero, subtitle: e.target.value } }))
                 }
               />
             </Field>
@@ -343,7 +370,7 @@ const AdminPage = ({
                 id="hero-badge"
                 value={draft.hero.badge}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setDraft({ ...draft, hero: { ...draft.hero, badge: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, hero: { ...draft.hero, badge: e.target.value } }))
                 }
               />
             </Field>
@@ -353,7 +380,7 @@ const AdminPage = ({
                   id="hero-primary"
                   value={draft.hero.primaryCta}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setDraft({ ...draft, hero: { ...draft.hero, primaryCta: e.target.value } })
+                    (markDirty(), setDraft({ ...draft, hero: { ...draft.hero, primaryCta: e.target.value } }))
                   }
                 />
               </Field>
@@ -362,7 +389,7 @@ const AdminPage = ({
                   id="hero-secondary"
                   value={draft.hero.secondaryCta}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setDraft({ ...draft, hero: { ...draft.hero, secondaryCta: e.target.value } })
+                    (markDirty(), setDraft({ ...draft, hero: { ...draft.hero, secondaryCta: e.target.value } }))
                   }
                 />
               </Field>
@@ -375,21 +402,21 @@ const AdminPage = ({
             <Heading size="5">Services</Heading>
             <Text color="gray">Cards with bullets.</Text>
             {draft.services.map((service, idx) => (
-              <Card key={service.title + idx} variant="surface">
+              <Card key={`service-${idx}`} variant="surface">
                 <Flex direction="column" gap="2">
                   <Grid columns={{ initial: '1', sm: '2' }} gap="3">
                     <Field label="Badge" id={`service-${idx}-badge`}>
                       <TextField.Root
                         id={`service-${idx}-badge`}
                         value={service.badge ?? ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateService(idx, { badge: e.target.value })}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateService(idx, { badge: e.target.value }))}
                       />
                     </Field>
                     <Field label="Title" id={`service-${idx}-title`}>
                       <TextField.Root
                         id={`service-${idx}-title`}
                         value={service.title}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateService(idx, { title: e.target.value })}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateService(idx, { title: e.target.value }))}
                       />
                     </Field>
                   </Grid>
@@ -398,7 +425,7 @@ const AdminPage = ({
                       id={`service-${idx}-summary`}
                       value={service.summary}
                       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        updateService(idx, { summary: e.target.value })
+                        (markDirty(), updateService(idx, { summary: e.target.value }))
                       }
                     />
                   </Field>
@@ -407,7 +434,7 @@ const AdminPage = ({
                       id={`service-${idx}-bullets`}
                       value={service.bullets.join('\n')}
                       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        updateService(idx, { bullets: e.target.value.split('\n').filter(Boolean) })
+                        (markDirty(), updateService(idx, { bullets: e.target.value.split('\n').filter(Boolean) }))
                       }
                     />
                   </Field>
@@ -425,13 +452,13 @@ const AdminPage = ({
             <Heading size="5">Projects</Heading>
             <Text color="gray">Recent work tiles.</Text>
             {draft.projects.map((project, idx) => (
-              <Card key={project.name + idx} variant="surface">
+              <Card key={`project-${idx}`} variant="surface">
                 <Flex direction="column" gap="2">
                   <Field label="Name" id={`project-${idx}-name`}>
                     <TextField.Root
                       id={`project-${idx}-name`}
                       value={project.name}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateProject(idx, { name: e.target.value })}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateProject(idx, { name: e.target.value }))}
                     />
                   </Field>
                   <Field label="Summary" id={`project-${idx}-summary`}>
@@ -439,7 +466,7 @@ const AdminPage = ({
                       id={`project-${idx}-summary`}
                       value={project.summary}
                       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        updateProject(idx, { summary: e.target.value })
+                        (markDirty(), updateProject(idx, { summary: e.target.value }))
                       }
                     />
                   </Field>
@@ -448,7 +475,7 @@ const AdminPage = ({
                       id={`project-${idx}-impact`}
                       value={project.impact}
                       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        updateProject(idx, { impact: e.target.value })
+                        (markDirty(), updateProject(idx, { impact: e.target.value }))
                       }
                     />
                   </Field>
@@ -457,14 +484,14 @@ const AdminPage = ({
                       <TextField.Root
                         id={`project-${idx}-status`}
                         value={project.status ?? ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateProject(idx, { status: e.target.value })}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateProject(idx, { status: e.target.value }))}
                       />
                     </Field>
                     <Field label="Link" id={`project-${idx}-link`}>
                       <TextField.Root
                         id={`project-${idx}-link`}
                         value={project.link ?? ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => updateProject(idx, { link: e.target.value })}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateProject(idx, { link: e.target.value }))}
                       />
                     </Field>
                   </Grid>
@@ -473,7 +500,8 @@ const AdminPage = ({
                       id={`project-${idx}-stack`}
                       value={project.stack.join(', ')}
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        updateProject(idx, { stack: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })
+                        (markDirty(),
+                        updateProject(idx, { stack: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) }))
                       }
                     />
                   </Field>
@@ -507,13 +535,13 @@ const AdminPage = ({
             <Heading size="5">Process steps</Heading>
             <Text color="gray">Four steps recommended.</Text>
             {draft.process.map((step, idx) => (
-              <Card key={step.title + idx} variant="surface">
+              <Card key={`process-${idx}`} variant="surface">
                 <Flex direction="column" gap="2">
                   <Field label="Title" id={`process-${idx}-title`}>
                     <TextField.Root
                       id={`process-${idx}-title`}
                       value={step.title}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateProcess(idx, { title: e.target.value })}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateProcess(idx, { title: e.target.value }))}
                     />
                   </Field>
                   <Field label="Detail" id={`process-${idx}-detail`}>
@@ -521,7 +549,7 @@ const AdminPage = ({
                       id={`process-${idx}-detail`}
                       value={step.detail}
                       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                        updateProcess(idx, { detail: e.target.value })
+                        (markDirty(), updateProcess(idx, { detail: e.target.value }))
                       }
                     />
                   </Field>
@@ -529,7 +557,7 @@ const AdminPage = ({
                     <TextField.Root
                       id={`process-${idx}-outcome`}
                       value={step.outcome}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => updateProcess(idx, { outcome: e.target.value })}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateProcess(idx, { outcome: e.target.value }))}
                     />
                   </Field>
                 </Flex>
@@ -541,13 +569,13 @@ const AdminPage = ({
         <Card size="3">
           <Flex direction="column" gap="3">
             <Heading size="5">Contact</Heading>
-            <Text color="gray">CTA and contact channels.</Text>
+            <Text color="gray">CTA and contact email.</Text>
             <Field label="Headline" id="contact-headline">
               <TextField.Root
                 id="contact-headline"
                 value={draft.contact.headline}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setDraft({ ...draft, contact: { ...draft.contact, headline: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, contact: { ...draft.contact, headline: e.target.value } }))
                 }
               />
             </Field>
@@ -556,36 +584,16 @@ const AdminPage = ({
                 id="contact-subhead"
                 value={draft.contact.subhead}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                  setDraft({ ...draft, contact: { ...draft.contact, subhead: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, contact: { ...draft.contact, subhead: e.target.value } }))
                 }
               />
             </Field>
-            <Grid columns={{ initial: '1', sm: '2' }} gap="3">
-              <Field label="Email" id="contact-email">
-                <TextField.Root
-                  id="contact-email"
-                  value={draft.contact.email}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setDraft({ ...draft, contact: { ...draft.contact, email: e.target.value } })
-                  }
-                />
-              </Field>
-              <Field label="Phone" id="contact-phone">
-                <TextField.Root
-                  id="contact-phone"
-                  value={draft.contact.phone}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setDraft({ ...draft, contact: { ...draft.contact, phone: e.target.value } })
-                  }
-                />
-              </Field>
-            </Grid>
-            <Field label="Calendly / booking URL" id="contact-calendly">
+            <Field label="Email" id="contact-email">
               <TextField.Root
-                id="contact-calendly"
-                value={draft.contact.calendly ?? ''}
+                id="contact-email"
+                value={draft.contact.email}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setDraft({ ...draft, contact: { ...draft.contact, calendly: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, contact: { ...draft.contact, email: e.target.value } }))
                 }
               />
             </Field>
@@ -594,7 +602,7 @@ const AdminPage = ({
                 id="contact-note"
                 value={draft.contact.note ?? ''}
                 onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-                  setDraft({ ...draft, contact: { ...draft.contact, note: e.target.value } })
+                  (markDirty(), setDraft({ ...draft, contact: { ...draft.contact, note: e.target.value } }))
                 }
               />
             </Field>

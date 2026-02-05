@@ -17,3 +17,8 @@
   --glow-mid: color-mix(in srgb, var(--accent-10) 18%, transparent);
   --glow-neutral: color-mix(in srgb, var(--gray-a6) 40%, transparent);
 }
+
+h1 {
+  font-size: var(--font-size-8, 32px);
+  margin: 0;
+}

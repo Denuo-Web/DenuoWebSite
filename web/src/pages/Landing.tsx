@@ -74,7 +74,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
       </Card>
 
       {loading && (
-        <Callout.Root color="jade">
+        <Callout.Root color="indigo">
           <Callout.Text>Syncing live content…</Callout.Text>
         </Callout.Root>
       )}
@@ -87,7 +87,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
       <Box asChild id="top">
         <section>
         <Box>
-          <Text size="1" color="green" weight="medium" mb="1" as="p">
+          <Text size="1" color="indigo" weight="medium" mb="1" as="p">
             {hero.eyebrow}
           </Text>
           <Heading size="9" mb="2">
@@ -107,7 +107,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
             </Button>
           </Flex>
           <Flex align="center" gap="3" wrap="wrap" mb="4">
-            <Badge color="jade">{hero.badge}</Badge>
+            <Badge color="indigo">{hero.badge}</Badge>
           </Flex>
           <Grid columns={{ initial: '1', sm: '2', lg: '3' }} gap="3">
             {stats.map((stat) => (
@@ -134,7 +134,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
 
       <Box asChild id="services">
         <section>
-        <Text color="green" size="1" weight="medium">
+        <Text color="indigo" size="1" weight="medium">
           {copy.sections.servicesKicker}
         </Text>
           <Heading size="7" my="1">
@@ -147,7 +147,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
             {services.map((service) => (
               <Card key={service.title} size="3" variant="surface">
                 <Flex direction="column" gap="2">
-                  <Badge color="jade" variant="soft">
+                  <Badge color="indigo" variant="soft">
                     {service.badge}
                   </Badge>
                   <Heading size="5">{service.title}</Heading>
@@ -179,7 +179,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
 
       <Box asChild id="projects">
         <section>
-        <Text color="green" size="1" weight="medium">
+        <Text color="indigo" size="1" weight="medium">
           {copy.sections.projectsKicker}
         </Text>
           <Heading size="7" my="1">
@@ -223,7 +223,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
 
       <Box asChild id="process">
         <section>
-        <Text color="green" size="1" weight="medium">
+        <Text color="indigo" size="1" weight="medium">
           {copy.sections.processKicker}
         </Text>
         <Heading size="7" my="1">
@@ -236,7 +236,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
           {process.map((step, idx) => (
             <Card key={step.title + idx} size="3">
               <Flex direction="column" gap="2">
-                <Text weight="medium" color="green">
+                <Text weight="medium" color="indigo">
                   0{idx + 1}
                 </Text>
                 <Heading size="5">{step.title}</Heading>
@@ -256,7 +256,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
         <Card size="4" variant="surface">
           <Flex direction={{ initial: 'column', sm: 'row' }} gap="4" justify="between" align="center">
             <Box>
-              <Text color="green" size="1" weight="medium">
+              <Text color="indigo" size="1" weight="medium">
                 {copy.sections.contactKicker}
               </Text>
               <Heading size="7" my="1">
@@ -267,7 +267,6 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
               </Text>
               <Flex gap="2" wrap="wrap" mb="2">
                 <Badge variant="soft">Email: {contact.email}</Badge>
-                <Badge variant="soft">Phone: {contact.phone}</Badge>
               </Flex>
               {contact.note && (
                 <Text color="gray" size="2">
@@ -277,15 +276,8 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
             </Box>
             <Flex gap="2" wrap="wrap">
               <Button asChild>
-                <a href={`mailto:${contact.email}`}>Email Jaron</a>
+                <a href={`mailto:${contact.email}`}>Email Denuo Web</a>
               </Button>
-              {contact.calendly && (
-                <Button asChild variant="ghost">
-                  <a href={contact.calendly} target="_blank" rel="noreferrer">
-                    Book a 30-min call
-                  </a>
-                </Button>
-              )}
             </Flex>
           </Flex>
         </Card>
@@ -306,8 +298,7 @@ const LandingPage = ({ content, loading, error, onOpenThemePanel, language, onTo
               </Text>
             </Box>
             <Flex gap="3" wrap="wrap">
-              <RadixLink href="mailto:jaron@rosenau.info">jaron@rosenau.info</RadixLink>
-              <RadixLink href="tel:+19202920431">+1 (920) 292-0431</RadixLink>
+              <RadixLink href="mailto:info@denuoweb.com">info@denuoweb.com</RadixLink>
               <Link to="/admin">{copy.nav.admin}</Link>
             </Flex>
           </Flex>
