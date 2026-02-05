@@ -20,8 +20,8 @@
   - Services grid (strategy, build, platform) with differentiator pills.
   - Work/projects grid featuring QuestByCycle, Moonshine Art, CrowdPM with stack tags and status badges.
   - Process timeline (Discover → Architecture → Build → Launch).
-  - Contact CTA with email/phone and booking link.
-  - Footer with contact + admin link.
+  - Contact CTA with email.
+  - Footer with contact email + admin link.
 - Admin dashboard (`/admin`)
   - Email/password sign-in via Firebase Auth (requires custom `admin` claim).
   - Panels to edit hero, services, projects, differentiators, process steps, and contact info; writes to Firestore `siteContent/public`.
@@ -40,7 +40,7 @@
   differentiators: [string],
   projects: [{ name, summary, impact, stack[], link?, status? }],
   process: [{ title, detail, outcome }],
-  contact: { headline, subhead, email, phone, calendly?, note? }
+  contact: { headline, subhead, email, note? }
 }
 ```
 - Fallback content lives in `web/src/content/fallback.ts` (pulled from Rosenau's resume).
