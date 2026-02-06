@@ -51,28 +51,132 @@ export const fallbackContent: SiteContent = {
   ],
   projects: [
     {
-      name: 'QuestByCycle.org',
-      summary: 'A Flask + Vite PWA with auth, quests, leaderboards, and offline-ready pages for a local climate nonprofit.',
+      name: 'QuestByCycle',
+      summary: 'Flask + Vite PWA with auth, quests, and leaderboards for a local climate nonprofit.',
       impact: 'Ran four public games, onboarded 100+ riders, and earned a $2,000 honorarium.',
-      stack: ['Flask', 'Vite/React', 'PostgreSQL', 'Redis', 'NGINX', 'Gunicorn'],
+      stack: ['Flask', 'Vite PWA', 'Auth', 'Leaderboards', 'PostgreSQL', 'Redis'],
       link: 'https://questbycycle.org',
       status: 'Live',
     },
     {
       name: 'Moonshine Art marketplace',
-      summary: 'Flutter + Firebase + Cloud Run poster marketplace with Stripe payments and Terraform-managed GCP.',
+      summary: 'Flutter + Firebase + Cloud Run poster marketplace with Stripe and Terraform-managed infrastructure.',
       impact: 'Built monorepo foundations, auth flows, and CI for a remote art founder.',
       stack: ['Flutter', 'Firebase', 'Cloud Run', 'Stripe', 'Terraform'],
+      link: 'https://moonshine-dev-be279.web.app/',
       status: 'In progress',
     },
     {
       name: 'CrowdPM Platform',
-      summary: 'React + Vite map UI over Firebase/Cloud Run API with deck.gl for a collaborative planning tool.',
+      summary: 'React + Vite map platform with API and ingestion pipeline for collaborative planning.',
       impact: 'Partnered with OSU capstone teams; delivered MVP specs, architecture docs, and OpenAPI contracts.',
-      stack: ['React/Vite', 'deck.gl', 'Firebase', 'Cloud Run'],
+      stack: ['React', 'Vite', 'Map UI', 'API', 'Ingest pipeline', 'Cloud Run'],
+      link: 'https://crowdpmplatform.web.app',
       status: 'In collaboration',
     },
   ],
+  work: {
+    caseStudies: [
+      {
+        slug: 'moonshine-art',
+        name: 'Moonshine Art',
+        summary:
+          'Marketplace foundation for an independent art brand with a cross-platform app, serverless data layer, and production billing.',
+        impact:
+          'Shipped the initial commerce stack with authenticated purchasing flows, Stripe invoicing support, and deployment guardrails.',
+        challenge:
+          'The founder needed a launch-ready marketplace spanning client app, backend logic, and cloud infrastructure without a platform team.',
+        solution:
+          'Built a Flutter + Firebase experience, Cloud Run services for business logic, Stripe payment flows, and Terraform-managed GCP resources for repeatable environments.',
+        outcomes: [
+          'Established a monorepo workflow for app, backend, and infrastructure changes.',
+          'Implemented secure auth and purchase lifecycle handling backed by Firebase and Cloud Run.',
+          'Provisioned baseline infrastructure and deployment automation with Terraform.',
+        ],
+        stack: ['Flutter', 'Firebase', 'Cloud Run', 'Stripe', 'Terraform'],
+        status: 'In progress',
+        liveUrl: 'https://moonshine-dev-be279.web.app/',
+        repositoryUrl: 'https://github.com/denuoweb/moonshine',
+        servicePackage: {
+          title: 'Full-stack delivery sprint',
+          summary: 'End-to-end product build from architecture through production operations.',
+          outcomes: ['Product architecture', 'Backend/API delivery', 'Infrastructure as code'],
+          timeline: 'Multi-phase delivery',
+        },
+      },
+      {
+        slug: 'crowdpm-platform',
+        name: 'CrowdPM Platform',
+        summary:
+          'Collaborative planning platform centered on interactive mapping, structured data ingest, and cloud APIs for stakeholder workflows.',
+        impact:
+          'Delivered MVP architecture, ingestion design, and implementation scaffolding used by capstone contributors and project leads.',
+        challenge:
+          'The team needed a credible MVP path that connected map-heavy UI interactions with reliable backend ingestion and API contracts.',
+        solution:
+          'Implemented a React + Vite interface, mapped-data views, API service boundaries, and an ingest pipeline blueprint for operational data flow.',
+        outcomes: [
+          'Delivered clear architecture artifacts and OpenAPI-ready boundaries for implementation teams.',
+          'Connected map UI requirements to backend data contracts and ingestion steps.',
+          'Reduced onboarding time for new contributors with shared technical direction.',
+        ],
+        stack: ['React', 'Vite', 'Map UI', 'API', 'Ingest pipeline', 'Cloud Run'],
+        status: 'In collaboration',
+        liveUrl: 'https://crowdpmplatform.web.app',
+        repositoryUrl: 'https://github.com/Denuo-Web/CrowdPMPlatform',
+        servicePackage: {
+          title: 'Platform architecture package',
+          summary: 'MVP architecture and implementation planning for multi-contributor teams.',
+          outcomes: ['System design', 'API contracts', 'Data ingestion strategy'],
+          timeline: 'Architecture-first engagement',
+        },
+      },
+      {
+        slug: 'questbycycle',
+        name: 'QuestByCycle',
+        summary:
+          'Community climate game platform delivered as a Flask + Vite PWA with account flows, challenge mechanics, and real-time standings.',
+        impact: 'Powered multiple public game events, onboarded riders, and supported measurable community participation.',
+        challenge:
+          'The nonprofit needed a production application quickly, with account security and gamified features that worked on mobile for live events.',
+        solution:
+          'Built a Flask backend with a Vite PWA frontend, implemented auth workflows, quest progression logic, and leaderboard capabilities for active campaigns.',
+        outcomes: [
+          'Launched a working program platform for recurring games and participant retention.',
+          'Delivered authenticated user journeys and points/quest progression.',
+          'Shipped leaderboard features and mobile-ready PWA behavior for field usage.',
+        ],
+        stack: ['Flask', 'Vite PWA', 'Auth', 'Leaderboards', 'PostgreSQL', 'Redis'],
+        status: 'Live',
+        liveUrl: 'https://questbycycle.org',
+        repositoryUrl: 'https://github.com/Denuo-Web/QuestByCycle',
+        servicePackage: {
+          title: 'Backend to production package',
+          summary: 'Production-ready application delivery with deployment ownership.',
+          outcomes: ['Feature implementation', 'Release management', 'Operational support'],
+          timeline: 'End-to-end launch cycle',
+        },
+      },
+    ],
+    servicePackages: [
+      {
+        title: 'Backend to production package',
+        summary: 'API, data model, deployment, and operational handoff for a production launch.',
+        outcomes: ['Backend implementation', 'Deployment automation', 'Runbook and support'],
+      },
+      {
+        title: 'Platform architecture package',
+        summary: 'Scope and architecture planning for teams building roadmap-driven platforms.',
+        outcomes: ['System diagrams', 'API contracts', 'Delivery milestones'],
+      },
+      {
+        title: 'Full-stack delivery sprint',
+        summary: 'Time-boxed delivery sprint to move from validated concept to shippable product.',
+        outcomes: ['Working product increment', 'Quality gates', 'Launch checklist'],
+      },
+    ],
+    testimonials: [],
+  },
   process: [
     {
       title: 'Offer A: Backend to Production',

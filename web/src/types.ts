@@ -21,6 +21,36 @@ export interface Project {
   status?: string
 }
 
+export interface ServicePackage {
+  title: string
+  summary: string
+  outcomes: string[]
+  timeline?: string
+}
+
+export interface Testimonial {
+  quote: string
+  person: string
+  role: string
+  company?: string
+  caseStudySlug?: string
+}
+
+export interface CaseStudy {
+  slug: string
+  name: string
+  summary: string
+  impact: string
+  challenge: string
+  solution: string
+  outcomes: string[]
+  stack: string[]
+  status?: string
+  liveUrl?: string
+  repositoryUrl?: string
+  servicePackage?: ServicePackage
+}
+
 export interface ProcessStep {
   title: string
   detail: string
@@ -49,6 +79,11 @@ export interface SiteContent {
   services: Service[]
   differentiators: string[]
   projects: Project[]
+  work: {
+    caseStudies: CaseStudy[]
+    servicePackages: ServicePackage[]
+    testimonials: Testimonial[]
+  }
   process: ProcessStep[]
   contact: ContactInfo
 }
