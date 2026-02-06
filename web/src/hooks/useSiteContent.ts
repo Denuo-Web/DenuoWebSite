@@ -105,6 +105,7 @@ const projectToCaseStudy = (project: Project): CaseStudy => {
   const slug = fallback?.slug ?? legacySlug
   const impact = isString(project.impact) ? project.impact.trim() : fallback?.impact ?? ''
   const summary = isString(project.summary) ? project.summary.trim() : fallback?.summary ?? impact
+  const stack = Array.isArray(project.stack) ? project.stack.filter(isString).map((item) => item.trim()) : []
 
   return {
     slug,
@@ -114,9 +115,9 @@ const projectToCaseStudy = (project: Project): CaseStudy => {
     challenge: fallback?.challenge ?? summary,
     solution: fallback?.solution ?? impact,
     outcomes: fallback?.outcomes ?? [impact].filter(Boolean),
-    stack: project.stack.length > 0 ? project.stack : fallback?.stack ?? [],
-    status: project.status ?? fallback?.status,
-    liveUrl: project.link ?? fallback?.liveUrl,
+    stack: stack.length > 0 ? stack : fallback?.stack ?? [],
+    status: isString(project.status) ? project.status.trim() : fallback?.status,
+    liveUrl: isString(project.link) ? project.link.trim() : fallback?.liveUrl,
     repositoryUrl: fallback?.repositoryUrl,
     servicePackage: fallback?.servicePackage,
   }
