@@ -25,6 +25,7 @@
 - Admin dashboard (`/admin`)
   - Email/password sign-in via Firebase Auth (requires custom `admin` claim).
   - Panels to edit hero, services, projects, differentiators, process steps, and contact info; writes to Firestore `siteContent/public`.
+  - Case studies are read from Firestore `siteContent/public/work/{slug}` documents.
   - Status + warnings when Firebase config is missing; save button disabled until authenticated.
   - Billing form to issue Stripe invoices (admin-only; posts to `/billing/invoice`).
 - Global toggles
@@ -39,8 +40,20 @@
   services: [{ title, summary, bullets[], badge }],
   differentiators: [string],
   projects: [{ name, summary, impact, stack[], link?, status? }],
+  work: {
+    servicePackages: [{ title, summary, outcomes[], timeline? }],
+    testimonials: [{ quote, person, role, company?, caseStudySlug? }]
+  },
   process: [{ title, detail, outcome }],
   contact: { headline, subhead, email, note? }
+}
+```
+- Case studies are first-class documents in `siteContent/public/work/{slug}`:
+```
+{
+  slug, name, summary, impact, challenge, solution,
+  outcomes[], stack[], status?, liveUrl?, repositoryUrl?,
+  servicePackage?
 }
 ```
 - Fallback content lives in `web/src/content/fallback.ts` (pulled from Rosenau's resume).

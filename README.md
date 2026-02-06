@@ -30,7 +30,7 @@ A Firebase + Google Cloud Run powered site for Denuo Web, LLC. The frontend is a
    ```
 3. Build for release: `npm run build` (outputs to `web/dist`).
 
-The admin dashboard writes to Firestore `siteContent/public`. Update security rules (`firestore.rules`) before going live.
+The admin dashboard writes to Firestore `siteContent/public` (plus work sub-documents under `siteContent/public/work/{slug}` for case studies). Update security rules (`firestore.rules`) before going live.
 
 ### Firebase Emulator Suite (local)
 - Toggle `VITE_USE_FIREBASE_EMULATORS=true` in `web/.env` to point the SPA to local emulators.
@@ -86,8 +86,8 @@ Set these repo secrets before enabling CI/CD (Terraform will populate them by de
 `deploy-hosting.yml` builds `web` and deploys Hosting. `deploy-cloudrun.yml` builds and deploys `api` to Cloud Run when `api/**` changes.
 
 ## Content model
-- Live content stored at Firestore `siteContent/public`; fallback content in `web/src/content/fallback.ts` is built from Jaron Rosenau's resume and recent work (QuestByCycle, Moonshine Art, CrowdPM).
-- Services, projects, differentiators, process, and contact info are editable via `/admin` after signing in.
+- Live content stored at Firestore `siteContent/public`; case studies are stored as documents at `siteContent/public/work/{slug}`. Fallback content in `web/src/content/fallback.ts` is built from Jaron Rosenau's resume and recent work (QuestByCycle, Moonshine Art, CrowdPM).
+- Services, projects, differentiators, process, contact info, and work metadata (`servicePackages`, `testimonials`) are editable via `/admin` after signing in.
 - Admin can send Stripe invoices from `/admin` when the API has `STRIPE_SECRET_KEY` set; the UI uses the authenticated Firebase ID token.
 
 ## Localization best practices
