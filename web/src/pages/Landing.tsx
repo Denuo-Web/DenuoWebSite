@@ -14,7 +14,7 @@ const LandingPage = ({
   onToggleLanguage,
   copy,
 }: MarketingPageProps) => {
-  const { hero, services, differentiators, projects, process, contact } = content
+  const { hero, services, differentiators, process, contact, work } = content
   const previews = [
     {
       to: '/services',
@@ -25,8 +25,8 @@ const LandingPage = ({
     {
       to: '/work',
       title: copy.nav.work,
-      summary: projects[0]?.impact ?? '',
-      badge: projects[0]?.status ?? copy.sections.projectsKicker,
+      summary: work.caseStudies[0]?.impact ?? '',
+      badge: work.caseStudies[0]?.status ?? copy.sections.projectsKicker,
     },
     {
       to: '/process',

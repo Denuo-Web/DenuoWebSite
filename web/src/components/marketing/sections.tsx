@@ -3,8 +3,7 @@ import { Badge, Box, Button, Card, Flex, Grid, Heading, Text } from '@radix-ui/t
 import { Link } from 'react-router-dom'
 
 import type { UiCopy } from '../../i18n/uiCopy'
-import { toProjectSlug } from '../../lib/projectSlug'
-import type { ContactInfo, HeroContent, ProcessStep, Project, Service } from '../../types'
+import type { CaseStudy, ContactInfo, HeroContent, ProcessStep, Service } from '../../types'
 
 interface HeroSectionProps {
   hero: HeroContent
@@ -16,8 +15,8 @@ interface ServicesSectionProps {
   copy: UiCopy
 }
 
-interface ProjectsSectionProps {
-  projects: Project[]
+interface CaseStudiesSectionProps {
+  caseStudies: CaseStudy[]
   copy: UiCopy
 }
 
@@ -111,7 +110,7 @@ export const ServicesSection = ({ services, differentiators, copy }: ServicesSec
   )
 }
 
-export const ProjectsSection = ({ projects, copy }: ProjectsSectionProps) => {
+export const CaseStudiesSection = ({ caseStudies, copy }: CaseStudiesSectionProps) => {
   return (
     <Box asChild>
       <section>
@@ -125,29 +124,29 @@ export const ProjectsSection = ({ projects, copy }: ProjectsSectionProps) => {
           {copy.sections.projectsLead}
         </Text>
         <Grid columns={{ initial: '1', sm: '2' }} gap="3">
-          {projects.map((project) => (
-            <Card key={project.name} size="3" variant="surface">
+          {caseStudies.map((caseStudy) => (
+            <Card key={caseStudy.slug} size="3" variant="surface">
               <Flex direction="column" gap="2">
-                <Badge variant="soft">{project.status}</Badge>
+                {caseStudy.status && <Badge variant="soft">{caseStudy.status}</Badge>}
                 <Flex align="center" justify="between" gap="3">
-                  <Heading size="5">{project.name}</Heading>
+                  <Heading size="5">{caseStudy.name}</Heading>
                   <Flex align="center" gap="2">
                     <Button asChild variant="soft" size="1">
-                      <Link to={`/work/${toProjectSlug(project.name)}`}>Details</Link>
+                      <Link to={`/work/${caseStudy.slug}`}>Details</Link>
                     </Button>
-                    {project.link && (
+                    {caseStudy.liveUrl && (
                       <Button asChild variant="ghost" size="1">
-                        <a href={project.link} target="_blank" rel="noreferrer">
+                        <a href={caseStudy.liveUrl} target="_blank" rel="noreferrer">
                           Visit
                         </a>
                       </Button>
                     )}
                   </Flex>
                 </Flex>
-                <Text>{project.summary}</Text>
-                <Text color="gray">{project.impact}</Text>
+                <Text>{caseStudy.summary}</Text>
+                <Text color="gray">{caseStudy.impact}</Text>
                 <Flex gap="2" wrap="wrap">
-                  {project.stack.map((tech) => (
+                  {caseStudy.stack.map((tech) => (
                     <Badge key={tech} variant="soft">
                       {tech}
                     </Badge>

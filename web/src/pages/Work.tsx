@@ -1,7 +1,7 @@
 import { Flex } from '@radix-ui/themes'
 
 import MarketingShell from '../components/marketing/MarketingShell'
-import { ProjectsSection } from '../components/marketing/sections'
+import { CaseStudiesSection } from '../components/marketing/sections'
 import type { MarketingPageProps } from './marketingPageProps'
 
 const WorkPage = ({
@@ -24,7 +24,7 @@ const WorkPage = ({
       error={error}
     >
       <Flex direction="column" gap="4">
-        <ProjectsSection projects={content.projects} copy={copy} />
+        <CaseStudiesSection caseStudies={content.work.caseStudies} copy={copy} />
       </Flex>
     </MarketingShell>
   )
