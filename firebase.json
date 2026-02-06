@@ -9,6 +9,10 @@
           "serviceId": "denuo-api",
           "region": "us-central1"
         }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ],
     "headers": [
