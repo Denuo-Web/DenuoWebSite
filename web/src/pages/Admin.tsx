@@ -23,7 +23,8 @@ import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } fr
 
 import { auth, isConfigured } from '../lib/firebase'
 import type { Language, UiCopy } from '../i18n/uiCopy'
-import type { ProcessStep, Project, Service, SiteContent } from '../types'
+import { toProjectSlug } from '../lib/projectSlug'
+import type { CaseStudy, ProcessStep, Project, Service, SiteContent } from '../types'
 
 interface AdminProps {
   content: SiteContent
@@ -159,6 +160,11 @@ const AdminPage = ({
     setDraft({ ...draft, process: updated })
   }
 
+  const updateCaseStudy = (index: number, next: Partial<CaseStudy>) => {
+    const updated = draft.work.caseStudies.map((caseStudy, idx) => (idx === index ? { ...caseStudy, ...next } : caseStudy))
+    setDraft({ ...draft, work: { ...draft.work, caseStudies: updated } })
+  }
+
   const addService = () => {
     const newService: Service = {
       title: 'New service',
@@ -178,6 +184,31 @@ const AdminPage = ({
       status: 'Planned',
     }
     setDraft({ ...draft, projects: [...draft.projects, newProject] })
+  }
+
+  const addCaseStudy = () => {
+    const newCaseStudy: CaseStudy = {
+      slug: `case-study-${draft.work.caseStudies.length + 1}`,
+      name: 'New case study',
+      summary: 'What was built and for whom.',
+      impact: 'What changed or improved.',
+      challenge: 'What challenge had to be solved.',
+      solution: 'How the solution was delivered.',
+      outcomes: ['Add measurable outcomes'],
+      stack: ['Tech stack'],
+      status: 'Draft',
+      servicePackage: {
+        title: '',
+        summary: '',
+        outcomes: [],
+      },
+    }
+    setDraft({ ...draft, work: { ...draft.work, caseStudies: [...draft.work.caseStudies, newCaseStudy] } })
+  }
+
+  const removeCaseStudy = (index: number) => {
+    const updated = draft.work.caseStudies.filter((_, idx) => idx !== index)
+    setDraft({ ...draft, work: { ...draft.work, caseStudies: updated } })
   }
 
   const Header = ({ children }: { children?: ReactNode }) => (
@@ -315,7 +346,7 @@ const AdminPage = ({
               Content dashboard
             </Text>
             <Heading size="7" mt="1">
-              Update site copy, services, and projects.
+              Update site copy, services, projects, and case studies.
             </Heading>
             {!isConfigured && (
               <Callout.Root color="amber" mt="2">
@@ -448,8 +479,8 @@ const AdminPage = ({
 
         <Card size="3">
           <Flex direction="column" gap="3">
-            <Heading size="5">Projects</Heading>
-            <Text color="gray">Recent work tiles.</Text>
+            <Heading size="5">Projects (Legacy)</Heading>
+            <Text color="gray">Legacy work tiles. Public /work now uses Case Studies below.</Text>
             {draft.projects.map((project, idx) => (
               <Card key={`project-${idx}`} variant="surface">
                 <Flex direction="column" gap="2">
@@ -509,6 +540,195 @@ const AdminPage = ({
             ))}
             <Button variant="soft" onClick={addProject}>
               + Add project
+            </Button>
+          </Flex>
+        </Card>
+
+        <Card size="3">
+          <Flex direction="column" gap="3">
+            <Heading size="5">Case Studies (Public /work)</Heading>
+            <Text color="gray">Cards render on /work and details render on /work/:slug.</Text>
+            {draft.work.caseStudies.map((caseStudy, idx) => (
+              <Card key={`case-study-${idx}`} variant="surface">
+                <Flex direction="column" gap="2">
+                  <Grid columns={{ initial: '1', sm: '2' }} gap="3">
+                    <Field label="Slug (URL path)" id={`case-study-${idx}-slug`}>
+                      <TextField.Root
+                        id={`case-study-${idx}-slug`}
+                        value={caseStudy.slug}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateCaseStudy(idx, { slug: toProjectSlug(e.target.value) }))}
+                      />
+                    </Field>
+                    <Field label="Name" id={`case-study-${idx}-name`}>
+                      <TextField.Root
+                        id={`case-study-${idx}-name`}
+                        value={caseStudy.name}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const name = e.target.value
+                          const next = caseStudy.slug ? { name } : { name, slug: toProjectSlug(name) }
+                          markDirty()
+                          updateCaseStudy(idx, next)
+                        }}
+                      />
+                    </Field>
+                  </Grid>
+                  <Grid columns={{ initial: '1', sm: '2' }} gap="3">
+                    <Field label="Status" id={`case-study-${idx}-status`}>
+                      <TextField.Root
+                        id={`case-study-${idx}-status`}
+                        value={caseStudy.status ?? ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateCaseStudy(idx, { status: e.target.value }))}
+                      />
+                    </Field>
+                    <Field label="Live URL" id={`case-study-${idx}-live-url`}>
+                      <TextField.Root
+                        id={`case-study-${idx}-live-url`}
+                        value={caseStudy.liveUrl ?? ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => (markDirty(), updateCaseStudy(idx, { liveUrl: e.target.value }))}
+                      />
+                    </Field>
+                  </Grid>
+                  <Field label="Repository URL" id={`case-study-${idx}-repository-url`}>
+                    <TextField.Root
+                      id={`case-study-${idx}-repository-url`}
+                      value={caseStudy.repositoryUrl ?? ''}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        (markDirty(), updateCaseStudy(idx, { repositoryUrl: e.target.value }))
+                      }
+                    />
+                  </Field>
+                  <Field label="Summary" id={`case-study-${idx}-summary`}>
+                    <TextArea
+                      id={`case-study-${idx}-summary`}
+                      value={caseStudy.summary}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => (markDirty(), updateCaseStudy(idx, { summary: e.target.value }))}
+                    />
+                  </Field>
+                  <Field label="Impact" id={`case-study-${idx}-impact`}>
+                    <TextArea
+                      id={`case-study-${idx}-impact`}
+                      value={caseStudy.impact}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) => (markDirty(), updateCaseStudy(idx, { impact: e.target.value }))}
+                    />
+                  </Field>
+                  <Field label="Challenge" id={`case-study-${idx}-challenge`}>
+                    <TextArea
+                      id={`case-study-${idx}-challenge`}
+                      value={caseStudy.challenge}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        (markDirty(), updateCaseStudy(idx, { challenge: e.target.value }))
+                      }
+                    />
+                  </Field>
+                  <Field label="Solution" id={`case-study-${idx}-solution`}>
+                    <TextArea
+                      id={`case-study-${idx}-solution`}
+                      value={caseStudy.solution}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        (markDirty(), updateCaseStudy(idx, { solution: e.target.value }))
+                      }
+                    />
+                  </Field>
+                  <Field label="Outcomes (one per line)" id={`case-study-${idx}-outcomes`}>
+                    <TextArea
+                      id={`case-study-${idx}-outcomes`}
+                      value={caseStudy.outcomes.join('\n')}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        (markDirty(), updateCaseStudy(idx, { outcomes: e.target.value.split('\n').filter(Boolean) }))
+                      }
+                    />
+                  </Field>
+                  <Field label="Stack (comma-separated)" id={`case-study-${idx}-stack`}>
+                    <TextField.Root
+                      id={`case-study-${idx}-stack`}
+                      value={caseStudy.stack.join(', ')}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        (markDirty(),
+                        updateCaseStudy(idx, { stack: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) }))
+                      }
+                    />
+                  </Field>
+                  <Text size="2" color="gray">
+                    Service package (optional)
+                  </Text>
+                  <Grid columns={{ initial: '1', sm: '2' }} gap="3">
+                    <Field label="Package title" id={`case-study-${idx}-package-title`}>
+                      <TextField.Root
+                        id={`case-study-${idx}-package-title`}
+                        value={caseStudy.servicePackage?.title ?? ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          (markDirty(),
+                          updateCaseStudy(idx, {
+                            servicePackage: {
+                              title: e.target.value,
+                              summary: caseStudy.servicePackage?.summary ?? '',
+                              outcomes: caseStudy.servicePackage?.outcomes ?? [],
+                              timeline: caseStudy.servicePackage?.timeline,
+                            },
+                          }))
+                        }
+                      />
+                    </Field>
+                    <Field label="Package timeline" id={`case-study-${idx}-package-timeline`}>
+                      <TextField.Root
+                        id={`case-study-${idx}-package-timeline`}
+                        value={caseStudy.servicePackage?.timeline ?? ''}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          (markDirty(),
+                          updateCaseStudy(idx, {
+                            servicePackage: {
+                              title: caseStudy.servicePackage?.title ?? '',
+                              summary: caseStudy.servicePackage?.summary ?? '',
+                              outcomes: caseStudy.servicePackage?.outcomes ?? [],
+                              timeline: e.target.value,
+                            },
+                          }))
+                        }
+                      />
+                    </Field>
+                  </Grid>
+                  <Field label="Package summary" id={`case-study-${idx}-package-summary`}>
+                    <TextArea
+                      id={`case-study-${idx}-package-summary`}
+                      value={caseStudy.servicePackage?.summary ?? ''}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        (markDirty(),
+                        updateCaseStudy(idx, {
+                          servicePackage: {
+                            title: caseStudy.servicePackage?.title ?? '',
+                            summary: e.target.value,
+                            outcomes: caseStudy.servicePackage?.outcomes ?? [],
+                            timeline: caseStudy.servicePackage?.timeline,
+                          },
+                        }))
+                      }
+                    />
+                  </Field>
+                  <Field label="Package outcomes (one per line)" id={`case-study-${idx}-package-outcomes`}>
+                    <TextArea
+                      id={`case-study-${idx}-package-outcomes`}
+                      value={caseStudy.servicePackage?.outcomes?.join('\n') ?? ''}
+                      onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                        (markDirty(),
+                        updateCaseStudy(idx, {
+                          servicePackage: {
+                            title: caseStudy.servicePackage?.title ?? '',
+                            summary: caseStudy.servicePackage?.summary ?? '',
+                            outcomes: e.target.value.split('\n').filter(Boolean),
+                            timeline: caseStudy.servicePackage?.timeline,
+                          },
+                        }))
+                      }
+                    />
+                  </Field>
+                  <Button variant="soft" color="ruby" onClick={() => (markDirty(), removeCaseStudy(idx))}>
+                    Remove case study
+                  </Button>
+                </Flex>
+              </Card>
+            ))}
+            <Button variant="soft" onClick={() => (markDirty(), addCaseStudy())}>
+              + Add case study
             </Button>
           </Flex>
         </Card>
@@ -665,7 +885,7 @@ const AdminPage = ({
 
       <Flex align="center" gap="3" wrap="wrap">
         <Text color="gray">
-          Saves write to Firestore collection `siteContent/public`. Restrict writes with an admin custom claim.
+          Saves write to Firestore `siteContent/public` and case studies in `siteContent/public/work/slug-id`.
         </Text>
         <Button onClick={handleSave} disabled={saving || !user}>
           {saving ? 'Saving…' : user ? 'Save content' : 'Sign in to save'}

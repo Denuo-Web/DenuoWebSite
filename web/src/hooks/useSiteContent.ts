@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
+import { collection, doc, getDocs, onSnapshot, setDoc, writeBatch } from 'firebase/firestore'
 
 import { fallbackContent } from '../content/fallback'
 import { db } from '../lib/firebase'
@@ -237,7 +237,7 @@ export function useSiteContent() {
       },
       (err) => {
         console.error('Error loading case studies', err)
-        setError((prev) => prev ?? 'Unable to load live case studies. Showing fallback instead.')
+        setError((prev) => prev ?? 'Unable to load live case studies. Showing fallback instead. Check Firestore rules for siteContent/public/work/*.')
         workSettled = true
         finalizeLoading()
       }
@@ -254,6 +254,42 @@ export function useSiteContent() {
       throw new Error('Firebase is not configured. Set VITE_FIREBASE_* env vars to enable saves.')
     }
 
+    const normalizedCaseStudies: CaseStudy[] = []
+    const seenSlugs = new Set<string>()
+
+    for (const [index, caseStudy] of next.work.caseStudies.entries()) {
+      const baseSlug = toProjectSlug(isString(caseStudy.slug) ? caseStudy.slug : caseStudy.name)
+      const fallbackSlug = baseSlug === 'project' ? `case-study-${index + 1}` : baseSlug
+
+      let slug = fallbackSlug
+      let suffix = 2
+      while (seenSlugs.has(slug)) {
+        slug = `${fallbackSlug}-${suffix}`
+        suffix += 1
+      }
+      seenSlugs.add(slug)
+
+      const normalizedName = isString(caseStudy.name) ? caseStudy.name.trim() : 'Untitled case study'
+      const normalizedSummary = isString(caseStudy.summary) ? caseStudy.summary.trim() : ''
+      const normalizedImpact = isString(caseStudy.impact) ? caseStudy.impact.trim() : ''
+
+      normalizedCaseStudies.push({
+        ...caseStudy,
+        slug,
+        name: normalizedName,
+        summary: normalizedSummary,
+        impact: normalizedImpact,
+        challenge: isString(caseStudy.challenge) ? caseStudy.challenge.trim() : normalizedSummary,
+        solution: isString(caseStudy.solution) ? caseStudy.solution.trim() : normalizedImpact,
+        outcomes: toStringArray(caseStudy.outcomes),
+        stack: toStringArray(caseStudy.stack),
+        status: isString(caseStudy.status) ? caseStudy.status.trim() : undefined,
+        liveUrl: isString(caseStudy.liveUrl) ? caseStudy.liveUrl.trim() : undefined,
+        repositoryUrl: isString(caseStudy.repositoryUrl) ? caseStudy.repositoryUrl.trim() : undefined,
+        servicePackage: normalizeServicePackage(caseStudy.servicePackage),
+      })
+    }
+
     await setDoc(doc(db, 'siteContent', 'public'), {
       ...next,
       work: {
@@ -262,7 +298,30 @@ export function useSiteContent() {
       },
     })
 
-    setContent(next)
+    const workCollectionRef = collection(db, 'siteContent', 'public', 'work')
+    const existingWorkDocs = await getDocs(workCollectionRef)
+    const incomingCaseStudySlugs = new Set(normalizedCaseStudies.map((caseStudy) => caseStudy.slug))
+    const workBatch = writeBatch(db)
+
+    for (const caseStudy of normalizedCaseStudies) {
+      workBatch.set(doc(workCollectionRef, caseStudy.slug), caseStudy)
+    }
+
+    for (const existingWorkDoc of existingWorkDocs.docs) {
+      if (!incomingCaseStudySlugs.has(existingWorkDoc.id)) {
+        workBatch.delete(existingWorkDoc.ref)
+      }
+    }
+
+    await workBatch.commit()
+
+    setContent({
+      ...next,
+      work: {
+        ...next.work,
+        caseStudies: normalizedCaseStudies,
+      },
+    })
     setError(null)
   }
 
