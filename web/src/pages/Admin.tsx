@@ -44,7 +44,6 @@ const AdminPage = ({
 }: AdminProps) => {
   const [draft, setDraft] = useState<SiteContent>(content)
   const [dirty, setDirty] = useState(false)
-  const contentSignature = useMemo(() => JSON.stringify(content), [content])
   const [user, setUser] = useState<User | null>(null)
   const [status, setStatus] = useState<string>('')
   const [saving, setSaving] = useState(false)
@@ -57,7 +56,7 @@ const AdminPage = ({
     if (!dirty) {
       setDraft(content)
     }
-  }, [contentSignature, dirty])
+  }, [content, dirty])
 
   const markDirty = () => {
     if (!dirty) setDirty(true)

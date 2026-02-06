@@ -7,12 +7,11 @@ import type { SiteContent } from '../types'
 
 export function useSiteContent() {
   const [content, setContent] = useState<SiteContent>(fallbackContent)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(() => Boolean(db))
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!db) {
-      setLoading(false)
       return
     }
 
