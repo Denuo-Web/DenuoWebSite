@@ -74,6 +74,14 @@ export const fallbackContent: SiteContent = {
       link: 'https://crowdpmplatform.web.app',
       status: 'In collaboration',
     },
+    {
+      name: 'ARM64-ADK',
+      summary: 'Android development scaffold for Linux ARM64 with GUI-first workflows and service-oriented tooling.',
+      impact: 'Established a production-style multi-service architecture for Android build workflows on ARM64 hosts.',
+      stack: ['Rust', 'gRPC', 'GTK4', 'Linux ARM64', 'Android SDK/NDK'],
+      link: 'https://github.com/denuoweb/ARM64-ADK',
+      status: 'Open source',
+    },
   ],
   work: {
     caseStudies: [
@@ -155,6 +163,32 @@ export const fallbackContent: SiteContent = {
           summary: 'Production-ready application delivery with deployment ownership.',
           outcomes: ['Feature implementation', 'Release management', 'Operational support'],
           timeline: 'End-to-end launch cycle',
+        },
+      },
+      {
+        slug: 'arm64-adk',
+        name: 'ARM64-ADK',
+        summary:
+          'GUI-first Android DevKit scaffold for Linux ARM64, with gRPC services handling toolchain, builds, targets, and observability.',
+        impact:
+          'Delivered an open-source platform architecture that makes Android development workflows viable on ARM64 Linux hosts.',
+        challenge:
+          'Android build workflows are often centered on x86 tooling, while Linux ARM64 teams need native-first tooling and clear orchestration between services.',
+        solution:
+          'Implemented a Rust multi-service gRPC system with GTK4 UI + CLI thin clients, JobService event streaming, and Workflow orchestration for end-to-end build operations.',
+        outcomes: [
+          'Defined a clean service topology for Toolchain, Build, Target, Observe, Project, and Workflow domains.',
+          'Enabled Linux ARM64-focused toolchain workflows and repeatable local runtime orchestration.',
+          'Published a reusable open-source scaffold for future Android platform automation.',
+        ],
+        stack: ['Rust', 'gRPC', 'GTK4', 'Linux ARM64', 'Android SDK/NDK'],
+        status: 'Open source',
+        repositoryUrl: 'https://github.com/denuoweb/ARM64-ADK',
+        servicePackage: {
+          title: 'Developer tooling and automation package',
+          summary: 'Build internal developer platforms and automation scaffolds for specialized engineering workflows.',
+          outcomes: ['Tooling architecture', 'Service orchestration', 'Operational runbooks'],
+          timeline: 'Iteration-based roadmap',
         },
       },
     ],
