@@ -137,6 +137,13 @@ const normalizeTestimonials = (value: unknown): Testimonial[] => {
   return value.map((item) => normalizeTestimonial(item)).filter((item): item is Testimonial => Boolean(item))
 }
 
+const getDocCaseStudies = (value: Partial<SiteContent>): CaseStudy[] =>
+  Array.isArray(value.work?.caseStudies)
+    ? value.work.caseStudies
+        .map((item) => normalizeCaseStudy(item))
+        .filter((item): item is CaseStudy => Boolean(item))
+    : []
+
 export function useSiteContent() {
   const [content, setContent] = useState<SiteContent>(fallbackContent)
   const [loading, setLoading] = useState(() => Boolean(db))
@@ -152,6 +159,7 @@ export function useSiteContent() {
     let liveDocument: Partial<SiteContent> = {}
     let liveWorkCaseStudies: CaseStudy[] = []
     let hasLiveWorkSnapshot = false
+    let docFailed = false
     let docSettled = false
     let workSettled = false
 
@@ -163,11 +171,7 @@ export function useSiteContent() {
 
     const syncContent = () => {
       const liveProjects = Array.isArray(liveDocument.projects) ? liveDocument.projects : fallbackContent.projects
-      const docCaseStudies = Array.isArray(liveDocument.work?.caseStudies)
-        ? liveDocument.work.caseStudies
-            .map((item) => normalizeCaseStudy(item))
-            .filter((item): item is CaseStudy => Boolean(item))
-        : []
+      const docCaseStudies = getDocCaseStudies(liveDocument)
       const projectCaseStudies =
         liveProjects.length > 0 ? liveProjects.map((project) => projectToCaseStudy(project)) : fallbackContent.work.caseStudies
 
@@ -199,6 +203,7 @@ export function useSiteContent() {
     const unsubscribeDoc = onSnapshot(
       ref,
       (snapshot) => {
+        docFailed = false
         liveDocument = snapshot.exists() ? (snapshot.data() as Partial<SiteContent>) : {}
         docSettled = true
         syncContent()
@@ -209,6 +214,7 @@ export function useSiteContent() {
       },
       (err) => {
         console.error('Error loading site content', err)
+        docFailed = true
         setError('Unable to load live content. Showing fallback instead.')
         docSettled = true
         finalizeLoading()
@@ -232,13 +238,15 @@ export function useSiteContent() {
           .filter((item): item is CaseStudy => Boolean(item))
         workSettled = true
         syncContent()
-        setError(null)
+        if (!docFailed) {
+          setError(null)
+        }
         finalizeLoading()
       },
       (err) => {
         console.error('Error loading case studies', err)
-        setError((prev) => prev ?? 'Unable to load live case studies. Showing fallback instead. Check Firestore rules for siteContent/public/work/*.')
         workSettled = true
+        syncContent()
         finalizeLoading()
       }
     )
@@ -293,27 +301,42 @@ export function useSiteContent() {
     await setDoc(doc(db, 'siteContent', 'public'), {
       ...next,
       work: {
+        caseStudies: normalizedCaseStudies,
         servicePackages: next.work.servicePackages,
         testimonials: next.work.testimonials,
       },
     })
+    let workSyncWarning: string | null = null
+    try {
+      const workCollectionRef = collection(db, 'siteContent', 'public', 'work')
+      const existingWorkDocs = await getDocs(workCollectionRef)
+      const incomingCaseStudySlugs = new Set(normalizedCaseStudies.map((caseStudy) => caseStudy.slug))
+      const workBatch = writeBatch(db)
 
-    const workCollectionRef = collection(db, 'siteContent', 'public', 'work')
-    const existingWorkDocs = await getDocs(workCollectionRef)
-    const incomingCaseStudySlugs = new Set(normalizedCaseStudies.map((caseStudy) => caseStudy.slug))
-    const workBatch = writeBatch(db)
-
-    for (const caseStudy of normalizedCaseStudies) {
-      workBatch.set(doc(workCollectionRef, caseStudy.slug), caseStudy)
-    }
-
-    for (const existingWorkDoc of existingWorkDocs.docs) {
-      if (!incomingCaseStudySlugs.has(existingWorkDoc.id)) {
-        workBatch.delete(existingWorkDoc.ref)
+      for (const caseStudy of normalizedCaseStudies) {
+        workBatch.set(doc(workCollectionRef, caseStudy.slug), caseStudy)
       }
-    }
 
-    await workBatch.commit()
+      for (const existingWorkDoc of existingWorkDocs.docs) {
+        if (!incomingCaseStudySlugs.has(existingWorkDoc.id)) {
+          workBatch.delete(existingWorkDoc.ref)
+        }
+      }
+
+      await workBatch.commit()
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      const isPermissionIssue =
+        message.includes('permission-denied') || message.includes('Missing or insufficient permissions')
+
+      if (!isPermissionIssue) {
+        throw err
+      }
+
+      workSyncWarning =
+        'Saved to siteContent/public, but syncing siteContent/public/work/* failed. Deploy latest Firestore rules to enable live work docs.'
+      console.warn(workSyncWarning, err)
+    }
 
     setContent({
       ...next,
@@ -322,7 +345,7 @@ export function useSiteContent() {
         caseStudies: normalizedCaseStudies,
       },
     })
-    setError(null)
+    setError(workSyncWarning)
   }
 
   return { content, loading, error, saveContent, setContent }
