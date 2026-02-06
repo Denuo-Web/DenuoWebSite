@@ -98,8 +98,11 @@ const normalizeContact = (value: unknown): ContactInfo => {
 }
 
 const projectToCaseStudy = (project: Project): CaseStudy => {
-  const slug = toProjectSlug(project.name)
-  const fallback = fallbackCaseStudyBySlug.get(slug)
+  const legacySlug = toProjectSlug(project.name)
+  const fallback =
+    fallbackCaseStudyBySlug.get(legacySlug) ??
+    fallbackContent.work.caseStudies.find((item) => legacySlug.includes(item.slug) || item.slug.includes(legacySlug))
+  const slug = fallback?.slug ?? legacySlug
   const impact = isString(project.impact) ? project.impact.trim() : fallback?.impact ?? ''
   const summary = isString(project.summary) ? project.summary.trim() : fallback?.summary ?? impact
 
