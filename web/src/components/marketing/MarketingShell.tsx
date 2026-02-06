@@ -2,6 +2,7 @@ import { GlobeIcon } from '@radix-ui/react-icons'
 import {
   Box,
   Button,
+  Callout,
   Card,
   Container,
   Flex,
@@ -24,6 +25,8 @@ interface MarketingShellProps {
   onToggleLanguage: () => void
   copy: UiCopy
   contactEmail: string
+  loading: boolean
+  error: string | null
   children: ReactNode
 }
 
@@ -33,27 +36,32 @@ const MarketingShell = ({
   onToggleLanguage,
   copy,
   contactEmail,
+  loading,
+  error,
   children,
 }: MarketingShellProps) => {
+  const links = [
+    { to: '/services', label: copy.nav.services },
+    { to: '/work', label: copy.nav.work },
+    { to: '/process', label: copy.nav.process },
+    { to: '/contact', label: copy.nav.contact },
+    { to: '/about', label: copy.nav.about },
+  ]
+
   return (
     <Container size="4" px="5" py="6">
       <Flex direction="column" gap="6">
         <Card size="3" variant="surface">
           <Flex align="center" justify="between" wrap="wrap" gap="4">
-            <Heading size="6">Denuo Web</Heading>
+            <Heading size="6">
+              <Link to="/">Denuo Web</Link>
+            </Heading>
             <Flex gap="3" align="center" wrap="wrap">
-              <RadixLink href="#services" weight="medium">
-                {copy.nav.services}
-              </RadixLink>
-              <RadixLink href="#projects" weight="medium">
-                {copy.nav.work}
-              </RadixLink>
-              <RadixLink href="#offers" weight="medium">
-                {copy.nav.process}
-              </RadixLink>
-              <RadixLink href="#contact" weight="medium">
-                {copy.nav.contact}
-              </RadixLink>
+              {links.map((link) => (
+                <RadixLink key={link.to} asChild weight="medium">
+                  <Link to={link.to}>{link.label}</Link>
+                </RadixLink>
+              ))}
               <Button asChild variant="soft" size="1">
                 <Link to="/admin">{copy.nav.admin}</Link>
               </Button>
@@ -73,6 +81,17 @@ const MarketingShell = ({
             </Flex>
           </Flex>
         </Card>
+
+        {loading && (
+          <Callout.Root color="indigo">
+            <Callout.Text>Syncing live content…</Callout.Text>
+          </Callout.Root>
+        )}
+        {error && (
+          <Callout.Root color="ruby">
+            <Callout.Text>{error}</Callout.Text>
+          </Callout.Root>
+        )}
 
         <Box asChild>
           <main>{children}</main>

@@ -1,13 +1,10 @@
 import { ArrowRightIcon } from '@radix-ui/react-icons'
-import { Badge, Box, Button, Callout, Card, Flex, Grid, Heading, Link as RadixLink, Text } from '@radix-ui/themes'
+import { Badge, Box, Button, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes'
+import { Link } from 'react-router-dom'
 
 import type { UiCopy } from '../../i18n/uiCopy'
+import { toProjectSlug } from '../../lib/projectSlug'
 import type { ContactInfo, HeroContent, ProcessStep, Project, Service } from '../../types'
-
-interface StatusMessagesProps {
-  loading: boolean
-  error: string | null
-}
 
 interface HeroSectionProps {
   hero: HeroContent
@@ -34,26 +31,9 @@ interface ContactSectionProps {
   copy: UiCopy
 }
 
-export const StatusMessages = ({ loading, error }: StatusMessagesProps) => {
-  return (
-    <>
-      {loading && (
-        <Callout.Root color="indigo">
-          <Callout.Text>Syncing live content…</Callout.Text>
-        </Callout.Root>
-      )}
-      {error && (
-        <Callout.Root color="ruby">
-          <Callout.Text>{error}</Callout.Text>
-        </Callout.Root>
-      )}
-    </>
-  )
-}
-
 export const HeroSection = ({ hero }: HeroSectionProps) => {
   return (
-    <Box asChild id="top">
+    <Box asChild>
       <section>
         <Box>
           <Text size="1" color="indigo" weight="medium" mb="1" as="p">
@@ -67,12 +47,12 @@ export const HeroSection = ({ hero }: HeroSectionProps) => {
           </Text>
           <Flex gap="3" wrap="wrap" mb="4">
             <Button size="3" asChild>
-              <RadixLink href="#contact">
+              <Link to="/contact">
                 {hero.primaryCta} <ArrowRightIcon />
-              </RadixLink>
+              </Link>
             </Button>
             <Button size="3" variant="ghost" asChild>
-              <RadixLink href="#projects">{hero.secondaryCta}</RadixLink>
+              <Link to="/work">{hero.secondaryCta}</Link>
             </Button>
           </Flex>
           <Flex align="center" gap="3" wrap="wrap" mb="4">
@@ -86,7 +66,7 @@ export const HeroSection = ({ hero }: HeroSectionProps) => {
 
 export const ServicesSection = ({ services, differentiators, copy }: ServicesSectionProps) => {
   return (
-    <Box asChild id="services">
+    <Box asChild>
       <section>
         <Text color="indigo" size="1" weight="medium">
           {copy.sections.servicesKicker}
@@ -133,7 +113,7 @@ export const ServicesSection = ({ services, differentiators, copy }: ServicesSec
 
 export const ProjectsSection = ({ projects, copy }: ProjectsSectionProps) => {
   return (
-    <Box asChild id="projects">
+    <Box asChild>
       <section>
         <Text color="indigo" size="1" weight="medium">
           {copy.sections.projectsKicker}
@@ -151,13 +131,18 @@ export const ProjectsSection = ({ projects, copy }: ProjectsSectionProps) => {
                 <Badge variant="soft">{project.status}</Badge>
                 <Flex align="center" justify="between" gap="3">
                   <Heading size="5">{project.name}</Heading>
-                  {project.link && (
-                    <Button asChild variant="ghost" size="1">
-                      <a href={project.link} target="_blank" rel="noreferrer">
-                        View
-                      </a>
+                  <Flex align="center" gap="2">
+                    <Button asChild variant="soft" size="1">
+                      <Link to={`/work/${toProjectSlug(project.name)}`}>Details</Link>
                     </Button>
-                  )}
+                    {project.link && (
+                      <Button asChild variant="ghost" size="1">
+                        <a href={project.link} target="_blank" rel="noreferrer">
+                          Visit
+                        </a>
+                      </Button>
+                    )}
+                  </Flex>
                 </Flex>
                 <Text>{project.summary}</Text>
                 <Text color="gray">{project.impact}</Text>
@@ -179,7 +164,7 @@ export const ProjectsSection = ({ projects, copy }: ProjectsSectionProps) => {
 
 export const ProcessSection = ({ process, copy }: ProcessSectionProps) => {
   return (
-    <Box asChild id="offers">
+    <Box asChild>
       <section>
         <Text color="indigo" size="1" weight="medium">
           {copy.sections.processKicker}
@@ -212,7 +197,7 @@ export const ProcessSection = ({ process, copy }: ProcessSectionProps) => {
 
 export const ContactSection = ({ contact, copy }: ContactSectionProps) => {
   return (
-    <Box asChild id="contact">
+    <Box asChild>
       <section>
         <Card size="4" variant="surface">
           <Flex direction={{ initial: 'column', sm: 'row' }} gap="4" justify="between" align="center">

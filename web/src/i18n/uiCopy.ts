@@ -6,6 +6,7 @@ export interface UiCopy {
     work: string
     process: string
     contact: string
+    about: string
     admin: string
     backToSite: string
     themeToggle: string
@@ -33,6 +34,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       work: 'Work',
       process: 'Offers',
       contact: 'Contact',
+      about: 'About',
       admin: 'Admin',
       backToSite: 'Back to site',
       themeToggle: 'Open theme panel (press T)',
@@ -59,6 +61,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       work: '実績',
       process: '提供プラン',
       contact: '連絡先',
+      about: '会社情報',
       admin: '管理',
       backToSite: 'サイトへ戻る',
       themeToggle: 'テーマパネルを開く（Tキー）',

@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Button, Theme, ThemePanel, type ThemeProps } from '@radix-ui/themes'
 
 import { useSiteContent } from './hooks/useSiteContent'
 import { uiCopy, type Language } from './i18n/uiCopy'
 import AdminPage from './pages/Admin'
+import AboutPage from './pages/About'
+import ContactPage from './pages/Contact'
 import LandingPage from './pages/Landing'
+import ProcessPage from './pages/Process'
+import ServicesPage from './pages/Services'
+import WorkDetailPage from './pages/WorkDetail'
+import WorkPage from './pages/Work'
 
 import '@radix-ui/themes/styles.css'
 import './App.css'
@@ -82,6 +88,15 @@ function App() {
   const toggleLanguage = () => setLanguage((prev) => (prev === 'en' ? 'ja' : 'en'))
 
   const copy = useMemo(() => uiCopy[language], [language])
+  const marketingPageProps = {
+    content,
+    loading,
+    error,
+    onOpenThemePanel: openThemePanel,
+    language,
+    onToggleLanguage: toggleLanguage,
+    copy,
+  }
 
   return (
     <Theme
@@ -116,20 +131,13 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <LandingPage
-              content={content}
-              loading={loading}
-              error={error}
-              onOpenThemePanel={openThemePanel}
-              language={language}
-              onToggleLanguage={toggleLanguage}
-              copy={copy}
-            />
-          }
-        />
+        <Route path="/" element={<LandingPage {...marketingPageProps} />} />
+        <Route path="/services" element={<ServicesPage {...marketingPageProps} />} />
+        <Route path="/work" element={<WorkPage {...marketingPageProps} />} />
+        <Route path="/work/:slug" element={<WorkDetailPage {...marketingPageProps} />} />
+        <Route path="/process" element={<ProcessPage {...marketingPageProps} />} />
+        <Route path="/contact" element={<ContactPage {...marketingPageProps} />} />
+        <Route path="/about" element={<AboutPage {...marketingPageProps} />} />
         <Route
           path="/admin"
           element={
@@ -143,6 +151,7 @@ function App() {
             />
           }
         />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Theme>
   )
