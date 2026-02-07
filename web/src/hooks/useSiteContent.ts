@@ -4,7 +4,7 @@ import { collection, doc, getDocs, onSnapshot, setDoc, writeBatch } from 'fireba
 import { fallbackContent } from '../content/fallback'
 import { db } from '../lib/firebase'
 import { toProjectSlug } from '../lib/projectSlug'
-import type { CaseStudy, ContactInfo, Project, ServicePackage, SiteContent, Testimonial } from '../types'
+import type { CaseStudy, ContactInfo, ServicePackage, SiteContent, Testimonial } from '../types'
 
 const fallbackCaseStudyBySlug = new Map(fallbackContent.work.caseStudies.map((item) => [item.slug, item]))
 
@@ -97,32 +97,6 @@ const normalizeContact = (value: unknown): ContactInfo => {
   }
 }
 
-const projectToCaseStudy = (project: Project): CaseStudy => {
-  const legacySlug = toProjectSlug(project.name)
-  const fallback =
-    fallbackCaseStudyBySlug.get(legacySlug) ??
-    fallbackContent.work.caseStudies.find((item) => legacySlug.includes(item.slug) || item.slug.includes(legacySlug))
-  const slug = fallback?.slug ?? legacySlug
-  const impact = isString(project.impact) ? project.impact.trim() : fallback?.impact ?? ''
-  const summary = isString(project.summary) ? project.summary.trim() : fallback?.summary ?? impact
-  const stack = Array.isArray(project.stack) ? project.stack.filter(isString).map((item) => item.trim()) : []
-
-  return {
-    slug,
-    name: isString(project.name) ? project.name.trim() : fallback?.name ?? slug,
-    summary,
-    impact,
-    challenge: fallback?.challenge ?? summary,
-    solution: fallback?.solution ?? impact,
-    outcomes: fallback?.outcomes ?? [impact].filter(Boolean),
-    stack: stack.length > 0 ? stack : fallback?.stack ?? [],
-    status: isString(project.status) ? project.status.trim() : fallback?.status,
-    liveUrl: isString(project.link) ? project.link.trim() : fallback?.liveUrl,
-    repositoryUrl: fallback?.repositoryUrl,
-    servicePackage: fallback?.servicePackage,
-  }
-}
-
 const normalizeServicePackages = (value: unknown): ServicePackage[] => {
   if (!Array.isArray(value)) return fallbackContent.work.servicePackages
   const next = value
@@ -137,13 +111,6 @@ const normalizeTestimonials = (value: unknown): Testimonial[] => {
   return value.map((item) => normalizeTestimonial(item)).filter((item): item is Testimonial => Boolean(item))
 }
 
-const getDocCaseStudies = (value: Partial<SiteContent>): CaseStudy[] =>
-  Array.isArray(value.work?.caseStudies)
-    ? value.work.caseStudies
-        .map((item) => normalizeCaseStudy(item))
-        .filter((item): item is CaseStudy => Boolean(item))
-    : []
-
 const isPermissionDeniedError = (value: unknown): boolean => {
   if (!value) return false
 
@@ -154,6 +121,23 @@ const isPermissionDeniedError = (value: unknown): boolean => {
 
   const message = value instanceof Error ? value.message : String(value)
   return message.includes('permission-denied') || message.includes('Missing or insufficient permissions')
+}
+
+const stripUndefinedDeep = <T>(value: T): T => {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => stripUndefinedDeep(item))
+      .filter((item) => item !== undefined) as T
+  }
+
+  if (value && typeof value === 'object') {
+    const sanitizedEntries = Object.entries(value as Record<string, unknown>)
+      .filter(([, entryValue]) => entryValue !== undefined)
+      .map(([key, entryValue]) => [key, stripUndefinedDeep(entryValue)])
+    return Object.fromEntries(sanitizedEntries) as T
+  }
+
+  return value
 }
 
 export function useSiteContent() {
@@ -183,16 +167,11 @@ export function useSiteContent() {
 
     const syncContent = () => {
       const liveProjects = Array.isArray(liveDocument.projects) ? liveDocument.projects : fallbackContent.projects
-      const docCaseStudies = getDocCaseStudies(liveDocument)
-      const projectCaseStudies =
-        liveProjects.length > 0 ? liveProjects.map((project) => projectToCaseStudy(project)) : fallbackContent.work.caseStudies
 
       const caseStudies =
         hasLiveWorkSnapshot && liveWorkCaseStudies.length > 0
           ? liveWorkCaseStudies
-          : docCaseStudies.length > 0
-            ? docCaseStudies
-            : projectCaseStudies
+          : fallbackContent.work.caseStudies
 
       setContent({
         hero: liveDocument.hero ?? fallbackContent.hero,
@@ -257,11 +236,7 @@ export function useSiteContent() {
       },
       (err) => {
         const isPermissionIssue = isPermissionDeniedError(err)
-        if (isPermissionIssue) {
-          console.warn(
-            'Read access denied for siteContent/public/work/*. Falling back to case studies stored in siteContent/public.'
-          )
-        } else {
+        if (!isPermissionIssue) {
           console.error('Error loading case studies', err)
         }
         hasLiveWorkSnapshot = false
@@ -319,14 +294,14 @@ export function useSiteContent() {
       })
     }
 
-    await setDoc(doc(db, 'siteContent', 'public'), {
+    const sanitizedPublicContent = stripUndefinedDeep({
       ...next,
       work: {
-        caseStudies: normalizedCaseStudies,
         servicePackages: next.work.servicePackages,
         testimonials: next.work.testimonials,
       },
     })
+    await setDoc(doc(db, 'siteContent', 'public'), sanitizedPublicContent)
     let workSyncWarning: string | null = null
     try {
       const workCollectionRef = collection(db, 'siteContent', 'public', 'work')
@@ -335,7 +310,7 @@ export function useSiteContent() {
       const workBatch = writeBatch(db)
 
       for (const caseStudy of normalizedCaseStudies) {
-        workBatch.set(doc(workCollectionRef, caseStudy.slug), caseStudy)
+        workBatch.set(doc(workCollectionRef, caseStudy.slug), stripUndefinedDeep(caseStudy))
       }
 
       for (const existingWorkDoc of existingWorkDocs.docs) {
