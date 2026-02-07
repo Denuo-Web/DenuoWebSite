@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Button, Theme, ThemePanel, type ThemeProps } from '@radix-ui/themes'
 
 import { useSiteContent } from './hooks/useSiteContent'
-import { uiCopy, type Language } from './i18n/uiCopy'
+import { useLocalizedUiCopy } from './hooks/useLocalizedUiCopy'
+import type { Language } from './i18n/uiCopy'
 import AdminPage from './pages/Admin'
 import AboutPage from './pages/About'
 import ContactPage from './pages/Contact'
@@ -87,11 +88,11 @@ function App() {
   }
   const toggleLanguage = () => setLanguage((prev) => (prev === 'en' ? 'ja' : 'en'))
 
-  const copy = useMemo(() => uiCopy[language], [language])
+  const { copy, copyByLanguage, saveTranslation, copyError } = useLocalizedUiCopy(language)
   const marketingPageProps = {
     content,
     loading,
-    error,
+    error: error ?? copyError,
     onOpenThemePanel: openThemePanel,
     language,
     onToggleLanguage: toggleLanguage,
@@ -144,10 +145,13 @@ function App() {
             <AdminPage
               content={content}
               onSave={saveContent}
+              onSaveTranslation={saveTranslation}
               onOpenThemePanel={openThemePanel}
               language={language}
               onToggleLanguage={toggleLanguage}
               copy={copy}
+              copyByLanguage={copyByLanguage}
+              translationError={copyError}
             />
           }
         />

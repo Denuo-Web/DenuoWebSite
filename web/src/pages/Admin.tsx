@@ -29,19 +29,25 @@ import type { CaseStudy, ProcessStep, Project, Service, SiteContent } from '../t
 interface AdminProps {
   content: SiteContent
   onSave: (next: SiteContent) => Promise<void>
+  onSaveTranslation: (language: Language, next: unknown) => Promise<void>
   onOpenThemePanel: () => void
   language: Language
   onToggleLanguage: () => void
   copy: UiCopy
+  copyByLanguage: Record<Language, UiCopy>
+  translationError: string | null
 }
 
 const AdminPage = ({
   content,
   onSave,
+  onSaveTranslation,
   onOpenThemePanel,
   language,
   onToggleLanguage,
   copy,
+  copyByLanguage,
+  translationError,
 }: AdminProps) => {
   const [draft, setDraft] = useState<SiteContent>(content)
   const [dirty, setDirty] = useState(false)
@@ -52,12 +58,22 @@ const AdminPage = ({
   const credentialsRef = useRef<{ email: string; password: string }>({ email: '', password: '' })
   const [invoiceForm, setInvoiceForm] = useState({ email: '', name: '', amountUsd: '', description: '' })
   const [invoiceStatus, setInvoiceStatus] = useState<string>('')
+  const [translationLanguage, setTranslationLanguage] = useState<Language>('ja')
+  const [translationJson, setTranslationJson] = useState('')
+  const [translationStatus, setTranslationStatus] = useState('')
+  const [translationDirty, setTranslationDirty] = useState(false)
+  const translationFileRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     if (!dirty) {
       setDraft(content)
     }
   }, [content, dirty])
+
+  useEffect(() => {
+    if (translationDirty) return
+    setTranslationJson(JSON.stringify(copyByLanguage[translationLanguage], null, 2))
+  }, [copyByLanguage, translationDirty, translationLanguage])
 
   const markDirty = () => {
     if (!dirty) setDirty(true)
@@ -140,6 +156,57 @@ const AdminPage = ({
       setStatus('Save failed. Confirm Firebase config and your admin claim.')
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handleResetTranslation = () => {
+    setTranslationJson(JSON.stringify(copyByLanguage[translationLanguage], null, 2))
+    setTranslationDirty(false)
+    setTranslationStatus('Translation JSON reset to current saved copy.')
+  }
+
+  const handleDownloadTranslation = () => {
+    try {
+      const parsed = JSON.parse(translationJson)
+      const normalized = JSON.stringify(parsed, null, 2)
+      const blob = new Blob([normalized], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = `ui-copy-${translationLanguage}.json`
+      anchor.click()
+      URL.revokeObjectURL(url)
+      setTranslationStatus(`Exported ${translationLanguage.toUpperCase()} translation JSON.`)
+    } catch {
+      setTranslationStatus('Translation JSON is invalid. Fix syntax before exporting.')
+    }
+  }
+
+  const handleUploadTranslation = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+
+    try {
+      const fileText = await file.text()
+      JSON.parse(fileText)
+      setTranslationJson(fileText)
+      setTranslationDirty(true)
+      setTranslationStatus(`Loaded ${file.name}. Review and save to Firestore.`)
+    } catch {
+      setTranslationStatus('Uploaded file is not valid JSON.')
+    }
+  }
+
+  const handleSaveTranslation = async () => {
+    try {
+      const parsed = JSON.parse(translationJson)
+      await onSaveTranslation(translationLanguage, parsed)
+      setTranslationDirty(false)
+      setTranslationStatus(`Saved ${translationLanguage.toUpperCase()} translation JSON to Firestore.`)
+    } catch (err) {
+      console.error(err)
+      setTranslationStatus('Translation save failed. Confirm JSON syntax, Firebase config, and admin claim.')
     }
   }
 
@@ -825,6 +892,79 @@ const AdminPage = ({
                 }
               />
             </Field>
+          </Flex>
+        </Card>
+
+        <Card size="3">
+          <Flex direction="column" gap="3">
+            <Heading size="5">Localization JSON (EN/JA)</Heading>
+            <Text color="gray">
+              Export/import UI copy packs for `siteContent/public/translations/{'{language}'}`. Use this for translator
+              handoff and direct publish without code edits.
+            </Text>
+            {translationError && (
+              <Callout.Root color="amber">
+                <Callout.Text>{translationError}</Callout.Text>
+              </Callout.Root>
+            )}
+            <Field label="Language" id="translation-language">
+              <select
+                id="translation-language"
+                value={translationLanguage}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                  setTranslationLanguage(e.target.value === 'ja' ? 'ja' : 'en')
+                  setTranslationDirty(false)
+                }}
+                style={{
+                  padding: '10px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--gray-6)',
+                  background: 'var(--color-surface)',
+                  outline: 'none',
+                  fontSize: '15px',
+                }}
+              >
+                <option value="en">English (en)</option>
+                <option value="ja">Japanese (ja)</option>
+              </select>
+            </Field>
+            <Field label="Translation JSON" id="translation-json">
+              <TextArea
+                id="translation-json"
+                rows={14}
+                value={translationJson}
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                  setTranslationJson(e.target.value)
+                  setTranslationDirty(true)
+                }}
+              />
+            </Field>
+            <input
+              ref={translationFileRef}
+              type="file"
+              accept="application/json,.json"
+              onChange={handleUploadTranslation}
+              style={{ display: 'none' }}
+            />
+            <Flex gap="2" wrap="wrap">
+              <Button variant="soft" onClick={handleResetTranslation}>
+                Reset
+              </Button>
+              <Button variant="soft" onClick={handleDownloadTranslation}>
+                Export JSON
+              </Button>
+              <Button variant="soft" onClick={() => translationFileRef.current?.click()}>
+                Import JSON
+              </Button>
+              <Button onClick={handleSaveTranslation} disabled={!user}>
+                Save translation
+              </Button>
+            </Flex>
+            {translationStatus && (
+              <Text color="gray" size="2">
+                {translationStatus}
+              </Text>
+            )}
           </Flex>
         </Card>
 

@@ -570,3 +570,39 @@ export const uiCopy: Record<Language, UiCopy> = {
     },
   },
 }
+
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const coerceByTemplate = (template: unknown, candidate: unknown): unknown => {
+  if (typeof template === 'string') {
+    return typeof candidate === 'string' ? candidate : template
+  }
+
+  if (Array.isArray(template)) {
+    if (!Array.isArray(candidate)) {
+      return template
+    }
+    const [templateItem] = template
+    if (templateItem === undefined) {
+      return []
+    }
+    return candidate.map((item) => coerceByTemplate(templateItem, item))
+  }
+
+  if (isPlainObject(template)) {
+    const source = isPlainObject(candidate) ? candidate : {}
+    const out: Record<string, unknown> = {}
+
+    for (const [key, value] of Object.entries(template)) {
+      out[key] = coerceByTemplate(value, source[key])
+    }
+
+    return out
+  }
+
+  return candidate ?? template
+}
+
+export const coerceUiCopyForLanguage = (language: Language, candidate: unknown): UiCopy =>
+  coerceByTemplate(uiCopy[language], candidate) as UiCopy

@@ -95,6 +95,7 @@ Set these repo secrets before enabling CI/CD (Terraform will populate them by de
 - For translated site content, mirror the schema per locale (e.g., `siteContent/public/translations/ja`) and keep keys consistent.
 - Default to English when translations are absent; prefer full-sentence keys to preserve Japanese line breaks.
 - Ship locale files through CI (export/import JSON) to keep translators and releases in sync.
+- `/admin` now includes `Localization JSON (EN/JA)` tools to export a language pack, import updated JSON, and save it to `siteContent/public/translations/{en|ja}`.
 
 ## Firebase Hosting rewrite
 Requests to `/api/**` are proxied to the Cloud Run service `denuo-api` in `us-central1` via the `firebase.json` rewrite. Update `serviceId`/`region` if you change the Cloud Run deployment.
