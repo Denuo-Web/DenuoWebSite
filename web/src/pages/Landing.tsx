@@ -130,7 +130,7 @@ const LandingPage = ({
               <Grid columns={{ initial: '1', sm: '3' }} gap="3">
                 {featuredCaseStudies.map((caseStudy) => (
                   <Card key={caseStudy.slug} asChild size="3" variant="surface">
-                    <Link to={`/work/${caseStudy.slug}`} aria-label={`Open case study: ${caseStudy.name}`}>
+                    <Link to={`/work/${caseStudy.slug}`}>
                       <Flex direction="column" gap="2">
                         {caseStudy.status && <Badge variant="soft">{caseStudy.status}</Badge>}
                         <Heading size="4">{caseStudy.name}</Heading>
@@ -161,7 +161,7 @@ const LandingPage = ({
               <Grid columns={{ initial: '1', sm: '2', md: '4' }} gap="3">
                 {servicePackageSnapshot.map((pkg) => (
                   <Card key={pkg.title} asChild size="3" variant="surface">
-                    <Link to="/services" aria-label={`Open services: ${pkg.title}`}>
+                    <Link to="/services">
                       <Flex direction="column" gap="2">
                         <Heading size="4">{pkg.title}</Heading>
                         <Text color="gray">{pkg.summary}</Text>
