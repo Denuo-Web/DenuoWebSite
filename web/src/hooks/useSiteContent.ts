@@ -144,6 +144,18 @@ const getDocCaseStudies = (value: Partial<SiteContent>): CaseStudy[] =>
         .filter((item): item is CaseStudy => Boolean(item))
     : []
 
+const isPermissionDeniedError = (value: unknown): boolean => {
+  if (!value) return false
+
+  const code = typeof value === 'object' && value !== null ? (value as { code?: unknown }).code : undefined
+  if (typeof code === 'string' && (code === 'permission-denied' || code === 'firestore/permission-denied')) {
+    return true
+  }
+
+  const message = value instanceof Error ? value.message : String(value)
+  return message.includes('permission-denied') || message.includes('Missing or insufficient permissions')
+}
+
 export function useSiteContent() {
   const [content, setContent] = useState<SiteContent>(fallbackContent)
   const [loading, setLoading] = useState(() => Boolean(db))
@@ -244,7 +256,16 @@ export function useSiteContent() {
         finalizeLoading()
       },
       (err) => {
-        console.error('Error loading case studies', err)
+        const isPermissionIssue = isPermissionDeniedError(err)
+        if (isPermissionIssue) {
+          console.warn(
+            'Read access denied for siteContent/public/work/*. Falling back to case studies stored in siteContent/public.'
+          )
+        } else {
+          console.error('Error loading case studies', err)
+        }
+        hasLiveWorkSnapshot = false
+        liveWorkCaseStudies = []
         workSettled = true
         syncContent()
         finalizeLoading()
@@ -325,9 +346,7 @@ export function useSiteContent() {
 
       await workBatch.commit()
     } catch (err) {
-      const message = err instanceof Error ? err.message : String(err)
-      const isPermissionIssue =
-        message.includes('permission-denied') || message.includes('Missing or insufficient permissions')
+      const isPermissionIssue = isPermissionDeniedError(err)
 
       if (!isPermissionIssue) {
         throw err
