@@ -14,6 +14,7 @@ const ServicesPage = ({
   copy,
 }: MarketingPageProps) => {
   const { services, differentiators, work } = content
+  const servicesCopy = copy.pages.services
   const packages = work.servicePackages.slice(0, 4)
 
   const findLinkedCaseStudy = (packageTitle: string) =>
@@ -36,19 +37,18 @@ const ServicesPage = ({
         <Card size="4" variant="surface">
           <Flex direction="column" gap="3">
             <Text color="indigo" size="1" weight="medium">
-              Services
+              {servicesCopy.eyebrow}
             </Text>
-            <Heading size="8">Service packages built for teams that need shipped outcomes.</Heading>
+            <Heading size="8">{servicesCopy.heroTitle}</Heading>
             <Text size="4" color="gray">
-              Each package combines planning, implementation, and handoff so founders, nonprofits, and research teams
-              can move from backlog to production with fewer blockers.
+              {servicesCopy.heroLead}
             </Text>
             <Flex gap="2" wrap="wrap">
               <Button asChild>
-                <Link to="/contact">Start a package discussion</Link>
+                <Link to="/contact">{servicesCopy.heroPrimaryCta}</Link>
               </Button>
               <Button asChild variant="soft">
-                <Link to="/work">View related case studies</Link>
+                <Link to="/work">{servicesCopy.heroSecondaryCta}</Link>
               </Button>
             </Flex>
           </Flex>
@@ -58,7 +58,7 @@ const ServicesPage = ({
           <section aria-labelledby="package-cards-heading">
             <Flex direction="column" gap="3">
               <Heading id="package-cards-heading" size="6">
-                Packages and deliverables
+                {servicesCopy.packagesHeading}
               </Heading>
               <Grid columns={{ initial: '1', sm: '2', md: '4' }} gap="3">
                 {packages.map((servicePackage) => {
@@ -69,12 +69,15 @@ const ServicesPage = ({
                     <Card key={servicePackage.title} asChild size="3" variant="surface">
                       <Link to={link}>
                         <Flex direction="column" gap="2">
-                          <Badge variant="soft">{linkedCaseStudy ? 'Related case study' : 'New engagement'}</Badge>
+                          <Badge variant="soft">
+                            {linkedCaseStudy ? servicesCopy.packageBadgeRelated : servicesCopy.packageBadgeNew}
+                          </Badge>
                           <Heading size="4">{servicePackage.title}</Heading>
                           <Text color="gray">{servicePackage.summary}</Text>
                           {servicePackage.timeline && (
                             <Text size="2" color="gray">
-                              Timeline: {servicePackage.timeline}
+                              {servicesCopy.packageTimelinePrefix}
+                              {servicePackage.timeline}
                             </Text>
                           )}
                           <Box asChild pl="3" m="0">
@@ -87,7 +90,9 @@ const ServicesPage = ({
                             </ul>
                           </Box>
                           <Text size="2" color="gray">
-                            {linkedCaseStudy ? `See: ${linkedCaseStudy.name}` : 'Discuss this package with your context'}
+                            {linkedCaseStudy
+                              ? `${servicesCopy.packageSeePrefix}${linkedCaseStudy.name}`
+                              : servicesCopy.packageFallbackCta}
                           </Text>
                         </Flex>
                       </Link>
@@ -104,10 +109,10 @@ const ServicesPage = ({
             <Flex direction="column" gap="3">
               <Flex align="center" justify="between" wrap="wrap" gap="2">
                 <Heading id="delivery-pillars-heading" size="6">
-                  Delivery pillars
+                  {servicesCopy.pillarsHeading}
                 </Heading>
                 <Button asChild variant="ghost" size="2">
-                  <Link to="/process">How delivery works</Link>
+                  <Link to="/process">{servicesCopy.pillarsCta}</Link>
                 </Button>
               </Flex>
               <Grid columns={{ initial: '1', sm: '3' }} gap="3">
@@ -115,7 +120,7 @@ const ServicesPage = ({
                   <Card key={service.title} asChild size="3" variant="surface">
                     <Link to="/process">
                       <Flex direction="column" gap="2">
-                        <Badge variant="soft">{service.badge ?? 'Delivery area'}</Badge>
+                        <Badge variant="soft">{service.badge ?? servicesCopy.pillarBadgeFallback}</Badge>
                         <Heading size="4">{service.title}</Heading>
                         <Text color="gray">{service.summary}</Text>
                         <Box asChild pl="3" m="0">
@@ -139,11 +144,8 @@ const ServicesPage = ({
         <Card size="4">
           <Flex direction={{ initial: 'column', sm: 'row' }} gap="4" justify="between">
             <Flex direction="column" gap="2">
-              <Heading size="6">Choosing the right package</Heading>
-              <Text color="gray">
-                Most teams start with a narrow scope, ship one measurable outcome, then expand with the same
-                architecture and delivery rhythm.
-              </Text>
+              <Heading size="6">{servicesCopy.choosingHeading}</Heading>
+              <Text color="gray">{servicesCopy.choosingBody}</Text>
               <Flex gap="2" wrap="wrap">
                 {differentiators.slice(0, 4).map((item) => (
                   <Badge key={item} variant="soft">

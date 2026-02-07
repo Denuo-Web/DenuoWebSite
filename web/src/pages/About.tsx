@@ -13,6 +13,7 @@ const AboutPage = ({
   onToggleLanguage,
   copy,
 }: MarketingPageProps) => {
+  const aboutCopy = copy.pages.about
   const featuredCaseStudies = content.work.caseStudies.slice(0, 3)
 
   return (
@@ -29,19 +30,18 @@ const AboutPage = ({
         <Card size="4" variant="surface">
           <Flex direction="column" gap="3">
             <Text color="indigo" size="1" weight="medium">
-              About
+              {aboutCopy.eyebrow}
             </Text>
-            <Heading size="8">Operator-led delivery for teams that need practical execution.</Heading>
+            <Heading size="8">{aboutCopy.heroTitle}</Heading>
             <Text size="4" color="gray">
-              I&apos;m Jaron Rosenau, founder of Denuo Web. I work directly with founders, nonprofits, and research
-              teams to take projects from fuzzy requirements to production systems with clear ownership and handoff.
+              {aboutCopy.heroBody}
             </Text>
             <Flex gap="2" wrap="wrap">
               <Button asChild>
-                <Link to="/contact">Start a conversation</Link>
+                <Link to="/contact">{aboutCopy.heroPrimaryCta}</Link>
               </Button>
               <Button asChild variant="soft">
-                <Link to="/work">Review case studies</Link>
+                <Link to="/work">{aboutCopy.heroSecondaryCta}</Link>
               </Button>
             </Flex>
             <Badge color="indigo">{content.hero.badge}</Badge>
@@ -53,12 +53,9 @@ const AboutPage = ({
             <Card size="3">
               <Flex direction="column" gap="3">
                 <Heading id="how-i-work-heading" size="6">
-                  How I work
+                  {aboutCopy.howHeading}
                 </Heading>
-                <Text color="gray">
-                  Engagements are built around decision velocity, measurable outcomes, and operational readiness.
-                  Strategy and implementation stay connected so teams can ship without losing context.
-                </Text>
+                <Text color="gray">{aboutCopy.howBody}</Text>
                 <Box asChild pl="3" m="0">
                   <ul>
                     {content.differentiators.slice(0, 4).map((item) => (
@@ -79,10 +76,10 @@ const AboutPage = ({
               <Flex direction="column" gap="3">
                 <Flex align="center" justify="between" wrap="wrap" gap="2">
                   <Heading id="delivery-evidence-heading" size="6">
-                    Recent delivery evidence
+                    {aboutCopy.evidenceHeading}
                   </Heading>
                   <Button asChild variant="ghost" size="2">
-                    <Link to="/work">See all work</Link>
+                    <Link to="/work">{aboutCopy.evidenceCta}</Link>
                   </Button>
                 </Flex>
                 <Grid columns={{ initial: '1', sm: '3' }} gap="3">
@@ -112,10 +109,10 @@ const AboutPage = ({
               <Flex direction="column" gap="3">
                 <Flex align="center" justify="between" wrap="wrap" gap="2">
                   <Heading id="engagement-options-heading" size="6">
-                    Engagement options
+                    {aboutCopy.optionsHeading}
                   </Heading>
                   <Button asChild variant="ghost" size="2">
-                    <Link to="/process">Delivery process</Link>
+                    <Link to="/process">{aboutCopy.optionsCta}</Link>
                   </Button>
                 </Flex>
                 <Grid columns={{ initial: '1', sm: '3' }} gap="3">
@@ -139,11 +136,8 @@ const AboutPage = ({
         <Card size="4" variant="surface">
           <Flex direction={{ initial: 'column', sm: 'row' }} justify="between" gap="4">
             <Flex direction="column" gap="2">
-              <Heading size="6">If you need a technical partner who ships, not just advises</Heading>
-              <Text color="gray">
-                Share your timeline, constraints, and what success looks like. I&apos;ll reply with a concrete next
-                step.
-              </Text>
+              <Heading size="6">{aboutCopy.finalHeading}</Heading>
+              <Text color="gray">{aboutCopy.finalBody}</Text>
             </Flex>
             <Flex direction="column" gap="2" align={{ initial: 'start', sm: 'end' }}>
               <Button asChild>

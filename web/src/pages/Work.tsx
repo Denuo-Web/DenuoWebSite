@@ -14,6 +14,7 @@ const WorkPage = ({
   copy,
 }: MarketingPageProps) => {
   const { work, contact } = content
+  const workCopy = copy.pages.work
   const packageTitles = Array.from(
     new Set(
       work.caseStudies
@@ -36,19 +37,18 @@ const WorkPage = ({
         <Card size="4" variant="surface">
           <Flex direction="column" gap="3">
             <Text color="indigo" size="1" weight="medium">
-              Work
+              {workCopy.eyebrow}
             </Text>
-            <Heading size="8">Case studies focused on delivery outcomes, not demos.</Heading>
+            <Heading size="8">{workCopy.heroTitle}</Heading>
             <Text size="4" color="gray">
-              Each project includes the context, challenge, implementation choices, and operational result so you can
-              assess fit before starting your own engagement.
+              {workCopy.heroLead}
             </Text>
             <Flex gap="2" wrap="wrap">
               <Button asChild>
-                <Link to="/contact">Discuss a similar project</Link>
+                <Link to="/contact">{workCopy.heroPrimaryCta}</Link>
               </Button>
               <Button asChild variant="soft">
-                <Link to="/services">See service packages</Link>
+                <Link to="/services">{workCopy.heroSecondaryCta}</Link>
               </Button>
             </Flex>
           </Flex>
@@ -58,7 +58,7 @@ const WorkPage = ({
           <section aria-labelledby="case-study-grid-heading">
             <Flex direction="column" gap="3">
               <Heading id="case-study-grid-heading" size="6">
-                Recent case studies
+                {workCopy.gridHeading}
               </Heading>
               <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3">
                 {work.caseStudies.map((caseStudy) => (
@@ -84,7 +84,7 @@ const WorkPage = ({
                           </ul>
                         </Box>
                         <Text size="2" color="gray">
-                          Open case study details
+                          {workCopy.openDetailsLabel}
                         </Text>
                       </Flex>
                     </Link>
@@ -102,10 +102,10 @@ const WorkPage = ({
                 <Flex direction="column" gap="3">
                   <Flex align="center" justify="between" wrap="wrap" gap="2">
                     <Heading id="engagement-package-links-heading" size="6">
-                      Engagement packages used in these projects
+                      {workCopy.packagesHeading}
                     </Heading>
                     <Button asChild variant="ghost" size="2">
-                      <Link to="/services">Open services</Link>
+                      <Link to="/services">{workCopy.packagesCta}</Link>
                     </Button>
                   </Flex>
                   <Grid columns={{ initial: '1', sm: '2', md: '3' }} gap="3">
@@ -115,7 +115,7 @@ const WorkPage = ({
                           <Flex direction="column" gap="2">
                             <Heading size="3">{title}</Heading>
                             <Text size="2" color="gray">
-                              See package deliverables and where it fits.
+                              {workCopy.packagesCardSummary}
                             </Text>
                           </Flex>
                         </Link>
@@ -131,11 +131,12 @@ const WorkPage = ({
         <Card size="4">
           <Flex direction={{ initial: 'column', sm: 'row' }} justify="between" gap="4">
             <Flex direction="column" gap="2">
-              <Heading size="6">Need this level of execution for your team?</Heading>
-              <Text color="gray">
-                Send your current constraints and timeline. You&apos;ll get a scoped recommendation and first-step plan.
-              </Text>
-              <Badge variant="soft">Email: {contact.email}</Badge>
+              <Heading size="6">{workCopy.finalHeading}</Heading>
+              <Text color="gray">{workCopy.finalBody}</Text>
+              <Badge variant="soft">
+                {workCopy.emailPrefix}
+                {contact.email}
+              </Badge>
             </Flex>
             <Flex direction="column" gap="2" align={{ initial: 'start', sm: 'end' }}>
               <Button asChild>

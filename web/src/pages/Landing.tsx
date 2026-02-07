@@ -4,49 +4,6 @@ import { Link } from 'react-router-dom'
 import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
-const credibilityBullets = [
-  {
-    title: 'Architecture that fits your constraints',
-    detail:
-      'Data model, authentication, and deployment decisions are documented up front so founders and team leads can make tradeoffs early.',
-  },
-  {
-    title: 'Delivery with weekly proof',
-    detail:
-      'You get scoped milestones, shipped increments, and visible progress each week instead of end-of-project surprises.',
-  },
-  {
-    title: 'Operational readiness from day one',
-    detail:
-      'CI/CD, monitoring, and runbooks are built into delivery so nonprofits and research teams can run what gets launched.',
-  },
-]
-
-const processSummary = [
-  {
-    title: '1. Scope',
-    detail: 'Define objectives, constraints, and success criteria with your decision makers.',
-  },
-  {
-    title: '2. Architect',
-    detail: 'Set technical boundaries, data flows, and delivery slices before heavy build work.',
-  },
-  {
-    title: '3. Build',
-    detail: 'Ship production-ready increments with review checkpoints and measurable outcomes.',
-  },
-  {
-    title: '4. Launch + support',
-    detail: 'Handoff docs, operational guardrails, and next-priority roadmap recommendations.',
-  },
-]
-
-const intakePrompts = [
-  'Who the product is for and what needs to improve in the next 60-90 days.',
-  'What already exists today (codebase, tools, or manual process).',
-  'Any fixed dates, compliance constraints, or budget boundaries.',
-]
-
 const LandingPage = ({
   content,
   loading,
@@ -57,6 +14,7 @@ const LandingPage = ({
   copy,
 }: MarketingPageProps) => {
   const { hero, contact, work } = content
+  const landingCopy = copy.pages.landing
   const featuredCaseStudies = work.caseStudies.slice(0, 3)
   const servicePackageSnapshot = work.servicePackages.slice(0, 4)
 
@@ -84,10 +42,10 @@ const LandingPage = ({
             </Flex>
             <Flex gap="3" wrap="wrap">
               <Button asChild size="3">
-                <Link to="/work">View work</Link>
+                <Link to="/work">{landingCopy.heroPrimaryCta}</Link>
               </Button>
               <Button asChild size="3" variant="soft">
-                <Link to="/contact">Contact</Link>
+                <Link to="/contact">{landingCopy.heroSecondaryCta}</Link>
               </Button>
             </Flex>
             <Flex gap="2" wrap="wrap">
@@ -100,10 +58,10 @@ const LandingPage = ({
           <section aria-labelledby="credibility-heading">
             <Flex direction="column" gap="3">
               <Heading id="credibility-heading" size="6">
-                What you can expect
+                {landingCopy.credibilityHeading}
               </Heading>
               <Grid columns={{ initial: '1', sm: '3' }} gap="3">
-                {credibilityBullets.map((item) => (
+                {landingCopy.credibilityBullets.map((item) => (
                   <Card key={item.title} variant="surface" size="3">
                     <Flex direction="column" gap="2">
                       <Heading size="4">{item.title}</Heading>
@@ -121,10 +79,10 @@ const LandingPage = ({
             <Flex direction="column" gap="3">
               <Flex align="center" justify="between" wrap="wrap" gap="2">
                 <Heading id="featured-work-heading" size="6">
-                  Featured work
+                  {landingCopy.featuredWorkHeading}
                 </Heading>
                 <Button asChild variant="ghost" size="2">
-                  <Link to="/work">See all case studies</Link>
+                  <Link to="/work">{landingCopy.featuredWorkCta}</Link>
                 </Button>
               </Flex>
               <Grid columns={{ initial: '1', sm: '3' }} gap="3">
@@ -152,10 +110,10 @@ const LandingPage = ({
             <Flex direction="column" gap="3">
               <Flex align="center" justify="between" wrap="wrap" gap="2">
                 <Heading id="services-snapshot-heading" size="6">
-                  Services snapshot
+                  {landingCopy.servicesSnapshotHeading}
                 </Heading>
                 <Button asChild variant="ghost" size="2">
-                  <Link to="/services">Explore services</Link>
+                  <Link to="/services">{landingCopy.servicesSnapshotCta}</Link>
                 </Button>
               </Flex>
               <Grid columns={{ initial: '1', sm: '2', md: '4' }} gap="3">
@@ -189,14 +147,14 @@ const LandingPage = ({
               <Flex direction="column" gap="3">
                 <Flex align="center" justify="between" wrap="wrap" gap="2">
                   <Heading id="process-summary-heading" size="6">
-                    Process
+                    {landingCopy.processHeading}
                   </Heading>
                   <Button asChild variant="ghost" size="2">
-                    <Link to="/process">Open full process</Link>
+                    <Link to="/process">{landingCopy.processCta}</Link>
                   </Button>
                 </Flex>
                 <Grid columns={{ initial: '1', sm: '2', md: '4' }} gap="3">
-                  {processSummary.map((step) => (
+                  {landingCopy.processSummary.map((step) => (
                     <Card key={step.title} variant="surface" size="2">
                       <Flex direction="column" gap="2">
                         <Heading size="3">{step.title}</Heading>
@@ -218,16 +176,13 @@ const LandingPage = ({
               <Flex direction={{ initial: 'column', sm: 'row' }} gap="4" justify="between">
                 <Flex direction="column" gap="2">
                   <Heading id="about-operator-heading" size="6">
-                    About the operator
+                    {landingCopy.aboutHeading}
                   </Heading>
-                  <Text color="gray">
-                    I&apos;m Jaron Rosenau, founder of Denuo Web. I work directly with founders, nonprofits, and
-                    research teams to turn requirements into shipped software and stable operations.
-                  </Text>
+                  <Text color="gray">{landingCopy.aboutBody}</Text>
                 </Flex>
                 <Flex align="start">
                   <Button asChild variant="soft">
-                    <Link to="/about">Read full background</Link>
+                    <Link to="/about">{landingCopy.aboutCta}</Link>
                   </Button>
                 </Flex>
               </Flex>
@@ -248,11 +203,11 @@ const LandingPage = ({
                   </Heading>
                   <Text color="gray">{contact.subhead}</Text>
                   <Text size="2" color="gray">
-                    Intake prompt:
+                    {landingCopy.intakeLabel}
                   </Text>
                   <Box asChild pl="3" m="0">
                     <ul>
-                      {intakePrompts.map((prompt) => (
+                      {landingCopy.intakePrompts.map((prompt) => (
                         <li key={prompt}>
                           <Text size="2" color="gray">
                             {prompt}
@@ -269,7 +224,7 @@ const LandingPage = ({
                 </Flex>
                 <Flex direction="column" gap="2" align={{ initial: 'start', sm: 'end' }}>
                   <Button asChild size="3">
-                    <Link to="/contact">Contact</Link>
+                    <Link to="/contact">{landingCopy.finalPrimaryCta}</Link>
                   </Button>
                   <Button asChild variant="soft">
                     <a href={`mailto:${contact.email}`}>{contact.email}</a>
