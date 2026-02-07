@@ -16,10 +16,10 @@ import {
   Tooltip,
 } from '@radix-ui/themes'
 import { GlobeIcon } from '@radix-ui/react-icons'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent, FormEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
+import { onIdTokenChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth'
 
 import { auth, isConfigured } from '../lib/firebase'
 import type { Language, UiCopy } from '../i18n/uiCopy'
@@ -48,6 +48,8 @@ const AdminPage = ({
   const [user, setUser] = useState<User | null>(null)
   const [status, setStatus] = useState<string>('')
   const [saving, setSaving] = useState(false)
+  const [checkingAdmin, setCheckingAdmin] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [authError, setAuthError] = useState<string>('')
   const credentialsRef = useRef<{ email: string; password: string }>({ email: '', password: '' })
   const [invoiceForm, setInvoiceForm] = useState({ email: '', name: '', amountUsd: '', description: '' })
@@ -63,11 +65,35 @@ const AdminPage = ({
     if (!dirty) setDirty(true)
   }
 
+  const verifyAdminClaim = useCallback(async (targetUser: User, forceRefresh = false) => {
+    setCheckingAdmin(true)
+    try {
+      const tokenResult = await targetUser.getIdTokenResult(forceRefresh)
+      const hasAdminClaim = tokenResult.claims.admin === true
+      setIsAdmin(hasAdminClaim)
+      return hasAdminClaim
+    } finally {
+      setCheckingAdmin(false)
+    }
+  }, [])
+
   useEffect(() => {
     if (!auth) return
-    const unsub = onAuthStateChanged(auth, (u) => setUser(u))
+    const unsub = onIdTokenChanged(auth, (u) => {
+      setUser(u)
+      if (!u) {
+        setIsAdmin(false)
+        setCheckingAdmin(false)
+        return
+      }
+
+      verifyAdminClaim(u).catch((err) => {
+        console.error('Unable to read admin claim', err)
+        setIsAdmin(false)
+      })
+    })
     return () => unsub()
-  }, [])
+  }, [verifyAdminClaim])
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
@@ -76,9 +102,10 @@ const AdminPage = ({
       return
     }
     try {
-      await signInWithEmailAndPassword(auth, credentialsRef.current.email, credentialsRef.current.password)
+      const credential = await signInWithEmailAndPassword(auth, credentialsRef.current.email, credentialsRef.current.password)
+      const hasAdminClaim = await verifyAdminClaim(credential.user, true)
       setAuthError('')
-      setStatus('Signed in.')
+      setStatus(hasAdminClaim ? 'Signed in.' : 'Signed in, but this account is missing the admin claim.')
     } catch (err) {
       setAuthError('Unable to sign in. Check credentials and admin claim.')
       console.error(err)
@@ -88,6 +115,11 @@ const AdminPage = ({
   const handleCreateInvoice = async () => {
     if (!auth || !user) {
       setInvoiceStatus('Sign in as admin to send invoices.')
+      return
+    }
+    const hasAdminClaim = await verifyAdminClaim(user, true)
+    if (!hasAdminClaim) {
+      setInvoiceStatus('Signed in, but this account is missing the admin claim.')
       return
     }
     const amountCents = Math.round(Number(invoiceForm.amountUsd || 0) * 100)
@@ -129,15 +161,24 @@ const AdminPage = ({
   }
 
   const handleSave = async () => {
+    if (!user) {
+      setStatus('Sign in as admin to save content.')
+      return
+    }
     setSaving(true)
     setStatus('')
     try {
+      const hasAdminClaim = await verifyAdminClaim(user, true)
+      if (!hasAdminClaim) {
+        setStatus('Signed in, but this account is missing the admin claim.')
+        return
+      }
       await onSave(draft)
       setDirty(false)
       setStatus('Content saved to Firestore.')
     } catch (err) {
       console.error(err)
-      setStatus('Save failed. Confirm Firebase config and your admin claim.')
+      setStatus('Save failed. Confirm Firebase config, Firestore rules, and your admin claim.')
     } finally {
       setSaving(false)
     }
@@ -356,6 +397,9 @@ const AdminPage = ({
           </Box>
           <Flex gap="2" align="center">
             <Text color="gray">Signed in as {user.email}</Text>
+            <Text color={checkingAdmin ? 'gray' : isAdmin ? 'green' : 'amber'} size="2">
+              {checkingAdmin ? 'Checking admin access…' : isAdmin ? 'Admin access verified' : 'Admin claim missing'}
+            </Text>
             <Button variant="ghost" onClick={handleSignOut}>
               Sign out
             </Button>
@@ -869,7 +913,7 @@ const AdminPage = ({
                 />
               </Field>
             </Grid>
-            <Button onClick={handleCreateInvoice} disabled={!user}>
+            <Button onClick={handleCreateInvoice} disabled={!user || checkingAdmin}>
               {user ? 'Send invoice' : 'Sign in to send'}
             </Button>
             {invoiceStatus && (
@@ -887,7 +931,7 @@ const AdminPage = ({
         <Text color="gray">
           Saves write to Firestore `siteContent/public` and case studies in `siteContent/public/work/slug-id`.
         </Text>
-        <Button onClick={handleSave} disabled={saving || !user}>
+        <Button onClick={handleSave} disabled={saving || !user || checkingAdmin}>
           {saving ? 'Saving…' : user ? 'Save content' : 'Sign in to save'}
         </Button>
         {status && (
