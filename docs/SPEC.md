@@ -57,7 +57,7 @@
 }
 ```
 - Fallback content lives in `web/src/content/fallback.ts` (pulled from Rosenau's resume).
-- Contact submissions land in `contactRequests` when Firestore credentials are available; reads of site content are public, writes are `admin`-only per `firestore.rules`.
+- Contact submissions land in `contactRequests` via API-only writes (Admin SDK). Firestore client rules deny direct `contactRequests` creates.
 
 ## Admin/auth requirements
 - Create a Firebase Auth user; set custom claim `admin: true` via `node api/scripts/setAdminClaim.js --email=<user>` with a service account.
@@ -80,8 +80,12 @@
 - Terraform scaffold at `infra/terraform` enables APIs, creates deploy SA + Artifact Registry, and pushes GitHub secrets (DNS not automated for Squarespace).
 
 ## Contact API behavior
-- `POST /contact` validates `name`, `email`, `message`; optional `project` string.
-- If Firestore is configured, saves document with ISO timestamp to `contactRequests`; otherwise logs and returns 201 for resilience.
+- `POST /contact` validates and normalizes `name`, `email`, `message`; optional `project`, `captchaToken`, and honeypot `website`.
+- In-memory rate limiting applies per client IP hash (`CONTACT_RATE_LIMIT_WINDOW_MS`, `CONTACT_RATE_LIMIT_MAX_REQUESTS`).
+- Optional origin allowlist via `CONTACT_ALLOWED_ORIGINS`.
+- Optional App Check verification via `CONTACT_REQUIRE_APP_CHECK` + `x-firebase-appcheck` header.
+- Optional Turnstile verification via `CONTACT_REQUIRE_CAPTCHA` + `TURNSTILE_SECRET_KEY`.
+- If Firestore is configured, saves normalized document with ISO timestamp to `contactRequests`; otherwise logs and returns 201 for resilience.
 - `POST /billing/invoice` (admin-only) creates and emails a Stripe invoice using `amountCents`, `email`, `name`, and optional `description`.
 
 ## Roadmap ideas

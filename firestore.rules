@@ -17,7 +17,8 @@ service cloud.firestore {
     }
 
     match /contactRequests/{docId} {
-      allow create: if true;
+      // Contact writes must go through trusted backend (Cloud Run + Admin SDK).
+      allow create: if false;
       allow read, update, delete: if request.auth != null && request.auth.token.admin == true;
     }
   }

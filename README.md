@@ -30,7 +30,7 @@ A Firebase + Google Cloud Run powered site for Denuo Web, LLC. The frontend is a
    ```
 3. Build for release: `npm run build` (outputs to `web/dist`).
 
-The admin dashboard writes to Firestore `siteContent/public` (plus work sub-documents under `siteContent/public/work/{slug}` for case studies). Update security rules (`firestore.rules`) before going live.
+The admin dashboard writes to Firestore `siteContent/public` (plus work sub-documents under `siteContent/public/work/{slug}` for case studies). Contact submissions are backend-only (`/api/contact`) and should not be client-written to Firestore.
 
 ### Firebase Emulator Suite (local)
 - Toggle `VITE_USE_FIREBASE_EMULATORS=true` in `web/.env` to point the SPA to local emulators.
@@ -55,12 +55,19 @@ The admin dashboard writes to Firestore `siteContent/public` (plus work sub-docu
 
 Endpoints:
 - `GET /health` – service health
-- `POST /contact` – `{ name, email, project?, message }`; stores to Firestore `contactRequests` when credentials are present
+- `POST /contact` – `{ name, email, project?, message, captchaToken?, website? }`; stores normalized payload in Firestore `contactRequests` when credentials are present
 - `GET /admin/status` – requires Firebase ID token with `admin: true` custom claim
 - `POST /billing/invoice` – admin-only; creates and emails a Stripe invoice (`{ email, name, amountCents, description? }`)
 
+Contact endpoint protections:
+- In-memory IP-based rate limiting (`CONTACT_RATE_LIMIT_WINDOW_MS`, `CONTACT_RATE_LIMIT_MAX_REQUESTS`)
+- Optional Firebase App Check verification (`CONTACT_REQUIRE_APP_CHECK=true`, send `x-firebase-appcheck` header)
+- Optional Turnstile CAPTCHA verification (`CONTACT_REQUIRE_CAPTCHA=true`, `TURNSTILE_SECRET_KEY`, send `captchaToken`)
+- Optional origin allowlist (`CONTACT_ALLOWED_ORIGINS`)
+- Payload normalization + length limits + honeypot field (`website`)
+
 ## Firestore rules
-Deploy rules to lock down writes to admin-only users and allow public reads for marketing content:
+Deploy rules to lock down writes to admin-only users, allow public reads for marketing content, and deny client-side writes to `contactRequests`:
 ```bash
 firebase deploy --only firestore:rules
 ```
@@ -80,8 +87,10 @@ Set these repo secrets before enabling CI/CD (Terraform will populate them by de
 - `GCP_PROJECT_ID` – Google Cloud project id
 - `GCP_REGION` – Cloud Run region (e.g., `us-central1`)
 - `STRIPE_SECRET_KEY` – Stripe secret (for invoicing API)
+- `TURNSTILE_SECRET_KEY` – Turnstile secret for contact CAPTCHA verification
+- `CONTACT_IP_HASH_SALT` – random salt used to hash IP metadata before persistence
 - A sample `.env.example` at repo root lists these keys (for local reference only; do not commit secrets).
-- Optionally, set (or let Terraform set) GitHub Actions variables for the Vite web config so production builds enable auth: `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, and `VITE_USE_FIREBASE_EMULATORS` (usually `false`).
+- Optionally, set (or let Terraform set) GitHub Actions variables for the Vite web config so production builds enable auth/App Check: `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_APP_CHECK_SITE_KEY`, and `VITE_USE_FIREBASE_EMULATORS` (usually `false`).
 
 `deploy-hosting.yml` builds `web` and deploys Hosting. `deploy-cloudrun.yml` builds and deploys `api` to Cloud Run when `api/**` changes.
 

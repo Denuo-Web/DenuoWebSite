@@ -1,4 +1,9 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app'
+import {
+  initializeAppCheck,
+  ReCaptchaV3Provider,
+  type AppCheck,
+} from 'firebase/app-check'
 import { connectAuthEmulator, getAuth, type Auth } from 'firebase/auth'
 import { connectFirestoreEmulator, getFirestore, type Firestore } from 'firebase/firestore'
 
@@ -13,15 +18,30 @@ const firebaseConfig = {
 
 const isConfigured = Object.values(firebaseConfig).every(Boolean)
 const useEmulators = import.meta.env.VITE_USE_FIREBASE_EMULATORS === 'true'
+const appCheckSiteKey = import.meta.env.VITE_FIREBASE_APP_CHECK_SITE_KEY
+const appCheckDebugToken = import.meta.env.VITE_FIREBASE_APP_CHECK_DEBUG_TOKEN
 
 let app: FirebaseApp | null = null
 let auth: Auth | null = null
 let db: Firestore | null = null
+let appCheck: AppCheck | null = null
 
 if (isConfigured) {
   app = initializeApp(firebaseConfig)
   auth = getAuth(app)
   db = getFirestore(app)
+
+  if (!useEmulators && appCheckSiteKey && typeof window !== 'undefined') {
+    if (appCheckDebugToken) {
+      ;(globalThis as typeof globalThis & { FIREBASE_APPCHECK_DEBUG_TOKEN?: string }).FIREBASE_APPCHECK_DEBUG_TOKEN =
+        appCheckDebugToken
+    }
+
+    appCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider(appCheckSiteKey),
+      isTokenAutoRefreshEnabled: true,
+    })
+  }
 
   if (useEmulators && auth && db) {
     connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true })
@@ -32,4 +52,4 @@ if (isConfigured) {
   console.warn('Firebase config missing. Using static fallback content until env vars are set.')
 }
 
-export { app, auth, db, isConfigured, useEmulators }
+export { app, auth, db, appCheck, isConfigured, useEmulators }
