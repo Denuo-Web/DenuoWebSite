@@ -1,4 +1,4 @@
-import { Box, Button, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes'
+import { Badge, Box, Button, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes'
 import { Link } from 'react-router-dom'
 
 import MarketingShell from '../components/marketing/MarketingShell'
@@ -14,6 +14,7 @@ const ProcessPage = ({
   copy,
 }: MarketingPageProps) => {
   const processCopy = copy.pages.process
+  const offerCards = content.services
 
   return (
     <MarketingShell
@@ -82,16 +83,17 @@ const ProcessPage = ({
                   </Button>
                 </Flex>
                 <Grid columns={{ initial: '1', sm: '3' }} gap="3">
-                  {content.process.map((offer, index) => (
-                    <Card key={`${offer.title}-${index}`} asChild variant="surface" size="2">
+                  {offerCards.map((offer) => (
+                    <Card key={offer.title} asChild variant="surface" size="2">
                       <Link to="/services">
                         <Flex direction="column" gap="2">
+                          <Badge variant="soft">{offer.badge ?? processCopy.eyebrow}</Badge>
                           <Heading size="3">{offer.title}</Heading>
                           <Text size="2" color="gray">
-                            {offer.detail || processCopy.optionsDetailFallback}
+                            {offer.summary}
                           </Text>
                           <Text size="2" color="gray">
-                            {offer.outcome}
+                            {offer.bullets[0] ?? processCopy.optionsDetailFallback}
                           </Text>
                         </Flex>
                       </Link>

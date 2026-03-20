@@ -38,7 +38,7 @@ const ContactPage = ({
             </Text>
             <Flex gap="2" wrap="wrap">
               <Button asChild size="3">
-                <a href={`mailto:${contact.email}`}>Email {contact.email}</a>
+                <a href={`mailto:${contact.email}`}>{contactCopy.finalPrimaryCta}</a>
               </Button>
               <Button asChild size="3" variant="soft">
                 <Link to="/process">{contactCopy.heroSecondaryCta}</Link>

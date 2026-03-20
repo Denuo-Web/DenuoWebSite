@@ -13,10 +13,9 @@ const LandingPage = ({
   onToggleLanguage,
   copy,
 }: MarketingPageProps) => {
-  const { hero, contact, work } = content
+  const { hero, contact, work, services } = content
   const landingCopy = copy.pages.landing
   const featuredCaseStudies = work.caseStudies.slice(0, 3)
-  const servicePackageSnapshot = work.servicePackages.slice(0, 4)
 
   return (
     <MarketingShell
@@ -90,6 +89,7 @@ const LandingPage = ({
                   <Card key={caseStudy.slug} asChild size="3" variant="surface">
                     <Link to={`/work/${caseStudy.slug}`}>
                       <Flex direction="column" gap="2">
+                        {caseStudy.servicePackage?.title && <Badge color="indigo">{caseStudy.servicePackage.title}</Badge>}
                         {caseStudy.status && <Badge variant="soft">{caseStudy.status}</Badge>}
                         <Heading size="4">{caseStudy.name}</Heading>
                         <Text color="gray">{caseStudy.summary}</Text>
@@ -116,16 +116,17 @@ const LandingPage = ({
                   <Link to="/services">{landingCopy.servicesSnapshotCta}</Link>
                 </Button>
               </Flex>
-              <Grid columns={{ initial: '1', sm: '2', md: '4' }} gap="3">
-                {servicePackageSnapshot.map((pkg) => (
-                  <Card key={pkg.title} asChild size="3" variant="surface">
+              <Grid columns={{ initial: '1', sm: '3' }} gap="3">
+                {services.slice(0, 3).map((offer) => (
+                  <Card key={offer.title} asChild size="3" variant="surface">
                     <Link to="/services">
                       <Flex direction="column" gap="2">
-                        <Heading size="4">{pkg.title}</Heading>
-                        <Text color="gray">{pkg.summary}</Text>
+                        <Badge variant="soft">{offer.badge ?? hero.badge}</Badge>
+                        <Heading size="4">{offer.title}</Heading>
+                        <Text color="gray">{offer.summary}</Text>
                         <Box asChild pl="3" m="0">
                           <ul>
-                            {pkg.outcomes.slice(0, 3).map((deliverable) => (
+                            {offer.bullets.slice(0, 3).map((deliverable) => (
                               <li key={deliverable}>
                                 <Text size="2">{deliverable}</Text>
                               </li>
@@ -179,6 +180,13 @@ const LandingPage = ({
                     {landingCopy.aboutHeading}
                   </Heading>
                   <Text color="gray">{landingCopy.aboutBody}</Text>
+                  <Flex gap="2" wrap="wrap">
+                    {services.slice(0, 3).map((offer) => (
+                      <Badge key={offer.title} variant="soft">
+                        {offer.title}
+                      </Badge>
+                    ))}
+                  </Flex>
                 </Flex>
                 <Flex align="start">
                   <Button asChild variant="soft">
