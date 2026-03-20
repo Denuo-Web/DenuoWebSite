@@ -32,6 +32,25 @@ a {
   text-decoration: none;
 }
 
+.brand-logo-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.brand-logo--header {
+  width: 5.5rem;
+}
+
+.brand-logo--footer {
+  width: 4.75rem;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -39,4 +58,14 @@ img {
 
 button, input, textarea {
   font-family: inherit;
+}
+
+@media (max-width: 640px) {
+  .brand-logo--header {
+    width: 4.5rem;
+  }
+
+  .brand-logo--footer {
+    width: 4rem;
+  }
 }

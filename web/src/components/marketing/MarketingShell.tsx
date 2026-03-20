@@ -6,7 +6,6 @@ import {
   Card,
   Container,
   Flex,
-  Heading,
   IconButton,
   Kbd,
   Link as RadixLink,
@@ -53,18 +52,17 @@ const MarketingShell = ({
       <Flex direction="column" gap="6">
         <Card size="3" variant="surface">
           <Flex align="center" justify="between" wrap="wrap" gap="4">
-            <Heading size="6">
-              <Link to="/">Denuo Web</Link>
-            </Heading>
+            <Box asChild>
+              <Link to="/" aria-label="Denuo Web home" className="brand-logo-link">
+                <img src="/denuweb.png" alt="Denuo Web" className="brand-logo brand-logo--header" />
+              </Link>
+            </Box>
             <Flex gap="3" align="center" wrap="wrap">
               {links.map((link) => (
                 <RadixLink key={link.to} asChild weight="medium">
                   <Link to={link.to}>{link.label}</Link>
                 </RadixLink>
               ))}
-              <Button asChild variant="soft" size="1">
-                <Link to="/admin">{copy.nav.admin}</Link>
-              </Button>
             </Flex>
             <Flex gap="2" ml="auto">
               <Tooltip content={copy.nav.themeToggle}>
@@ -103,16 +101,17 @@ const MarketingShell = ({
           <footer>
             <Flex align="center" justify="between" wrap="wrap" gap="3">
               <Box>
-                <Flex align="center" gap="2">
-                  <Text weight="bold">Denuo Web, LLC</Text>
-                </Flex>
+                <Box asChild mb="2">
+                  <Link to="/" aria-label="Denuo Web home" className="brand-logo-link">
+                    <img src="/denuweb.png" alt="Denuo Web, LLC" className="brand-logo brand-logo--footer" />
+                  </Link>
+                </Box>
                 <Text color="gray" size="2">
                   {copy.sections.footerLine}
                 </Text>
               </Box>
               <Flex gap="3" wrap="wrap">
                 <RadixLink href={`mailto:${contactEmail}`}>{contactEmail}</RadixLink>
-                <Link to="/admin">{copy.nav.admin}</Link>
               </Flex>
             </Flex>
           </footer>
