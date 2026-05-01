@@ -21,16 +21,18 @@ const offerByCaseStudySlug: Record<string, OfferKey> = {
   'crowdpm-platform': 'discovery',
   'moonshine-art': 'build',
   questbycycle: 'build',
+  'apk-workbench': 'stabilize',
   'arm64-adk': 'stabilize',
+  dripcopy: 'stabilize',
 }
 
 const localizedOfferCopy = {
   en: {
     heroNote:
-      'Every project below maps to one of three offers: discovery, build, or stabilize. That keeps the work legible for small teams with real constraints.',
+      'Every project below maps to one of three offers: plan, build, or stabilize. That keeps the work legible for teams with real constraints.',
     offerSectionHeading: 'Three offers, not a menu of vague services',
     offerSectionLead:
-      'Each offer is framed around a decision point, a type of system, and the kind of handoff a small team actually needs.',
+      'Each offer is framed around a decision point, a type of system, and the kind of handoff a team actually needs.',
     offerCardCta: 'Open the related case study',
     offerLabel: 'Offer',
     buyerValueLabel: 'Buyer value',
@@ -61,13 +63,13 @@ const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
   en: [
     {
       key: 'discovery',
-      title: 'Architecture / Discovery Sprint',
-      summary: 'For requirements ambiguity, data ambiguity, or product ambiguity.',
+      title: 'Discovery / Implementation Plan',
+      summary: 'For requirements ambiguity, API ambiguity, data ambiguity, or workflow ambiguity.',
       whoFor:
-        'Best for small research, geospatial, environmental, and mission-driven teams that need a technical plan before build work.',
+        'Best for teams that need a technical plan before build work, integration work, or stakeholder review.',
       problems: [
         'No shared system design yet',
-        'Data sources and constraints are still unclear',
+        'APIs, data sources, and constraints are still unclear',
         'The team needs tradeoffs before committing to implementation',
       ],
       deliverables: ['Technical plan', 'System design', 'Delivery roadmap', 'Constraints and tradeoffs'],
@@ -76,12 +78,12 @@ const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
     },
     {
       key: 'build',
-      title: 'MVP / Internal Tool Build',
-      summary: 'For authenticated web apps, APIs, dashboards, admin tools, and workflow systems.',
-      whoFor: 'Best for teams that need a working product increment instead of another planning deck.',
+      title: 'Web App / Integration Build',
+      summary: 'For authenticated web apps, APIs, dashboards, checkout flows, admin tools, and workflow systems.',
+      whoFor: 'Best for teams that need a working product increment and a supportable launch path.',
       problems: [
         'The product needs to move from concept to a usable system',
-        'Auth, data model, and deployment foundations still need to be built',
+        'Auth, data model, API boundaries, and deployment foundations still need to be built',
         'The team needs a production-ready path, not just a prototype',
       ],
       deliverables: [
@@ -95,8 +97,8 @@ const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
     },
     {
       key: 'stabilize',
-      title: 'Stabilize / Operate',
-      summary: 'For existing systems that need cleanup, deployment discipline, and handoff.',
+      title: 'Stabilize / Support Handoff',
+      summary: 'For existing systems that need cleanup, deployment discipline, documentation, and handoff.',
       whoFor:
         'Best for teams with an existing codebase or internal tool that needs to be made reliable enough to operate.',
       problems: [
@@ -111,41 +113,41 @@ const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
         'Observability and hardening',
       ],
       buyerValue: 'You get a system that is easier to run, support, and hand off without heroics.',
-      caseStudySlugs: ['arm64-adk'],
+      caseStudySlugs: ['apk-workbench'],
     },
   ],
   ja: [
     {
       key: 'discovery',
       title: 'アーキテクチャ / ディスカバリー・スプリント',
-      summary: '要件・データ・プロダクトの不確実性がある段階向けです。',
+      summary: '要件・API・データ・ワークフローの不確実性がある段階向けです。',
       whoFor:
-        '研究、地理空間、環境、ミッション重視の小規模チームが、実装前に技術方針を固めたいときに向いています。',
-      problems: ['システム設計の共通認識がまだない', 'データソースや制約が不明確', '実装前に判断材料が必要'],
+        '実装、連携、関係者レビューの前に技術方針を固めたいチームに向いています。',
+      problems: ['システム設計の共通認識がまだない', 'API、データソース、制約が不明確', '実装前に判断材料が必要'],
       deliverables: ['技術計画', 'システム設計', '進行ロードマップ', '制約とトレードオフ'],
       buyerValue: '実装に入る前に、進むべき道筋が明確になります。',
       caseStudySlugs: ['crowdpm-platform'],
     },
     {
       key: 'build',
-      title: 'MVP / 社内ツール構築',
-      summary: '認証付きWebアプリ、API、ダッシュボード、管理画面、ワークフロー向けです。',
-      whoFor: '計画書ではなく、実際に使える動く成果物が必要なチーム向けです。',
-      problems: ['アイデアから使えるシステムへ進めたい', '認証・データモデル・デプロイ基盤がまだない', '試作品ではなく本番前提の土台が必要'],
+      title: 'Webアプリ / 連携構築',
+      summary: '認証付きWebアプリ、API、ダッシュボード、決済、管理画面、ワークフロー向けです。',
+      whoFor: '動く成果物と、支援しやすい公開経路が必要なチーム向けです。',
+      problems: ['アイデアから使えるシステムへ進めたい', '認証・データモデル・API境界・デプロイ基盤がまだない', '試作品ではなく本番前提の土台が必要'],
       deliverables: ['動くプロダクトの増分', 'データモデル + アプリ基盤', '認証/管理の土台', '本番対応のデプロイ経路'],
       buyerValue: 'チームが使って、確認して、次の改善へ進める形になります。',
       caseStudySlugs: ['questbycycle', 'moonshine-art'],
     },
     {
       key: 'stabilize',
-      title: '安定化 / 運用支援',
-      summary: '既存システムの整理、運用整備、引き継ぎが必要な段階向けです。',
+      title: '安定化 / サポート引き継ぎ',
+      summary: '既存システムの整理、運用整備、文書化、引き継ぎが必要な段階向けです。',
       whoFor:
         '既存コードベースや社内ツールを、安心して運用できる状態にしたいチーム向けです。',
       problems: ['デプロイが不安定、または手順が残っていない', '認証・連携・バックグラウンド処理の整理が必要', '監視と運用引き継ぎが不足している'],
       deliverables: ['CI/CD とデプロイ', '認証整理', '連携・バックグラウンド処理', '監視とハードニング'],
       buyerValue: '運用しやすく、引き継ぎやすいシステムになります。',
-      caseStudySlugs: ['arm64-adk'],
+      caseStudySlugs: ['apk-workbench'],
     },
   ],
 }

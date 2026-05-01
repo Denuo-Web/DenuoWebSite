@@ -158,18 +158,18 @@ export const uiCopy: Record<Language, UiCopy> = {
       languageToggle: 'Switch language (EN/JA)',
     },
     sections: {
-      servicesKicker: 'Three offers',
-      servicesTitle: 'Concrete offers for teams that need a clear path from ambiguity to shipped software.',
+      servicesKicker: 'Plan / build / stabilize',
+      servicesTitle: 'Concrete offers for teams that need a clear path from ambiguity to shipped, supportable software.',
       servicesLead:
-        'Each offer has a specific outcome: plan the system, build the product, or stabilize what already exists.',
+        'Each offer has a specific outcome: turn ambiguity into an implementation plan, build the working system, or stabilize what already exists.',
       projectsKicker: 'Case studies',
-      projectsTitle: 'Delivery work for web platforms, internal tools, and data systems.',
-      projectsLead: 'Built for small teams that need practical systems, not generic agency copy.',
+      projectsTitle: 'Delivery work for API-driven apps, marketplace workflows, internal tools, and operational tooling.',
+      projectsLead: 'Built around practical launch and support needs, not generic agency copy.',
       processKicker: 'How engagements work',
       processTitle: 'A short delivery loop that keeps scope, build, and handoff connected.',
       processLead: 'You get visible progress, explicit tradeoffs, and a final system your team can run.',
       contactKicker: 'Qualified contact',
-      footerLine: 'Operator-led delivery for web platforms, internal tools, and data systems.',
+      footerLine: 'Implementation, integrations, and supportable launches for practical web systems.',
     },
     pages: {
       landing: {
@@ -200,7 +200,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         ],
         featuredWorkHeading: 'Featured case studies',
         featuredWorkCta: 'See all work',
-        servicesSnapshotHeading: 'Three offers',
+        servicesSnapshotHeading: 'Plan, build, stabilize',
         servicesSnapshotCta: 'See services',
         processHeading: 'How engagements work',
         processCta: 'Open process',
@@ -224,7 +224,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         ],
         aboutHeading: 'Operator behind the studio',
         aboutBody:
-          "I'm Jaron Rosenau, the operator behind Denuo Web. I work directly with small teams to scope, build, and stabilize software that needs to survive in production.",
+          "I'm Jaron Rosenau, the operator behind Denuo Web. I work directly with teams to scope, build, integrate, and stabilize software that needs to survive in production.",
         aboutCta: 'Read about the studio',
         intakeLabel: 'To start, share:',
         intakePrompts: [
@@ -236,9 +236,9 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       services: {
         eyebrow: 'Services',
-        heroTitle: 'Three offers for teams that need web platforms, internal tools, or data systems.',
+        heroTitle: 'Three offers for teams that need implementation, integrations, or supportable systems.',
         heroLead:
-          'Each offer starts with a concrete deliverable and ends with a system your team can operate.',
+          'Each offer starts with a concrete deliverable and ends with software your team can use, review, and support.',
         heroPrimaryCta: 'Contact about a project',
         heroSecondaryCta: 'View case studies',
         packagesHeading: 'Three offers',
@@ -252,13 +252,13 @@ export const uiCopy: Record<Language, UiCopy> = {
         pillarBadgeFallback: 'Offer',
         choosingHeading: 'Choosing the right starting point',
         choosingBody:
-          'If requirements are unclear, start with Discovery. If the product needs to exist, choose Build. If the system exists but is fragile, choose Stabilize.',
+          'If requirements or integrations are unclear, start with Discovery. If the product needs to exist, choose Build. If the system exists but is fragile, choose Stabilize.',
       },
       work: {
         eyebrow: 'Work',
-        heroTitle: 'Case studies from platform, internal tool, and data work.',
+        heroTitle: 'Case studies from app, integration, marketplace, and support tooling work.',
         heroLead:
-          'Each case study shows the problem, the build, and the operational result so you can see how the three offers map to real work.',
+          'Each case study shows the problem, the implementation, and the operational result so you can see how the three offers map to real work.',
         heroPrimaryCta: 'Discuss a similar build',
         heroSecondaryCta: 'Review services',
         gridHeading: 'Case studies',
@@ -320,7 +320,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         eyebrow: 'About',
         heroTitle: 'What Denuo Web does',
         heroBody:
-          'Denuo Web builds web platforms, internal tools, and data systems for small research, geospatial, environmental, and mission-driven teams.',
+          'Denuo Web builds API-driven web apps, integrations, marketplace workflows, internal tools, and operational tooling for teams that need practical delivery.',
         heroPrimaryCta: 'Discuss a project',
         heroSecondaryCta: 'See case studies',
         howHeading: 'How it works',
@@ -332,7 +332,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         optionsCta: 'See services',
         finalHeading: 'Operator behind the studio',
         finalBody:
-          "I'm Jaron Rosenau. I stay hands-on from first call through handoff, and I bias toward practical systems that small teams can operate.",
+          "I'm Jaron Rosenau. I stay hands-on from first call through handoff, and I bias toward practical systems that teams can operate.",
       },
       contact: {
         eyebrow: 'Contact',
@@ -383,18 +383,18 @@ export const uiCopy: Record<Language, UiCopy> = {
       languageToggle: '言語を切り替える（英語／日本語）',
     },
     sections: {
-      servicesKicker: '3つの提案',
-      servicesTitle: '曖昧さから本番運用までをつなぐ、具体的な3つの提案。',
+      servicesKicker: '計画 / 構築 / 安定化',
+      servicesTitle: '曖昧さから、公開後に支援しやすいソフトウェアまでをつなぐ具体的な3つの提案。',
       servicesLead:
         '各提案には明確な成果物があります。設計を固める、作る、既存システムを安定させる、のいずれかから始められます。',
       projectsKicker: 'ケーススタディ',
-      projectsTitle: 'Webプラットフォーム、社内ツール、データシステムの実行例。',
-      projectsLead: '小規模チームが現実的に運用できるシステムを前提にしています。',
+      projectsTitle: 'API連携アプリ、マーケットプレイス、社内ツール、運用ツールの実行例。',
+      projectsLead: '公開とサポートの現実に合わせた実用的なシステムを前提にしています。',
       processKicker: '進め方',
       processTitle: 'スコープ、設計、実装、引き渡しをつなげる短い進行。',
       processLead: '進捗が見え、判断点が明確で、最後にチームが運用できる状態を目指します。',
       contactKicker: '相談について',
-      footerLine: '小規模チーム向けのWebプラットフォーム、社内ツール、データシステムを、運用まで見据えて提供します。',
+      footerLine: '実用的なWebシステムの実装、連携、支援しやすい公開を提供します。',
     },
     pages: {
       landing: {
@@ -425,7 +425,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         ],
         featuredWorkHeading: '注目のケーススタディ',
         featuredWorkCta: 'すべて見る',
-        servicesSnapshotHeading: '3つの提案',
+        servicesSnapshotHeading: '計画・構築・安定化',
         servicesSnapshotCta: 'サービスを見る',
         processHeading: '進め方',
         processCta: '詳細を見る',
@@ -449,7 +449,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         ],
         aboutHeading: '仕事を進める人',
         aboutBody:
-          'Denuo Web は Jaron Rosenau が運営しています。小規模チームと直接連携し、本番で使えるソフトウェアをスコープ、実装、安定化まで進めます。',
+          'Denuo Web は Jaron Rosenau が運営しています。チームと直接連携し、本番で使えるソフトウェアをスコープ、実装、連携、安定化まで進めます。',
         aboutCta: 'スタジオについて読む',
         intakeLabel: '最初の相談で共有してほしい内容:',
         intakePrompts: [
@@ -462,7 +462,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       services: {
         eyebrow: 'サービス',
-        heroTitle: 'Webプラットフォーム、社内ツール、データシステムが必要なチーム向けの3つの提案。',
+        heroTitle: '実装、連携、支援しやすいシステムが必要なチーム向けの3つの提案。',
         heroLead:
           '各提案は明確な成果物から始まり、チームが運用できるシステムとして終わります。',
         heroPrimaryCta: '案件について連絡する',
@@ -482,7 +482,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       work: {
         eyebrow: '実績',
-        heroTitle: 'プラットフォーム、社内ツール、データシステムのケーススタディ。',
+        heroTitle: 'アプリ、連携、マーケットプレイス、運用ツールのケーススタディ。',
         heroLead:
           '課題、実装、運用結果を示し、3つの提案のどれが合うかを見やすくしています。',
         heroPrimaryCta: '似た案件を相談する',
@@ -546,7 +546,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         eyebrow: '概要',
         heroTitle: 'Denuo Web がやること',
         heroBody:
-          'Denuo Web は、小規模な研究、地理空間、環境、ミッション志向のチーム向けに、Webプラットフォーム、社内ツール、データシステムを構築します。',
+          'Denuo Web は、実用的な提供が必要なチーム向けに、API連携Webアプリ、マーケットプレイス、社内ツール、運用ツールを構築します。',
         heroPrimaryCta: '案件を相談する',
         heroSecondaryCta: '実績を見る',
         howHeading: '進め方',

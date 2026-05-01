@@ -2,6 +2,8 @@
 
 A Firebase + Google Cloud Run powered site for Denuo Web, LLC. The frontend is a Vite/React app with a Firebase-authenticated admin dashboard that edits Firestore-driven content. The backend is a minimal Express API deployed to Cloud Run for contact capture and admin utilities. CI/CD is wired through GitHub Actions.
 
+Current public positioning: Denuo Web is Jaron Rosenau's software delivery practice for practical API-driven web apps, integrations, marketplace workflows, internal tools, operational tooling, and supportable launches. Public case studies are organized around three offers: Discovery / Implementation Plan, Web App / Integration Build, and Stabilize / Support Handoff.
+
 ## Prerequisites
 - Node.js 20 (use `nvm use 20` or install via nvm) + npm
 - Firebase CLI: `npm install -g firebase-tools`
@@ -95,7 +97,7 @@ Set these repo secrets before enabling CI/CD (Terraform will populate them by de
 `deploy-hosting.yml` builds `web` and deploys Hosting. `deploy-cloudrun.yml` builds and deploys `api` to Cloud Run when `api/**` changes.
 
 ## Content model
-- Live content stored at Firestore `siteContent/public`; case studies are stored as documents at `siteContent/public/work/{slug}`. Fallback content in `web/src/content/fallback.ts` is built from Jaron Rosenau's resume and recent work (QuestByCycle, Moonshine Art, CrowdPM).
+- Live content stored at Firestore `siteContent/public`; case studies are stored as documents at `siteContent/public/work/{slug}`. Fallback content in `web/src/content/fallback.ts` is built from Jaron Rosenau's current positioning and recent work (Moonshine Art, QuestByCycle, CrowdPM Platform, APK Workbench, DripCopy).
 - Services, projects, differentiators, process, contact info, and work metadata (`servicePackages`, `testimonials`) are editable via `/admin` after signing in.
 - Admin can send Stripe invoices from `/admin` when the API has `STRIPE_SECRET_KEY` set; the UI uses the authenticated Firebase ID token.
 

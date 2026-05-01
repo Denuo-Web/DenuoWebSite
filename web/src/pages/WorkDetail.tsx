@@ -10,7 +10,9 @@ const offerByCaseStudySlug: Record<string, OfferKey> = {
   'crowdpm-platform': 'discovery',
   'moonshine-art': 'build',
   questbycycle: 'build',
+  'apk-workbench': 'stabilize',
   'arm64-adk': 'stabilize',
+  dripcopy: 'stabilize',
 }
 
 const offerCopyByLanguage = {
@@ -49,19 +51,19 @@ const offerCopyByLanguage = {
 const offerDefinitions = {
   en: {
     discovery: {
-      title: 'Architecture / Discovery Sprint',
+      title: 'Discovery / Implementation Plan',
       buyerValue: 'You leave with a clear build path and fewer avoidable decisions later.',
       deliverables: ['Technical plan', 'System design', 'Delivery roadmap', 'Constraints and tradeoffs'],
     },
     build: {
-      title: 'MVP / Internal Tool Build',
-      buyerValue: 'You get something your team can use, review, and continue shipping from.',
-      deliverables: ['Working product increment', 'Data model + app shell', 'Auth/admin foundations', 'Production-ready deployment path'],
+      title: 'Web App / Integration Build',
+      buyerValue: 'You get something your team can use, review, support, and continue shipping from.',
+      deliverables: ['Working product increment', 'Data model + app shell', 'Auth/admin foundations', 'API and deployment path'],
     },
     stabilize: {
-      title: 'Stabilize / Operate',
+      title: 'Stabilize / Support Handoff',
       buyerValue: 'You get a system that is easier to run, support, and hand off without heroics.',
-      deliverables: ['CI/CD and deployments', 'Auth cleanup', 'Integrations and background jobs', 'Observability and hardening'],
+      deliverables: ['CI/CD and deployments', 'Auth cleanup', 'Support notes and runbooks', 'Observability and hardening'],
     },
   },
   ja: {
@@ -71,12 +73,12 @@ const offerDefinitions = {
       deliverables: ['技術計画', 'システム設計', '進行ロードマップ', '制約とトレードオフ'],
     },
     build: {
-      title: 'MVP / 社内ツール構築',
+      title: 'Webアプリ / 連携構築',
       buyerValue: 'チームが使って、確認して、次の改善へ進める形になります。',
       deliverables: ['動くプロダクトの増分', 'データモデル + アプリ基盤', '認証/管理の土台', '本番対応のデプロイ経路'],
     },
     stabilize: {
-      title: '安定化 / 運用支援',
+      title: '安定化 / サポート引き継ぎ',
       buyerValue: '運用しやすく、引き継ぎやすいシステムになります。',
       deliverables: ['CI/CD とデプロイ', '認証整理', '連携・バックグラウンド処理', '監視とハードニング'],
     },
