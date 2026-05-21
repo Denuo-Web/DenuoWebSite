@@ -121,3 +121,11 @@ Requests to `/api/**` are proxied to the Cloud Run service `denuo-api` in `us-ce
 
 ## Terraform scaffold
 - See `infra/terraform/README.md` for automating API enablement, deploy service account, Artifact Registry, and pushing GitHub Actions secrets (including Stripe). Squarespace DNS is not managed; migrate DNS to a Terraform-capable provider if you want full automation for records.
+
+## Portfolio Case Study
+
+This repository is part of Jaron Rosenau's implementation, developer-support, and integration engineering portfolio. The public case study summarizes the problem, delivery scope, architecture, and operational result.
+
+- Case study: [Denuo Web site implementation case study](https://rosenau.info/projects/5S7YQjzDSIVzafxbfLi3)
+- Full portfolio: [Jaron Rosenau](https://rosenau.info)
+- Summary: Firebase Hosting, Firestore content admin, Cloud Run API, and CI/CD for a production service site.
