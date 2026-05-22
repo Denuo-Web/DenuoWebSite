@@ -29,20 +29,20 @@ const offerNarrativesByLanguage: Record<'en' | 'ja', OfferNarrative[]> = {
   en: [
     {
       whoFor:
-        'Teams with requirements ambiguity, data ambiguity, or product ambiguity that need a concrete technical plan before implementation.',
+        'Teams with requirements ambiguity, data ambiguity, civic or operational workflow ambiguity, or product ambiguity that need a concrete technical plan before implementation.',
       solves: [
         'The system shape is still unclear',
-        'The data sources, constraints, or integrations are still moving',
+        'The users, data sources, institutional constraints, or integrations are still moving',
         'The team needs architecture tradeoffs before committing build time',
       ],
-      buyerGets: 'A technical plan, delivery roadmap, and system boundary the team can act on immediately.',
+      buyerGets: 'A technical plan, delivery roadmap, workflow boundary, and system boundary the team can act on immediately.',
     },
     {
       whoFor:
-        'Teams that need an authenticated web app, API, dashboard, admin tool, or workflow system to move from concept into real use.',
+        'Teams that need an authenticated web app, civic or operations tool, API, dashboard, admin tool, or workflow system to move from concept into real use.',
       solves: [
         'The product needs to become usable by real people',
-        'Auth, app structure, and data flows still need to be established',
+        'Auth, app structure, support paths, and data flows still need to be established',
         'The team needs a production-ready path instead of a throwaway prototype',
       ],
       buyerGets: 'A working product increment with the technical foundations needed to keep shipping.',
@@ -61,20 +61,20 @@ const offerNarrativesByLanguage: Record<'en' | 'ja', OfferNarrative[]> = {
   ja: [
     {
       whoFor:
-        '要件、データ、プロダクト像がまだ固まっておらず、実装前に具体的な技術方針が必要なチーム向けです。',
+        '要件、データ、公共 / 運用ワークフロー、プロダクト像がまだ固まっておらず、実装前に具体的な技術方針が必要なチーム向けです。',
       solves: [
         'システムの形がまだ見えていない',
-        'データソース、制約、連携条件が固まっていない',
+        '利用者、データソース、組織上の制約、連携条件が固まっていない',
         '実装に入る前に設計上の判断材料が必要',
       ],
-      buyerGets: 'すぐに実行へ移せる技術計画、進行ロードマップ、システム境界を得られます。',
+      buyerGets: 'すぐに実行へ移せる技術計画、進行ロードマップ、ワークフロー境界、システム境界を得られます。',
     },
     {
       whoFor:
-        '認証付きWebアプリ、API、ダッシュボード、管理画面、ワークフローを形にして実運用へ進めたいチーム向けです。',
+        '認証付きWebアプリ、公共 / 運用ツール、API、ダッシュボード、管理画面、ワークフローを形にして実運用へ進めたいチーム向けです。',
       solves: [
         'アイデアを実際に使える形へ進めたい',
-        '認証、アプリ構成、データフローの土台がまだない',
+        '認証、アプリ構成、サポート経路、データフローの土台がまだない',
         '試作品ではなく本番を見据えた道筋が必要',
       ],
       buyerGets: '継続して改善できる技術基盤付きの動く成果物を得られます。',

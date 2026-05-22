@@ -159,33 +159,33 @@ export const uiCopy: Record<Language, UiCopy> = {
     },
     sections: {
       servicesKicker: 'Plan / build / stabilize',
-      servicesTitle: 'Concrete offers for teams that need a clear path from ambiguity to shipped, supportable software.',
+      servicesTitle: 'Concrete offers for teams that need a clear path from messy real-world workflows to shipped, supportable software.',
       servicesLead:
         'Each offer has a specific outcome: turn ambiguity into an implementation plan, build the working system, or stabilize what already exists.',
       projectsKicker: 'Case studies',
-      projectsTitle: 'Delivery work for API-driven apps, marketplace workflows, internal tools, and operational tooling.',
-      projectsLead: 'Built around practical launch and support needs, not generic agency copy.',
+      projectsTitle: 'Delivery work for API-driven apps, civic systems, marketplace workflows, internal tools, and operational tooling.',
+      projectsLead: 'Built around practical launch, public usefulness, and support needs, not generic agency copy.',
       processKicker: 'How engagements work',
       processTitle: 'A short delivery loop that keeps scope, build, and handoff connected.',
       processLead: 'You get visible progress, explicit tradeoffs, and a final system your team can run.',
       contactKicker: 'Qualified contact',
-      footerLine: 'Implementation, integrations, and supportable launches for practical web systems.',
+      footerLine: 'Implementation, systems analysis, integrations, and supportable launches for practical web systems.',
     },
     pages: {
       landing: {
         heroPrimaryCta: 'View case studies',
         heroSecondaryCta: 'Discuss your project',
-        credibilityHeading: 'Why Denuo Web',
+        credibilityHeading: 'Why this delivery umbrella',
         credibilityBullets: [
           {
-            title: 'Operator-led delivery',
+            title: 'Direct technical ownership',
             detail:
-              'You work with the person doing the technical decisions and implementation, not a layer of account management.',
+              'Technical decisions, implementation, documentation, and support handoff stay connected.',
           },
           {
             title: 'Fits real constraints',
             detail:
-              'Architecture, data flow, and deployment choices are made around the team, the budget, and the operational reality.',
+              'Architecture, data flow, and deployment choices are made around the team, budget, institutional context, and operational reality.',
           },
           {
             title: 'Weekly visible progress',
@@ -195,7 +195,7 @@ export const uiCopy: Record<Language, UiCopy> = {
           {
             title: 'Operational readiness',
             detail:
-              'The goal is a system that can be launched, monitored, and handed off, not just a prototype that looks complete.',
+              'The goal is a system that can be launched, documented, supported, and handed off, not just a prototype that looks complete.',
           },
         ],
         featuredWorkHeading: 'Featured case studies',
@@ -222,10 +222,10 @@ export const uiCopy: Record<Language, UiCopy> = {
             detail: 'Stabilize deployment, document the system, and hand over operational ownership.',
           },
         ],
-        aboutHeading: 'Operator behind the studio',
+        aboutHeading: 'Umbrella behind the work',
         aboutBody:
-          "I'm Jaron Rosenau, the operator behind Denuo Web. I work directly with teams to scope, build, integrate, and stabilize software that needs to survive in production.",
-        aboutCta: 'Read about the studio',
+          "Denuo Web is my independent software-delivery and portfolio umbrella for practical web systems, integrations, civic/public-systems tooling, and case-study projects.",
+        aboutCta: 'Read about the work',
         intakeLabel: 'To start, share:',
         intakePrompts: [
           'Who the system is for and what it needs to do.',
@@ -236,7 +236,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       services: {
         eyebrow: 'Services',
-        heroTitle: 'Three offers for teams that need implementation, integrations, or supportable systems.',
+        heroTitle: 'Three offers for teams that need implementation, systems analysis, integrations, or supportable software.',
         heroLead:
           'Each offer starts with a concrete deliverable and ends with software your team can use, review, and support.',
         heroPrimaryCta: 'Contact about a project',
@@ -256,9 +256,9 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       work: {
         eyebrow: 'Work',
-        heroTitle: 'Case studies from app, integration, marketplace, and support tooling work.',
+        heroTitle: 'Case studies from app, civic-systems, integration, marketplace, and support tooling work.',
         heroLead:
-          'Each case study shows the problem, the implementation, and the operational result so you can see how the three offers map to real work.',
+          'Each case study shows the problem, the implementation, and the operational result so you can see how the three offers map to real-world systems work.',
         heroPrimaryCta: 'Discuss a similar build',
         heroSecondaryCta: 'Review services',
         gridHeading: 'Case studies',
@@ -318,9 +318,9 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       about: {
         eyebrow: 'About',
-        heroTitle: 'What Denuo Web does',
+        heroTitle: 'What Denuo Web is',
         heroBody:
-          'Denuo Web builds API-driven web apps, integrations, marketplace workflows, internal tools, and operational tooling for teams that need practical delivery.',
+          "Denuo Web is Jaron Rosenau's independent software-delivery and portfolio umbrella for API-driven web apps, integrations, marketplace workflows, civic/public-systems tooling, internal tools, and operational tooling.",
         heroPrimaryCta: 'Discuss a project',
         heroSecondaryCta: 'See case studies',
         howHeading: 'How it works',
@@ -330,9 +330,9 @@ export const uiCopy: Record<Language, UiCopy> = {
         evidenceCta: 'View work',
         optionsHeading: 'The three offers',
         optionsCta: 'See services',
-        finalHeading: 'Operator behind the studio',
+        finalHeading: 'Operator behind the work',
         finalBody:
-          "I'm Jaron Rosenau. I stay hands-on from first call through handoff, and I bias toward practical systems that teams can operate.",
+          "I'm Jaron Rosenau. I stay hands-on from discovery through handoff, and I bias toward practical systems that teams, residents, or operators can actually use.",
       },
       contact: {
         eyebrow: 'Contact',
@@ -384,33 +384,33 @@ export const uiCopy: Record<Language, UiCopy> = {
     },
     sections: {
       servicesKicker: '計画 / 構築 / 安定化',
-      servicesTitle: '曖昧さから、公開後に支援しやすいソフトウェアまでをつなぐ具体的な3つの提案。',
+      servicesTitle: '複雑な実ワークフローから、公開後に支援しやすいソフトウェアまでをつなぐ具体的な3つの提案。',
       servicesLead:
         '各提案には明確な成果物があります。設計を固める、作る、既存システムを安定させる、のいずれかから始められます。',
       projectsKicker: 'ケーススタディ',
-      projectsTitle: 'API連携アプリ、マーケットプレイス、社内ツール、運用ツールの実行例。',
-      projectsLead: '公開とサポートの現実に合わせた実用的なシステムを前提にしています。',
+      projectsTitle: 'API連携アプリ、公共系システム、マーケットプレイス、社内ツール、運用ツールの実行例。',
+      projectsLead: '公開、公共性、サポートの現実に合わせた実用的なシステムを前提にしています。',
       processKicker: '進め方',
       processTitle: 'スコープ、設計、実装、引き渡しをつなげる短い進行。',
       processLead: '進捗が見え、判断点が明確で、最後にチームが運用できる状態を目指します。',
       contactKicker: '相談について',
-      footerLine: '実用的なWebシステムの実装、連携、支援しやすい公開を提供します。',
+      footerLine: '実用的なWebシステムの実装、システム分析、連携、支援しやすい公開を提供します。',
     },
     pages: {
       landing: {
         heroPrimaryCta: 'ケーススタディを見る',
         heroSecondaryCta: '相談する',
-        credibilityHeading: 'Denuo Webが重視すること',
+        credibilityHeading: 'この delivery umbrella が重視すること',
         credibilityBullets: [
           {
-            title: 'オペレーターが直接進める実行',
+            title: '技術責任をつなげる実行',
             detail:
-              'アカウント管理層ではなく、技術判断と実装を担当する本人と直接やり取りできます。',
+              '技術判断、実装、ドキュメント、サポート引き継ぎを分断せずにつなげます。',
           },
           {
             title: '制約に合う設計',
             detail:
-              'アーキテクチャ、データフロー、デプロイ方針は、チーム規模・予算・運用現実に合わせて決めます。',
+              'アーキテクチャ、データフロー、デプロイ方針は、チーム規模・予算・組織文脈・運用現実に合わせて決めます。',
           },
           {
             title: '毎週見える進捗',
@@ -420,7 +420,7 @@ export const uiCopy: Record<Language, UiCopy> = {
           {
             title: '運用を見据えた納品',
             detail:
-              '目的は、見た目だけの試作品ではなく、公開・監視・引き継ぎができるシステムです。',
+              '目的は、見た目だけの試作品ではなく、公開・文書化・サポート・引き継ぎができるシステムです。',
           },
         ],
         featuredWorkHeading: '注目のケーススタディ',
@@ -447,10 +447,10 @@ export const uiCopy: Record<Language, UiCopy> = {
             detail: 'デプロイを安定させ、システムを文書化し、運用を引き渡します。',
           },
         ],
-        aboutHeading: '仕事を進める人',
+        aboutHeading: 'この仕事の umbrella',
         aboutBody:
-          'Denuo Web は Jaron Rosenau が運営しています。チームと直接連携し、本番で使えるソフトウェアをスコープ、実装、連携、安定化まで進めます。',
-        aboutCta: 'スタジオについて読む',
+          'Denuo Web は、Jaron Rosenau の独立したソフトウェア delivery / ポートフォリオ umbrella です。実用的な Web システム、連携、公共系ツール、ケーススタディプロジェクトを整理しています。',
+        aboutCta: '仕事について読む',
         intakeLabel: '最初の相談で共有してほしい内容:',
         intakePrompts: [
           'システムが誰のためのものか、何を実現する必要があるか。',
@@ -462,7 +462,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       services: {
         eyebrow: 'サービス',
-        heroTitle: '実装、連携、支援しやすいシステムが必要なチーム向けの3つの提案。',
+        heroTitle: '実装、システム分析、連携、支援しやすいソフトウェアが必要なチーム向けの3つの提案。',
         heroLead:
           '各提案は明確な成果物から始まり、チームが運用できるシステムとして終わります。',
         heroPrimaryCta: '案件について連絡する',
@@ -482,9 +482,9 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       work: {
         eyebrow: '実績',
-        heroTitle: 'アプリ、連携、マーケットプレイス、運用ツールのケーススタディ。',
+        heroTitle: 'アプリ、公共系システム、連携、マーケットプレイス、運用ツールのケーススタディ。',
         heroLead:
-          '課題、実装、運用結果を示し、3つの提案のどれが合うかを見やすくしています。',
+          '課題、実装、運用結果を示し、3つの提案が実世界のシステム作業にどう対応するかを見やすくしています。',
         heroPrimaryCta: '似た案件を相談する',
         heroSecondaryCta: 'サービスを見る',
         gridHeading: 'ケーススタディ',
@@ -544,9 +544,9 @@ export const uiCopy: Record<Language, UiCopy> = {
       },
       about: {
         eyebrow: '概要',
-        heroTitle: 'Denuo Web がやること',
+        heroTitle: 'Denuo Web の位置づけ',
         heroBody:
-          'Denuo Web は、実用的な提供が必要なチーム向けに、API連携Webアプリ、マーケットプレイス、社内ツール、運用ツールを構築します。',
+          'Denuo Web は、Jaron Rosenau の独立したソフトウェア delivery / ポートフォリオ umbrella です。API連携Webアプリ、マーケットプレイス、公共系ツール、社内ツール、運用ツールを整理しています。',
         heroPrimaryCta: '案件を相談する',
         heroSecondaryCta: '実績を見る',
         howHeading: '進め方',
@@ -556,9 +556,9 @@ export const uiCopy: Record<Language, UiCopy> = {
         evidenceCta: '実績を見る',
         optionsHeading: '3つの提案',
         optionsCta: 'サービスを見る',
-        finalHeading: 'スタジオの実行担当',
+        finalHeading: '仕事の実行担当',
         finalBody:
-          'Jaron Rosenau が最初の相談から引き渡しまで手を動かし、小規模チームが運用できる実用的なシステムを優先します。',
+          'Jaron Rosenau が調査から引き渡しまで手を動かし、チーム、住民、運用担当者が実際に使えるシステムを優先します。',
       },
       contact: {
         eyebrow: '連絡',

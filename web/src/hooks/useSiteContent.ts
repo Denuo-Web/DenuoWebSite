@@ -4,9 +4,11 @@ import { collection, doc, getDocs, onSnapshot, setDoc, writeBatch } from 'fireba
 import { fallbackContent } from '../content/fallback'
 import { db } from '../lib/firebase'
 import { toProjectSlug } from '../lib/projectSlug'
-import type { CaseStudy, ContactInfo, ServicePackage, SiteContent, Testimonial } from '../types'
+import type { CaseStudy, ContactInfo, HeroContent, ServicePackage, SiteContent, Testimonial } from '../types'
 
 const fallbackCaseStudyBySlug = new Map(fallbackContent.work.caseStudies.map((item) => [item.slug, item]))
+const legacyPositioningPattern =
+  /software delivery lab|software delivery practice|practical web systems for teams that need implementation, integrations, and supportable launches|implementation\s*\/\s*integrations\s*\/\s*support handoff|one accountable operator|operator behind the studio|fractional cto|full-stack delivery partner/i
 
 const isString = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0
 
@@ -14,6 +16,38 @@ const toStringArray = (value: unknown, fallback: string[] = []): string[] => {
   if (!Array.isArray(value)) return [...fallback]
   const next = value.filter(isString).map((entry) => entry.trim())
   return next.length > 0 ? next : [...fallback]
+}
+
+const isLegacyPositioningCopy = (value: string) => legacyPositioningPattern.test(value)
+
+const sanitizePositioningString = (value: unknown, fallback: string): string => {
+  if (!isString(value)) return fallback
+  const trimmed = value.trim()
+  return isLegacyPositioningCopy(trimmed) ? fallback : trimmed
+}
+
+const normalizeHero = (value: unknown): HeroContent => {
+  if (!value || typeof value !== 'object') return fallbackContent.hero
+
+  const record = value as Partial<HeroContent>
+  return {
+    eyebrow: sanitizePositioningString(record.eyebrow, fallbackContent.hero.eyebrow),
+    title: sanitizePositioningString(record.title, fallbackContent.hero.title),
+    subtitle: sanitizePositioningString(record.subtitle, fallbackContent.hero.subtitle),
+    badge: sanitizePositioningString(record.badge, fallbackContent.hero.badge),
+    primaryCta: isString(record.primaryCta) ? record.primaryCta.trim() : fallbackContent.hero.primaryCta,
+    secondaryCta: isString(record.secondaryCta) ? record.secondaryCta.trim() : fallbackContent.hero.secondaryCta,
+  }
+}
+
+const normalizeDifferentiators = (value: unknown): string[] => {
+  if (!Array.isArray(value)) return fallbackContent.differentiators
+  const next = value
+    .filter(isString)
+    .map((entry) => entry.trim())
+    .filter((entry) => !isLegacyPositioningCopy(entry))
+
+  return next.length > 0 ? next : fallbackContent.differentiators
 }
 
 const normalizeServicePackage = (value: unknown, fallback?: ServicePackage): ServicePackage | undefined => {
@@ -174,12 +208,10 @@ export function useSiteContent() {
           : fallbackContent.work.caseStudies
 
       setContent({
-        hero: liveDocument.hero ?? fallbackContent.hero,
+        hero: normalizeHero(liveDocument.hero),
         stats: Array.isArray(liveDocument.stats) ? liveDocument.stats : fallbackContent.stats,
         services: Array.isArray(liveDocument.services) ? liveDocument.services : fallbackContent.services,
-        differentiators: Array.isArray(liveDocument.differentiators)
-          ? liveDocument.differentiators
-          : fallbackContent.differentiators,
+        differentiators: normalizeDifferentiators(liveDocument.differentiators),
         projects: liveProjects,
         work: {
           caseStudies,

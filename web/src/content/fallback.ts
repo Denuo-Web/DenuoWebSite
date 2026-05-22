@@ -2,11 +2,11 @@ import type { SiteContent } from '../types'
 
 export const fallbackContent: SiteContent = {
   hero: {
-    eyebrow: 'Software delivery lab',
-    title: 'Practical web systems for teams that need implementation, integrations, and supportable launches.',
+    eyebrow: 'Independent software-delivery umbrella',
+    title: 'Practical web systems for real-world workflows, integrations, and supportable launches.',
     subtitle:
-      "Denuo Web is Jaron Rosenau's software delivery practice. I scope, build, integrate, deploy, document, and support API-driven web apps, internal tools, marketplace workflows, and operational tooling.",
-    badge: 'Implementation / integrations / support handoff',
+      "Denuo Web is Jaron Rosenau's independent software-delivery and portfolio umbrella for practical web systems, integrations, civic/public-systems tooling, and supportable case-study projects.",
+    badge: 'Implementation / systems analysis / support handoff',
     primaryCta: 'View case studies',
     secondaryCta: 'Discuss your project',
   },
@@ -14,9 +14,9 @@ export const fallbackContent: SiteContent = {
   services: [
     {
       title: 'Discovery / Implementation Plan',
-      summary: 'Turn unclear requirements, APIs, data flows, or operating constraints into a buildable delivery plan.',
+      summary: 'Turn unclear requirements, civic or operational workflows, APIs, data flows, or constraints into a buildable delivery plan.',
       bullets: [
-        'Clarify users, workflows, system boundaries, data sources, and launch constraints.',
+        'Clarify users, workflows, institutional boundaries, data sources, and launch constraints.',
         'Define API contracts, deployment shape, risks, and a delivery sequence a small team can execute.',
         'Leave with concrete artifacts: scope, system design, decisions, and next implementation steps.',
       ],
@@ -24,7 +24,7 @@ export const fallbackContent: SiteContent = {
     },
     {
       title: 'Web App / Integration Build',
-      summary: 'Ship authenticated apps, dashboards, APIs, checkout flows, admin tools, and workflow automation.',
+      summary: 'Ship authenticated apps, dashboards, APIs, civic/operations tooling, checkout flows, admin tools, and workflow automation.',
       bullets: [
         'Build the app shell, data model, auth/admin paths, and customer-facing workflows.',
         'Connect third-party APIs, webhooks, background jobs, and operational data flows.',
@@ -44,16 +44,16 @@ export const fallbackContent: SiteContent = {
     },
   ],
   differentiators: [
-    'Technical decisions and implementation stay with one accountable operator.',
-    'Work starts from existing constraints: budget, data, staff time, live users, and support burden.',
+    'Denuo Web is a transparent delivery and case-study umbrella for practical implementation work.',
+    'Work starts from existing constraints: budget, data, staff time, public users, and support burden.',
     'API contracts, deployment paths, runbooks, and support notes are treated as part of delivery.',
-    'Progress is shown through working software, documented decisions, and clear next actions.',
+    'Progress is shown through working software, documented decisions, and inspectable public project evidence.',
   ],
   projects: [
     {
       name: 'QuestByCycle',
-      summary: 'Authenticated community climate game with quests, scorekeeping, admin workflows, and event support.',
-      impact: 'Supported live program cycles, participant onboarding, and recurring event operations.',
+      summary: 'Civic transportation engagement platform with quests, badges, leaderboards, auth, admin workflows, and event support.',
+      impact: 'Supported public pilot operations, participant onboarding, sustainable-mobility programming, and 100+ user operations.',
       stack: ['Flask', 'Vite PWA', 'Auth', 'Leaderboards', 'PostgreSQL', 'Redis'],
       link: 'https://questbycycle.org',
       status: 'Live',
@@ -69,9 +69,9 @@ export const fallbackContent: SiteContent = {
     },
     {
       name: 'CrowdPM Platform',
-      summary: 'Map-based planning platform with API boundaries, structured data flows, and contributor-ready architecture.',
-      impact: 'Delivered the implementation path and technical scaffolding used by project leads and contributors.',
-      stack: ['React', 'Vite', 'Map UI', 'API design', 'Data ingest', 'Cloud Run'],
+      summary: 'Firebase/TypeScript PM2.5 monitoring platform with cloud ingest, real-time map visualization, and smoke-tested demo deployments.',
+      impact: 'Connected environmental data workflows to a supportable map and cloud API path for project leads and contributors.',
+      stack: ['TypeScript', 'Firebase', 'Firestore', 'Map UI', 'Data ingest', 'Cloud Run'],
       link: 'https://crowdpmplatform.web.app',
       status: 'In collaboration',
     },
@@ -125,15 +125,15 @@ export const fallbackContent: SiteContent = {
         name: 'QuestByCycle',
         summary:
           'Community climate game platform delivered as a Flask + Vite PWA with account flows, challenge mechanics, leaderboards, and event operations.',
-        impact: 'Powered public game events, supported rider onboarding, and gave organizers a reusable program platform.',
+        impact: 'Powered public game events, supported rider onboarding, and gave organizers a reusable civic transportation program platform.',
         challenge:
-          'The nonprofit needed a production application quickly, with account security and gamified features that worked on mobile for live events.',
+          'The nonprofit needed a production application quickly, with account security, gamified transportation behavior, and mobile-friendly event operations.',
         solution:
-          'Built a Flask backend with a Vite PWA frontend, implemented auth workflows, quest progression logic, leaderboard capabilities, and deployment support for active campaigns.',
+          'Built a Flask backend with a Vite PWA frontend, implemented auth workflows, quest progression logic, leaderboard capabilities, documentation, and deployment support for active campaigns.',
         outcomes: [
-          'Launched a working program platform for recurring games and participant retention.',
+          'Launched a working program platform for recurring games, sustainable mobility engagement, and participant retention.',
           'Delivered authenticated user journeys and points/quest progression.',
-          'Supported leaderboard features and mobile-ready PWA behavior for field usage.',
+          'Supported leaderboard features, mobile-ready PWA behavior, and 100+ user operations for field usage.',
         ],
         stack: ['Flask', 'Vite PWA', 'Auth', 'Leaderboards', 'PostgreSQL', 'Redis'],
         status: 'Live',
@@ -150,13 +150,13 @@ export const fallbackContent: SiteContent = {
         slug: 'crowdpm-platform',
         name: 'CrowdPM Platform',
         summary:
-          'Collaborative planning platform centered on interactive mapping, structured data ingest, and cloud API boundaries for stakeholder workflows.',
+          'Environmental data platform centered on PM2.5 ingest, interactive mapping, structured data flows, and cloud API boundaries for stakeholder workflows.',
         impact:
-          'Delivered architecture, ingestion design, and implementation scaffolding that project leads and contributors could build from.',
+          'Delivered architecture, ingestion design, smoke-tested deployments, and implementation scaffolding that project leads and contributors could build from.',
         challenge:
-          'The team needed a credible discovery path that connected map-heavy UI interactions with reliable backend ingestion and API contracts.',
+          'The team needed a credible discovery path that connected environmental sensor data, map-heavy UI interactions, reliable backend ingestion, and API contracts.',
         solution:
-          'Implemented a React + Vite interface, mapped-data views, API service boundaries, and an ingest pipeline blueprint for operational data flow.',
+          'Implemented a React + Vite interface, mapped-data views, Firebase/TypeScript service boundaries, and an ingest pipeline blueprint for operational data flow.',
         outcomes: [
           'Delivered clear architecture artifacts and API-ready boundaries for implementation teams.',
           'Connected map UI requirements to backend data contracts and ingestion steps.',
@@ -229,7 +229,7 @@ export const fallbackContent: SiteContent = {
     servicePackages: [
       {
         title: 'Discovery / Implementation Plan',
-        summary: 'Technical plan, system design, delivery roadmap, API boundaries, and risk register.',
+        summary: 'Technical plan, system design, delivery roadmap, workflow boundaries, API boundaries, and risk register.',
         outcomes: ['System design', 'Delivery roadmap', 'Tradeoff record'],
         timeline: '1-2 weeks',
       },
@@ -251,12 +251,12 @@ export const fallbackContent: SiteContent = {
   process: [
     {
       title: 'Scope the supportable system',
-      detail: 'Clarify the user, current workflow, existing code/data, deadline, and operational constraints.',
+      detail: 'Clarify the user, current workflow, existing code/data, institutional context, deadline, and operational constraints.',
       outcome: 'A scoped starting point with success criteria, risks, and known unknowns.',
     },
     {
       title: 'Design the implementation path',
-      detail: 'Define system boundaries, data model, API shape, integration points, and deployment path.',
+      detail: 'Define system boundaries, data model, API shape, integration points, support path, and deployment path.',
       outcome: 'A concrete plan that can be built, reviewed, and supported.',
     },
     {
@@ -271,9 +271,9 @@ export const fallbackContent: SiteContent = {
     },
   ],
   contact: {
-    headline: 'Tell me what needs to ship, integrate, or stabilize in the next 60-90 days.',
+    headline: 'Tell me what real-world workflow needs to ship, integrate, or stabilize in the next 60-90 days.',
     subhead:
-      'Share the current system, who uses it, what already exists, and any fixed constraints. I respond with a concrete next step.',
+      'Share the current system, who uses it, what already exists, and any fixed constraints. I respond with a concrete next step and the relevant delivery path.',
     email: 'info@denuoweb.com',
     note: 'Existing codebases, APIs, manual workflows, or partial builds are useful starting points.',
   },

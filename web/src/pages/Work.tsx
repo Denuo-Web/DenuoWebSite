@@ -29,7 +29,7 @@ const offerByCaseStudySlug: Record<string, OfferKey> = {
 const localizedOfferCopy = {
   en: {
     heroNote:
-      'Every project below maps to one of three offers: plan, build, or stabilize. That keeps the work legible for teams with real constraints.',
+      'Every project below maps to one of three offers: plan, build, or stabilize. That keeps the work legible for teams dealing with real users, institutions, and operational constraints.',
     offerSectionHeading: 'Three offers, not a menu of vague services',
     offerSectionLead:
       'Each offer is framed around a decision point, a type of system, and the kind of handoff a team actually needs.',
@@ -40,11 +40,11 @@ const localizedOfferCopy = {
     linkedCaseStudiesLabel: 'Supported by',
     mappedOfferHeading: 'How the case studies map to the offers',
     mappedOfferLead:
-      'The public work is organized around the three offers so prospective buyers can quickly see which engagement matches their situation.',
+      'The public work is organized around the three offers so prospective buyers can quickly see which engagement matches their real-world systems problem.',
   },
   ja: {
     heroNote:
-      '各案件は3つの提供オプションのどれかに対応しています。制約のある小規模チームでも判断しやすい形に整理しています。',
+      '各案件は3つの提供オプションのどれかに対応しています。実利用者、組織、運用制約を抱えるチームでも判断しやすい形に整理しています。',
     offerSectionHeading: '曖昧なサービスメニューではなく、3つの明確な提供オプション',
     offerSectionLead:
       '各オプションは、判断ポイント、対象システム、そして小規模チームに必要な引き継ぎを基準にまとめています。',
@@ -55,7 +55,7 @@ const localizedOfferCopy = {
     linkedCaseStudiesLabel: '該当実績',
     mappedOfferHeading: 'ケーススタディと提供オプションの対応',
     mappedOfferLead:
-      '公開実績を3つの提供オプションに整理し、どの案件がどの相談に近いかをすぐ判断できるようにしています。',
+      '公開実績を3つの提供オプションに整理し、どの案件が実世界のシステム課題に近いかをすぐ判断できるようにしています。',
   },
 } as const
 
@@ -64,26 +64,26 @@ const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
     {
       key: 'discovery',
       title: 'Discovery / Implementation Plan',
-      summary: 'For requirements ambiguity, API ambiguity, data ambiguity, or workflow ambiguity.',
+      summary: 'For requirements ambiguity, API ambiguity, data ambiguity, civic workflow ambiguity, or operating constraints.',
       whoFor:
         'Best for teams that need a technical plan before build work, integration work, or stakeholder review.',
       problems: [
         'No shared system design yet',
-        'APIs, data sources, and constraints are still unclear',
+        'Users, APIs, data sources, institutional constraints, and support paths are still unclear',
         'The team needs tradeoffs before committing to implementation',
       ],
-      deliverables: ['Technical plan', 'System design', 'Delivery roadmap', 'Constraints and tradeoffs'],
+      deliverables: ['Technical plan', 'System design', 'Workflow boundary', 'Delivery roadmap', 'Constraints and tradeoffs'],
       buyerValue: 'You leave with a clear build path and fewer avoidable decisions later.',
       caseStudySlugs: ['crowdpm-platform'],
     },
     {
       key: 'build',
       title: 'Web App / Integration Build',
-      summary: 'For authenticated web apps, APIs, dashboards, checkout flows, admin tools, and workflow systems.',
+      summary: 'For authenticated web apps, civic or operations tools, APIs, dashboards, checkout flows, admin tools, and workflow systems.',
       whoFor: 'Best for teams that need a working product increment and a supportable launch path.',
       problems: [
         'The product needs to move from concept to a usable system',
-        'Auth, data model, API boundaries, and deployment foundations still need to be built',
+        'Auth, data model, API boundaries, support paths, and deployment foundations still need to be built',
         'The team needs a production-ready path, not just a prototype',
       ],
       deliverables: [
@@ -120,20 +120,20 @@ const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
     {
       key: 'discovery',
       title: 'アーキテクチャ / ディスカバリー・スプリント',
-      summary: '要件・API・データ・ワークフローの不確実性がある段階向けです。',
+      summary: '要件・API・データ・公共ワークフロー・運用制約の不確実性がある段階向けです。',
       whoFor:
         '実装、連携、関係者レビューの前に技術方針を固めたいチームに向いています。',
-      problems: ['システム設計の共通認識がまだない', 'API、データソース、制約が不明確', '実装前に判断材料が必要'],
-      deliverables: ['技術計画', 'システム設計', '進行ロードマップ', '制約とトレードオフ'],
+      problems: ['システム設計の共通認識がまだない', '利用者、API、データソース、組織上の制約、サポート経路が不明確', '実装前に判断材料が必要'],
+      deliverables: ['技術計画', 'システム設計', 'ワークフロー境界', '進行ロードマップ', '制約とトレードオフ'],
       buyerValue: '実装に入る前に、進むべき道筋が明確になります。',
       caseStudySlugs: ['crowdpm-platform'],
     },
     {
       key: 'build',
       title: 'Webアプリ / 連携構築',
-      summary: '認証付きWebアプリ、API、ダッシュボード、決済、管理画面、ワークフロー向けです。',
+      summary: '認証付きWebアプリ、公共 / 運用ツール、API、ダッシュボード、決済、管理画面、ワークフロー向けです。',
       whoFor: '動く成果物と、支援しやすい公開経路が必要なチーム向けです。',
-      problems: ['アイデアから使えるシステムへ進めたい', '認証・データモデル・API境界・デプロイ基盤がまだない', '試作品ではなく本番前提の土台が必要'],
+      problems: ['アイデアから使えるシステムへ進めたい', '認証・データモデル・API境界・サポート経路・デプロイ基盤がまだない', '試作品ではなく本番前提の土台が必要'],
       deliverables: ['動くプロダクトの増分', 'データモデル + アプリ基盤', '認証/管理の土台', '本番対応のデプロイ経路'],
       buyerValue: 'チームが使って、確認して、次の改善へ進める形になります。',
       caseStudySlugs: ['questbycycle', 'moonshine-art'],

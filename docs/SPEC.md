@@ -1,8 +1,8 @@
 # Denuo Web site spec
 
 ## Purpose & audience
-- Position Denuo Web, LLC (Jaron Rosenau) as a fractional CTO/full-stack delivery partner for founders, nonprofits, and research teams.
-- Showcase recent work (QuestByCycle PWA, Moonshine Art marketplace, CrowdPM platform) and service lines drawn from Jaron's resume and portfolio repos.
+- Position Denuo Web, LLC as Jaron Rosenau's independent software-delivery and portfolio umbrella for practical web systems, integrations, civic/public-systems tooling, and supportable case-study projects.
+- Showcase recent work (QuestByCycle PWA, CrowdPM platform, Moonshine Art marketplace, APK Workbench, DripCopy) and service lines drawn from Jaron's resume and portfolio repos without presenting the umbrella as conventional employment history.
 - Provide a gated admin dashboard for rapid content edits without code deploys.
 
 ## Stack
@@ -16,10 +16,10 @@
 
 ## Pages & UX
 - Landing (`/`)
-  - Hero with eyebrow, bold headline, CTA buttons, and stat strip (games launched, honorarium, cloud coverage).
-  - Services grid (strategy, build, platform) with differentiator pills.
+  - Hero with eyebrow, bold headline, CTA buttons, and controlled Denuo Web umbrella framing.
+  - Services grid (Discovery / Implementation Plan, Web App / Integration Build, Stabilize / Support Handoff) with differentiator pills.
   - Work/projects grid featuring QuestByCycle, Moonshine Art, CrowdPM with stack tags and status badges.
-  - Process timeline (Discover → Architecture → Build → Launch).
+  - Process timeline (Scope → Design → Build → Launch + handoff).
   - Contact CTA with email.
   - Footer with contact email + admin link.
 - Admin dashboard (`/admin`)
