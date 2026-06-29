@@ -8,6 +8,8 @@ import type { Language } from './i18n/uiCopy'
 import AdminPage from './pages/Admin'
 import AboutPage from './pages/About'
 import ContactPage from './pages/Contact'
+import HnsBrowserPage from './pages/HnsBrowser'
+import HnsBrowserPrivacyPage from './pages/HnsBrowserPrivacy'
 import LandingPage from './pages/Landing'
 import ProcessPage from './pages/Process'
 import ServicesPage from './pages/Services'
@@ -136,6 +138,8 @@ function App() {
         <Route path="/services" element={<ServicesPage {...marketingPageProps} />} />
         <Route path="/work" element={<WorkPage {...marketingPageProps} />} />
         <Route path="/work/:slug" element={<WorkDetailPage {...marketingPageProps} />} />
+        <Route path="/hns-browser" element={<HnsBrowserPage {...marketingPageProps} />} />
+        <Route path="/hns-browser/privacy" element={<HnsBrowserPrivacyPage {...marketingPageProps} />} />
         <Route path="/process" element={<ProcessPage {...marketingPageProps} />} />
         <Route path="/contact" element={<ContactPage {...marketingPageProps} />} />
         <Route path="/about" element={<AboutPage {...marketingPageProps} />} />

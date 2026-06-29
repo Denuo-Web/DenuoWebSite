@@ -42,6 +42,7 @@ const MarketingShell = ({
   const links = [
     { to: '/services', label: copy.nav.services },
     { to: '/work', label: copy.nav.work },
+    { to: '/hns-browser', label: 'HNS Browser' },
     { to: '/process', label: copy.nav.process },
     { to: '/contact', label: copy.nav.contact },
     { to: '/about', label: copy.nav.about },
