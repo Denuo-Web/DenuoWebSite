@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.denuoweb.hnsdane",
+      "sha256_cert_fingerprints": [
+        "CA:0F:1C:B4:27:2E:DB:53:3E:2F:FE:AE:2B:83:E5:9F:D3:CF:CD:BD:8D:AA:8F:C6:4E:8D:B0:BD:1D:C1:9F:98"
+      ]
+    }
+  }
+]
