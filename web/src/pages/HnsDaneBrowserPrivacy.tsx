@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
-const SUPPORT_URL = 'https://github.com/denuoweb/handshake-browser-android/issues'
-const SOURCE_URL = 'https://github.com/denuoweb/handshake-browser-android'
+const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android/issues'
+const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android'
 
 const localData = [
   'Browsing history: page URLs, page titles, and visit times.',
@@ -24,7 +24,7 @@ const networkRequests = [
   'Android DownloadManager destinations when you choose to download a file.',
 ]
 
-const HnsBrowserPrivacyPage = ({
+const HnsDaneBrowserPrivacyPage = ({
   content,
   loading,
   error,
@@ -49,15 +49,15 @@ const HnsBrowserPrivacyPage = ({
             <Text color="indigo" size="1" weight="medium">
               Last updated: 2026-06-29
             </Text>
-            <Heading size="8">HNS Browser Privacy Policy</Heading>
+            <Heading size="8">HNS-DANE Browser Privacy Policy</Heading>
             <Text color="gray" size="3">
-              HNS Browser is published by Denuo Web, LLC. For privacy questions or deletion requests, use the project issue tracker or the contact method listed by the developer in Google Play Console.
+              HNS-DANE Browser is published by Denuo Web, LLC. For privacy questions or deletion requests, use the project issue tracker or the contact method listed by the developer in Google Play Console.
             </Text>
           </Flex>
 
           <PolicySection title="Summary">
             <Text>
-              HNS Browser is a browser for Handshake (HNS), DNSSEC, and DANE testing. The app does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Donations are optional and do not unlock app functionality.
+              HNS-DANE Browser is a browser for Handshake (HNS), DNSSEC, and DANE testing. The app does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Donations are optional and do not unlock app functionality.
             </Text>
             <Text>
               The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.
@@ -85,13 +85,13 @@ const HnsBrowserPrivacyPage = ({
 
           <PolicySection title="Cookies and website data">
             <Text>
-              Websites may set cookies or use WebView storage. HNS Browser provides Settings controls to block third-party cookies and delete cookies. Websites are responsible for their own privacy practices.
+              Websites may set cookies or use WebView storage. HNS-DANE Browser provides Settings controls to block third-party cookies and delete cookies. Websites are responsible for their own privacy practices.
             </Text>
           </PolicySection>
 
           <PolicySection title="Data sharing">
             <Text>
-              Denuo Web does not sell personal or sensitive user data. HNS Browser shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file.
+              Denuo Web does not sell personal or sensitive user data. HNS-DANE Browser shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file.
             </Text>
           </PolicySection>
 
@@ -100,13 +100,13 @@ const HnsBrowserPrivacyPage = ({
               Local browser data remains on the device until you clear it or uninstall the app. The app provides Settings controls for clearing cookies, browsing history, download records, and the HNS resolver cache. Android system settings can also clear all app storage.
             </Text>
             <Text>
-              HNS Browser does not create developer-operated user accounts, so there is no app account deletion flow.
+              HNS-DANE Browser does not create developer-operated user accounts, so there is no app account deletion flow.
             </Text>
           </PolicySection>
 
           <PolicySection title="Children">
             <Text>
-              HNS Browser is not directed to children. Because it is a general-purpose browser, websites opened by users may contain third-party content outside Denuo Web&apos;s control.
+              HNS-DANE Browser is not directed to children. Because it is a general-purpose browser, websites opened by users may contain third-party content outside Denuo Web&apos;s control.
             </Text>
           </PolicySection>
 
@@ -118,7 +118,7 @@ const HnsBrowserPrivacyPage = ({
 
           <Flex gap="3" wrap="wrap">
             <Button asChild>
-              <Link to="/hns-browser">HNS Browser overview</Link>
+              <Link to="/work/hns-dane-browser">HNS-DANE Browser overview</Link>
             </Button>
             <Button asChild variant="soft">
               <RadixLink href={SUPPORT_URL} target="_blank" rel="noreferrer">
@@ -162,4 +162,4 @@ const PolicyList = ({ title, items }: { title: string; items: string[] }) => (
   </PolicySection>
 )
 
-export default HnsBrowserPrivacyPage
+export default HnsDaneBrowserPrivacyPage

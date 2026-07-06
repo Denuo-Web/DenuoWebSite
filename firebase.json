@@ -2,6 +2,38 @@
   "hosting": {
     "public": "web/dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/hns-browser",
+        "destination": "/work/hns-dane-browser",
+        "type": 301
+      },
+      {
+        "source": "/hns-browser/privacy",
+        "destination": "/work/hns-dane-browser/privacy",
+        "type": 301
+      },
+      {
+        "source": "/hns-browser/privacy/**",
+        "destination": "/work/hns-dane-browser/privacy",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-browser",
+        "destination": "/work/hns-dane-browser",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-browser/privacy",
+        "destination": "/work/hns-dane-browser/privacy",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser",
+        "destination": "/work/hns-dane-browser",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "/api/**",

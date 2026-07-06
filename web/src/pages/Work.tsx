@@ -59,6 +59,25 @@ const localizedOfferCopy = {
   },
 } as const
 
+const localizedHnsDaneBrowserWorkCard = {
+  en: {
+    status: 'Denuo Web product',
+    badge: 'Open source Android app',
+    title: 'HNS-DANE Browser',
+    summary: 'Experimental Android browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
+    impact: 'Publishes the product overview, privacy surface, and source link as part of Denuo Web work.',
+    outcomes: ['Local HNS proof path', 'DNSSEC and DANE diagnostics'],
+  },
+  ja: {
+    status: 'Denuo Web プロダクト',
+    badge: 'オープンソース Android アプリ',
+    title: 'HNS-DANE Browser',
+    summary: 'Handshake 名、DNSSEC、DANE 検証、リゾルバ診断のための実験的 Android ブラウザ。',
+    impact: 'プロダクト概要、プライバシー情報、ソースリンクを Denuo Web の実績として公開しています。',
+    outcomes: ['ローカル HNS 証明パス', 'DNSSEC と DANE の診断'],
+  },
+} as const
+
 const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
   en: [
     {
@@ -183,6 +202,7 @@ const WorkPage = ({
   const offerCopy = localizedOfferCopy[language]
   const offers = offerDefinitions[language]
   const offerByKey = new Map(offers.map((offer) => [offer.key, offer]))
+  const hnsDaneBrowserWorkCard = localizedHnsDaneBrowserWorkCard[language]
   const offerGroups = offers.map((offer) => ({
     ...offer,
     caseStudies: work.caseStudies.filter(
@@ -270,6 +290,33 @@ const WorkPage = ({
                     </Card>
                   )
                 })}
+                <Card key="hns-dane-browser" asChild size="3" variant="surface">
+                  <Link to="/work/hns-dane-browser">
+                    <Flex direction="column" gap="2">
+                      <Flex gap="2" wrap="wrap">
+                        <Badge variant="soft">{hnsDaneBrowserWorkCard.status}</Badge>
+                        <Badge color="indigo">{hnsDaneBrowserWorkCard.badge}</Badge>
+                      </Flex>
+                      <Heading size="4">{hnsDaneBrowserWorkCard.title}</Heading>
+                      <Text color="gray">{hnsDaneBrowserWorkCard.summary}</Text>
+                      <Text size="2" color="gray">
+                        {hnsDaneBrowserWorkCard.impact}
+                      </Text>
+                      <Box asChild pl="3" m="0">
+                        <ul>
+                          {hnsDaneBrowserWorkCard.outcomes.map((outcome) => (
+                            <li key={outcome}>
+                              <Text size="2">{outcome}</Text>
+                            </li>
+                          ))}
+                        </ul>
+                      </Box>
+                      <Text size="2" color="gray">
+                        {workCopy.openDetailsLabel}
+                      </Text>
+                    </Flex>
+                  </Link>
+                </Card>
               </Grid>
             </Flex>
           </section>

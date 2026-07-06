@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
-const PRIVACY_URL = '/hns-browser/privacy'
-const SOURCE_URL = 'https://github.com/denuoweb/handshake-browser-android'
-const SUPPORT_URL = 'https://github.com/denuoweb/handshake-browser-android/issues'
+const PRIVACY_URL = '/work/hns-dane-browser/privacy'
+const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android'
+const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android/issues'
 const PLAY_PACKAGE = 'com.handshake.browser'
 
 const localData = [
@@ -40,7 +40,7 @@ const featureCards = [
   },
 ]
 
-const HnsBrowserPage = ({
+const HnsDaneBrowserPage = ({
   content,
   loading,
   error,
@@ -66,7 +66,7 @@ const HnsBrowserPage = ({
               <Text color="indigo" size="1" weight="medium">
                 Denuo Web product
               </Text>
-              <Heading size="8">HNS Browser</Heading>
+              <Heading size="8">HNS-DANE Browser</Heading>
               <Text size="4" color="gray">
                 An experimental Android browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.
               </Text>
@@ -110,7 +110,7 @@ const HnsBrowserPage = ({
           <Flex direction="column" gap="3">
             <Heading size="6">Privacy summary</Heading>
             <Text color="gray">
-              HNS Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.
+              HNS-DANE Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.
             </Text>
             <Grid columns={{ initial: '1', md: '2' }} gap="3">
               <Box>
@@ -148,4 +148,4 @@ const HnsBrowserPage = ({
   )
 }
 
-export default HnsBrowserPage
+export default HnsDaneBrowserPage

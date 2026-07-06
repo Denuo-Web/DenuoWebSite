@@ -8,8 +8,8 @@ import type { Language } from './i18n/uiCopy'
 import AdminPage from './pages/Admin'
 import AboutPage from './pages/About'
 import ContactPage from './pages/Contact'
-import HnsBrowserPage from './pages/HnsBrowser'
-import HnsBrowserPrivacyPage from './pages/HnsBrowserPrivacy'
+import HnsDaneBrowserPage from './pages/HnsDaneBrowser'
+import HnsDaneBrowserPrivacyPage from './pages/HnsDaneBrowserPrivacy'
 import LandingPage from './pages/Landing'
 import ProcessPage from './pages/Process'
 import ServicesPage from './pages/Services'
@@ -137,9 +137,15 @@ function App() {
         <Route path="/" element={<LandingPage {...marketingPageProps} />} />
         <Route path="/services" element={<ServicesPage {...marketingPageProps} />} />
         <Route path="/work" element={<WorkPage {...marketingPageProps} />} />
+        <Route path="/work/hns-dane-browser" element={<HnsDaneBrowserPage {...marketingPageProps} />} />
+        <Route path="/work/hns-dane-browser/privacy" element={<HnsDaneBrowserPrivacyPage {...marketingPageProps} />} />
         <Route path="/work/:slug" element={<WorkDetailPage {...marketingPageProps} />} />
-        <Route path="/hns-browser" element={<HnsBrowserPage {...marketingPageProps} />} />
-        <Route path="/hns-browser/privacy" element={<HnsBrowserPrivacyPage {...marketingPageProps} />} />
+        <Route path="/work/hns-browser" element={<Navigate to="/work/hns-dane-browser" replace />} />
+        <Route path="/work/hns-browser/privacy" element={<Navigate to="/work/hns-dane-browser/privacy" replace />} />
+        <Route path="/hns-browser" element={<Navigate to="/work/hns-dane-browser" replace />} />
+        <Route path="/hns-browser/privacy" element={<Navigate to="/work/hns-dane-browser/privacy" replace />} />
+        <Route path="/hns-dane-browser" element={<Navigate to="/work/hns-dane-browser" replace />} />
+        <Route path="/hns-dane-browser/privacy" element={<Navigate to="/work/hns-dane-browser/privacy" replace />} />
         <Route path="/process" element={<ProcessPage {...marketingPageProps} />} />
         <Route path="/contact" element={<ContactPage {...marketingPageProps} />} />
         <Route path="/about" element={<AboutPage {...marketingPageProps} />} />
