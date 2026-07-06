@@ -63,7 +63,7 @@ const localizedHnsDaneBrowserWorkCard = {
   en: {
     status: 'Denuo Web product',
     badge: 'Open source Android app',
-    title: 'HNS-DANE Browser',
+    title: 'HNS DANE Browser',
     summary: 'Experimental Android browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
     impact: 'Publishes the product overview, privacy surface, and source link as part of Denuo Web work.',
     outcomes: ['Local HNS proof path', 'DNSSEC and DANE diagnostics'],
@@ -71,7 +71,7 @@ const localizedHnsDaneBrowserWorkCard = {
   ja: {
     status: 'Denuo Web プロダクト',
     badge: 'オープンソース Android アプリ',
-    title: 'HNS-DANE Browser',
+    title: 'HNS DANE Browser',
     summary: 'Handshake 名、DNSSEC、DANE 検証、リゾルバ診断のための実験的 Android ブラウザ。',
     impact: 'プロダクト概要、プライバシー情報、ソースリンクを Denuo Web の実績として公開しています。',
     outcomes: ['ローカル HNS 証明パス', 'DNSSEC と DANE の診断'],

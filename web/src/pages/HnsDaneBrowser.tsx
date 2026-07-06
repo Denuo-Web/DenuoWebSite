@@ -66,7 +66,7 @@ const HnsDaneBrowserPage = ({
               <Text color="indigo" size="1" weight="medium">
                 Denuo Web product
               </Text>
-              <Heading size="8">HNS-DANE Browser</Heading>
+              <Heading size="8">HNS DANE Browser</Heading>
               <Text size="4" color="gray">
                 An experimental Android browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.
               </Text>
@@ -110,7 +110,7 @@ const HnsDaneBrowserPage = ({
           <Flex direction="column" gap="3">
             <Heading size="6">Privacy summary</Heading>
             <Text color="gray">
-              HNS-DANE Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.
+              HNS DANE Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.
             </Text>
             <Grid columns={{ initial: '1', md: '2' }} gap="3">
               <Box>
