@@ -15,7 +15,6 @@ import {
   TextField,
   Tooltip,
 } from '@radix-ui/themes'
-import { GlobeIcon } from '@radix-ui/react-icons'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent, FormEvent, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
@@ -31,8 +30,6 @@ interface AdminProps {
   onSave: (next: SiteContent) => Promise<void>
   onSaveTranslation: (language: Language, next: unknown) => Promise<void>
   onOpenThemePanel: () => void
-  language: Language
-  onToggleLanguage: () => void
   copy: UiCopy
   copyByLanguage: Record<Language, UiCopy>
   translationError: string | null
@@ -43,8 +40,6 @@ const AdminPage = ({
   onSave,
   onSaveTranslation,
   onOpenThemePanel,
-  language,
-  onToggleLanguage,
   copy,
   copyByLanguage,
   translationError,
@@ -289,12 +284,6 @@ const AdminPage = ({
           <IconButton variant="soft" onClick={onOpenThemePanel} aria-label={copy.nav.themeToggle}>
             <Kbd>t</Kbd>
           </IconButton>
-        </Tooltip>
-        <Tooltip content={copy.nav.languageToggle}>
-          <Button variant="soft" onClick={onToggleLanguage} aria-label={copy.nav.languageToggle} size="2">
-            <GlobeIcon />
-            <Text ml="2">{language === 'en' ? 'EN' : '日本'}</Text>
-          </Button>
         </Tooltip>
       </Flex>
     </Flex>

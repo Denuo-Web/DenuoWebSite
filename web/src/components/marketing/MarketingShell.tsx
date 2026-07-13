@@ -53,7 +53,7 @@ const MarketingShell = ({
         <Card size="3" variant="surface">
           <Flex align="center" justify="between" wrap="wrap" gap="4">
             <Box asChild>
-              <Link to="/" aria-label="Denuo Web home" className="brand-logo-link">
+              <Link to="/" aria-label={copy.chrome.homeLabel} className="brand-logo-link">
                 <img src="/denuweb.png" alt="Denuo Web" className="brand-logo brand-logo--header" />
               </Link>
             </Box>
@@ -82,12 +82,12 @@ const MarketingShell = ({
 
         {loading && (
           <Callout.Root color="indigo">
-            <Callout.Text>Syncing live content…</Callout.Text>
+            <Callout.Text>{copy.chrome.loadingLabel}</Callout.Text>
           </Callout.Root>
         )}
         {error && (
           <Callout.Root color="ruby">
-            <Callout.Text>{error}</Callout.Text>
+            <Callout.Text>{copy.chrome.errorLabel}</Callout.Text>
           </Callout.Root>
         )}
 
@@ -102,7 +102,7 @@ const MarketingShell = ({
             <Flex align="center" justify="between" wrap="wrap" gap="3">
               <Box>
                 <Box asChild mb="2">
-                  <Link to="/" aria-label="Denuo Web home" className="brand-logo-link">
+                  <Link to="/" aria-label={copy.chrome.homeLabel} className="brand-logo-link">
                     <img src="/denuweb.png" alt="Denuo Web, LLC" className="brand-logo brand-logo--footer" />
                   </Link>
                 </Box>

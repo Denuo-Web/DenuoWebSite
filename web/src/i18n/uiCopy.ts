@@ -23,6 +23,34 @@ interface CredibilityBullet {
 }
 
 export interface UiCopy {
+  meta: {
+    title: string
+    description: string
+  }
+  chrome: {
+    homeLabel: string
+    themeTitle: string
+    closeLabel: string
+    loadingLabel: string
+    errorLabel: string
+    detailsLabel: string
+    visitLabel: string
+    supportLabel: string
+    emailLabel: string
+    emailDenuoLabel: string
+  }
+  theme: {
+    accentColor: string
+    grayColor: string
+    appearance: string
+    light: string
+    dark: string
+    radius: string
+    scaling: string
+    panelBackground: string
+    solid: string
+    translucent: string
+  }
   nav: {
     services: string
     work: string
@@ -146,6 +174,34 @@ export interface UiCopy {
 
 export const uiCopy: Record<Language, UiCopy> = {
   en: {
+    meta: {
+      title: 'Denuo Web - Practical Software Delivery',
+      description: 'Denuo Web builds practical API-driven web apps, integrations, marketplace workflows, internal tools, and supportable launches.',
+    },
+    chrome: {
+      homeLabel: 'Denuo Web home',
+      themeTitle: 'Theme',
+      closeLabel: 'Close',
+      loadingLabel: 'Syncing live content…',
+      errorLabel: 'Unable to load live content. Showing bundled content instead.',
+      detailsLabel: 'Details',
+      visitLabel: 'Visit',
+      supportLabel: 'Support',
+      emailLabel: 'Email',
+      emailDenuoLabel: 'Email Denuo Web',
+    },
+    theme: {
+      accentColor: 'Accent color',
+      grayColor: 'Gray color',
+      appearance: 'Appearance',
+      light: 'Light',
+      dark: 'Dark',
+      radius: 'Corner radius',
+      scaling: 'Scaling',
+      panelBackground: 'Panel background',
+      solid: 'Solid',
+      translucent: 'Translucent',
+    },
     nav: {
       services: 'Services',
       work: 'Work',
@@ -371,6 +427,34 @@ export const uiCopy: Record<Language, UiCopy> = {
     },
   },
   ja: {
+    meta: {
+      title: 'Denuo Web - 実用的なソフトウェア開発',
+      description: 'Denuo Webは、API連携Webアプリ、マーケットプレイス、社内ツール、運用可能なシステムを設計・構築します。',
+    },
+    chrome: {
+      homeLabel: 'Denuo Web ホーム',
+      themeTitle: 'テーマ',
+      closeLabel: '閉じる',
+      loadingLabel: '最新コンテンツを同期しています…',
+      errorLabel: '最新コンテンツを読み込めないため、内蔵コンテンツを表示しています。',
+      detailsLabel: '詳細',
+      visitLabel: 'サイトを見る',
+      supportLabel: 'サポート',
+      emailLabel: 'メール',
+      emailDenuoLabel: 'Denuo Webへメールする',
+    },
+    theme: {
+      accentColor: 'アクセント色',
+      grayColor: 'グレー色',
+      appearance: '表示モード',
+      light: 'ライト',
+      dark: 'ダーク',
+      radius: '角の丸み',
+      scaling: '表示倍率',
+      panelBackground: 'パネル背景',
+      solid: '単色',
+      translucent: '半透明',
+    },
     nav: {
       services: 'サービス',
       work: '実績',
@@ -400,7 +484,7 @@ export const uiCopy: Record<Language, UiCopy> = {
       landing: {
         heroPrimaryCta: 'ケーススタディを見る',
         heroSecondaryCta: '相談する',
-        credibilityHeading: 'この delivery umbrella が重視すること',
+        credibilityHeading: '一貫したデリバリーで重視すること',
         credibilityBullets: [
           {
             title: '技術責任をつなげる実行',
@@ -447,9 +531,9 @@ export const uiCopy: Record<Language, UiCopy> = {
             detail: 'デプロイを安定させ、システムを文書化し、運用を引き渡します。',
           },
         ],
-        aboutHeading: 'この仕事の umbrella',
+        aboutHeading: 'この仕事を支える仕組み',
         aboutBody:
-          'Denuo Web は、Jaron Rosenau の独立したソフトウェア delivery / ポートフォリオ umbrella です。実用的な Web システム、連携、公共系ツール、ケーススタディプロジェクトを整理しています。',
+          'Denuo Web は、Jaron Rosenau が手がける独立系ソフトウェアデリバリーとポートフォリオの名称です。実用的なWebシステム、外部連携、公共系ツール、ケーススタディを紹介しています。',
         aboutCta: '仕事について読む',
         intakeLabel: '最初の相談で共有してほしい内容:',
         intakePrompts: [
@@ -546,7 +630,7 @@ export const uiCopy: Record<Language, UiCopy> = {
         eyebrow: '概要',
         heroTitle: 'Denuo Web の位置づけ',
         heroBody:
-          'Denuo Web は、Jaron Rosenau の独立したソフトウェア delivery / ポートフォリオ umbrella です。API連携Webアプリ、マーケットプレイス、公共系ツール、社内ツール、運用ツールを整理しています。',
+          'Denuo Web は、Jaron Rosenau が手がける独立系ソフトウェアデリバリーとポートフォリオの名称です。API連携Webアプリ、マーケットプレイス、公共系ツール、社内ツール、運用ツールを紹介しています。',
         heroPrimaryCta: '案件を相談する',
         heroSecondaryCta: '実績を見る',
         howHeading: '進め方',

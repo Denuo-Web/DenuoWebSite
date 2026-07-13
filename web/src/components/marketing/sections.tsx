@@ -132,12 +132,12 @@ export const CaseStudiesSection = ({ caseStudies, copy }: CaseStudiesSectionProp
                   <Heading size="5">{caseStudy.name}</Heading>
                   <Flex align="center" gap="2">
                     <Button asChild variant="soft" size="1">
-                      <Link to={`/work/${caseStudy.slug}`}>Details</Link>
+                      <Link to={`/work/${caseStudy.slug}`}>{copy.chrome.detailsLabel}</Link>
                     </Button>
                     {caseStudy.liveUrl && (
                       <Button asChild variant="ghost" size="1">
                         <a href={caseStudy.liveUrl} target="_blank" rel="noreferrer">
-                          Visit
+                          {copy.chrome.visitLabel}
                         </a>
                       </Button>
                     )}
@@ -182,7 +182,7 @@ export const ProcessSection = ({ process, copy }: ProcessSectionProps) => {
                 {step.detail && <Text>{step.detail}</Text>}
                 {step.outcome && (
                   <Text color="gray" size="2">
-                    Support: {step.outcome}
+                    {step.outcome}
                   </Text>
                 )}
               </Flex>
@@ -211,7 +211,7 @@ export const ContactSection = ({ contact, copy }: ContactSectionProps) => {
                 {contact.subhead}
               </Text>
               <Flex gap="2" wrap="wrap" mb="2">
-                <Badge variant="soft">Email: {contact.email}</Badge>
+                <Badge variant="soft">{copy.chrome.emailLabel}: {contact.email}</Badge>
               </Flex>
               {contact.note && (
                 <Text color="gray" size="2">
@@ -221,7 +221,7 @@ export const ContactSection = ({ contact, copy }: ContactSectionProps) => {
             </Box>
             <Flex gap="2" wrap="wrap">
               <Button asChild>
-                <a href={`mailto:${contact.email}`}>Email Denuo Web</a>
+                <a href={`mailto:${contact.email}`}>{copy.chrome.emailDenuoLabel}</a>
               </Button>
             </Flex>
           </Flex>
