@@ -1,0 +1,1897 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Pocha Ojisan: event planning, sign painting, interior carpentry, event setup, signs, food, and original apparel." />
+  <title>Pocha Ojisan — Artist &amp; Neighborhood Maker</title>
+  <style>
+    :root {
+      --ink: #2b2119;
+      --ink-soft: #6f5a46;
+      --paper: #fff7ea;
+      --paper-2: #f4e5c7;
+      --accent: #9b3920;
+      --accent-dark: #6e2414;
+      --gold: #d7b36f;
+      --panel: rgba(255, 249, 239, 0.97);
+      --line: rgba(110, 76, 41, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      overflow-x: clip;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+      color: #382a20;
+      background:
+        radial-gradient(circle at 76% 28%, rgba(255, 250, 236, .9), transparent 32%),
+        radial-gradient(circle at 12% 82%, rgba(175, 109, 69, .13), transparent 30%),
+        #e8ddc8;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .32;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+      z-index: -1;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    .app {
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .site-mark {
+      position: absolute;
+      top: 32px;
+      left: 38px;
+      z-index: 3;
+    }
+
+    .site-mark strong,
+    .site-note strong {
+      display: block;
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .site-mark span,
+    .site-note span {
+      display: block;
+      margin-top: 7px;
+      color: rgba(56, 42, 32, .62);
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+
+    .site-note span { margin-top: 0; }
+
+    .site-mark a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-mark a:hover,
+    .site-mark a:focus-visible { color: var(--accent); }
+
+    .site-note {
+      position: absolute;
+      top: 32px;
+      right: 38px;
+      text-align: right;
+      z-index: 3;
+    }
+
+    .language-switcher {
+      position: absolute;
+      top: 76px;
+      right: 38px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid rgba(56, 42, 32, .16);
+      border-radius: 999px;
+      background: rgba(255, 250, 239, .58);
+      backdrop-filter: blur(8px);
+      z-index: 8;
+    }
+
+    .language-btn {
+      min-width: 42px;
+      min-height: 28px;
+      padding: 5px 9px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(56, 42, 32, .62);
+      font: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      cursor: pointer;
+    }
+
+    .language-btn.active {
+      background: #8e3923;
+      color: #fff9ee;
+      box-shadow: 0 4px 12px rgba(91, 40, 25, .18);
+    }
+
+    .language-btn:focus-visible {
+      outline: 2px solid #8e3923;
+      outline-offset: 2px;
+    }
+
+    html[lang="ja"] .intro h1 {
+      font-size: clamp(36px, 3vw, 46px);
+      letter-spacing: -.045em;
+      line-height: 1;
+      word-break: keep-all;
+    }
+
+    .home {
+      width: min(100%, 1160px);
+      min-height: calc(100svh - 56px);
+      display: grid;
+      grid-template-columns: minmax(230px, .72fr) minmax(360px, 1fr) minmax(180px, .55fr);
+      align-items: center;
+      gap: clamp(20px, 4vw, 64px);
+      position: relative;
+    }
+
+    .intro {
+      align-self: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #8e3923;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .intro h1 {
+      margin: 0;
+      max-width: 420px;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", Georgia, serif;
+      font-size: clamp(42px, 6.4vw, 88px);
+      font-weight: 500;
+      letter-spacing: -.055em;
+      line-height: .9;
+    }
+
+    .intro h1 span {
+      display: block;
+      margin-top: 12px;
+      color: #8e3923;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: .2em;
+      font-weight: 800;
+      letter-spacing: .18em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .machine-stage {
+      height: min(82svh, 58vw, 825px);
+      aspect-ratio: 2 / 3;
+      max-width: 90vw;
+      position: relative;
+      justify-self: center;
+      isolation: isolate;
+      filter: drop-shadow(0 28px 24px rgba(66, 43, 24, .24));
+      transition: filter .35s ease, transform .35s ease;
+    }
+
+    .machine-stage::before {
+      content: "";
+      position: absolute;
+      inset: 1% -25% -3%;
+      background: radial-gradient(
+        ellipse at 50% 48%,
+        rgba(78, 51, 31, .23) 0%,
+        rgba(78, 51, 31, .13) 48%,
+        transparent 74%
+      );
+      filter: blur(28px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app.is-playing .machine-stage {
+      transform: scale(1.012);
+    }
+
+    .machine-image,
+    .machine-clean,
+    .knob-sprite,
+    .machine-video {
+      position: absolute;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+      transition: opacity .18s ease;
+    }
+
+    .machine-image,
+    .machine-clean,
+    .machine-video {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .machine-image,
+    .machine-clean {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .machine-clean { opacity: 0; }
+
+    .knob-sprite {
+      left: 32.3242%;
+      top: 64.1927%;
+      width: 29.1016%;
+      height: 16.4063%;
+      opacity: 0;
+      z-index: 2;
+      transform-origin: center;
+      transform: scaleY(.845638) rotate(var(--knob-rotation, 0deg)) scaleY(1.18254);
+      will-change: transform;
+    }
+
+    .machine-video {
+      opacity: 0;
+      z-index: 3;
+      -webkit-mask-image: url("assets/front_transparent.png");
+      mask-image: url("assets/front_transparent.png");
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      mask-mode: alpha;
+    }
+
+    /* Chromium blocks external CSS masks on file:// pages. The WebM still has
+       its own alpha channel, so direct-file previews can safely fall back. */
+    .machine-video.embedded-alpha-fallback {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .app.is-turning .machine-image { opacity: 0; }
+    .app.is-turning .machine-clean,
+    .app.is-turning .knob-sprite { opacity: 1; }
+
+    .app.is-playing .machine-image,
+    .app.is-playing .machine-clean,
+    .app.is-playing .knob-sprite { opacity: 0; }
+    .app.is-playing .machine-video { opacity: 1; }
+
+    .knob-button {
+      position: absolute;
+      left: 46.875%;
+      top: 72.396%;
+      width: 24%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      z-index: 5;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: none;
+    }
+
+    .knob-button::before {
+      content: "";
+      position: absolute;
+      inset: -7%;
+      border: 2px solid rgba(142, 57, 35, .78);
+      border-radius: inherit;
+      opacity: 0;
+      transform: scale(.88);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .knob-button:hover::before,
+    .knob-button:focus-visible::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .knob-button:focus-visible {
+      outline: 3px solid rgba(255, 248, 231, .95);
+      outline-offset: 3px;
+    }
+
+    .app.is-playing .knob-button {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .app.is-turning .knob-button::before { opacity: 0; }
+
+    .capsule-button {
+      position: absolute;
+      left: 33.9%;
+      top: 91.9%;
+      width: 16%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      opacity: 0;
+      pointer-events: none;
+      cursor: pointer;
+      z-index: 7;
+      transition: opacity .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .capsule-button::before,
+    .capsule-button::after {
+      content: "";
+      position: absolute;
+      inset: 4%;
+      border: 2px solid #fff7e9;
+      border-radius: inherit;
+      box-shadow: 0 0 0 2px rgba(142, 57, 35, .82), 0 5px 18px rgba(58, 29, 18, .25);
+    }
+
+    .capsule-button::after {
+      animation: capsule-pulse 1.5s ease-out infinite;
+    }
+
+    .capsule-button:focus-visible {
+      outline: 3px solid #8e3923;
+      outline-offset: 4px;
+    }
+
+    .app.capsule-ready .capsule-button {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .app.is-playing .intro {
+      opacity: .3;
+    }
+
+    @keyframes capsule-pulse {
+      0% { opacity: .8; transform: scale(.82); }
+      75%, 100% { opacity: 0; transform: scale(1.35); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .capsule-button::after { animation: none; }
+    }
+
+    .ball-shell {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.3));
+    }
+
+    .ball-half {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.7);
+      background:
+        radial-gradient(circle at 28% 28%, rgba(255,255,255,.85), rgba(255,255,255,.28) 22%, transparent 30%),
+        linear-gradient(90deg, var(--ball-a, #ff7b7b) 0 50%, var(--ball-b, #ffe46f) 50% 100%);
+      box-shadow: inset 0 -10px 14px rgba(0,0,0,.16);
+    }
+
+    .ball-half::before {
+      content: "";
+      position: absolute;
+      top: 8%;
+      bottom: 8%;
+      left: 49%;
+      width: 2px;
+      background: rgba(255,255,255,.64);
+    }
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 7, 6, .68);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .26s ease;
+      z-index: 20;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+      transition: opacity .28s ease;
+    }
+
+    .modal-open .backdrop,
+    .modal-open .modal {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: min(1100px, calc(100vw - 24px));
+      height: min(744px, calc(100svh - 28px));
+      max-height: calc(100dvh - 28px);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(260px, 340px) minmax(320px, 1fr);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 28px;
+      border: 1px solid rgba(117, 82, 47, .14);
+      box-shadow: 0 26px 80px rgba(0,0,0,.38);
+      transform: translateY(10px) scale(.97);
+      transition: transform .28s ease;
+    }
+
+    .modal-open .modal-card { transform: translateY(0) scale(1); }
+
+    .fortune-side {
+      padding: 24px 18px 20px;
+      background:
+        radial-gradient(circle at 50% -5%, rgba(227,191,117,.26), transparent 34%),
+        linear-gradient(180deg, #fffaf2, #f7ecd7);
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .fortune-side .capsule-title {
+      align-self: stretch;
+      text-align: center;
+    }
+
+    .fortune-side h2 {
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .fortune-side p {
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: var(--ink-soft);
+    }
+
+    .capsule-stage {
+      width: min(230px, 100%);
+      aspect-ratio: 1;
+      position: relative;
+      display: grid;
+      place-items: center;
+      margin-top: 4px;
+    }
+
+    .capsule-stage .ball-shell {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      transition: transform .2s ease, filter .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .capsule-stage:not(.open) .ball-shell:hover {
+      transform: scale(1.035);
+      filter: drop-shadow(0 14px 21px rgba(0,0,0,.34));
+    }
+
+    .capsule-stage:not(.open) .ball-shell:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 7px;
+      border-radius: 50%;
+    }
+
+    .capsule-stage.open .ball-shell { cursor: default; }
+
+    .capsule-stage .ball-half {
+      transition: transform .7s cubic-bezier(.22,.9,.24,1);
+      transform-origin: center center;
+    }
+
+    .capsule-stage .ball-top  { clip-path: inset(0 0 50% 0 round 1000px 1000px 0 0); }
+    .capsule-stage .ball-bottom { clip-path: inset(50% 0 0 0 round 0 0 1000px 1000px); }
+
+    .capsule-stage.open .ball-top { transform: translateY(-36px) rotate(-26deg); }
+    .capsule-stage.open .ball-bottom { transform: translateY(34px) rotate(24deg); }
+
+    .fortune-slip {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 74%;
+      min-height: 66%;
+      transform: translate(-50%, -28%) scale(.78);
+      opacity: 0;
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--paper), var(--paper-2));
+      border: 1px solid rgba(138, 104, 62, .24);
+      box-shadow: 0 10px 28px rgba(73,49,23,.14);
+      padding: 18px 16px;
+      text-align: center;
+      transition: transform .6s ease .24s, opacity .6s ease .24s;
+      pointer-events: none;
+    }
+
+    .capsule-stage.open .fortune-slip {
+      opacity: 1;
+      transform: translate(-50%, -44%) scale(1);
+      pointer-events: auto;
+    }
+
+    .fortune-rank {
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+      font-size: clamp(30px, 6vw, 42px);
+      line-height: 1;
+      color: var(--accent);
+      margin: 0;
+    }
+
+    .fortune-romaji {
+      margin-top: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #85684b;
+      font-weight: 800;
+    }
+
+    .fortune-copy {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.52;
+      color: #433224;
+    }
+
+    .fortune-mini {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+      text-align: left;
+      font-size: 12px;
+      color: #4a392a;
+    }
+
+    .fortune-mini div span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #8c6d4e;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .content-side {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 22px 22px;
+      max-height: calc(100vh - 60px);
+    }
+
+    .content-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .content-top h3 {
+      margin: 0;
+      font-size: clamp(24px, 3.3vw, 34px);
+      line-height: 1.05;
+    }
+
+    .content-top p {
+      margin: 6px 0 0;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .close-btn {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(90,60,30,.08);
+      color: #594131;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      border: 1px solid rgba(116, 86, 52, .16);
+      background: #fffaf2;
+      color: #5b4331;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 800;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(180deg, #b1472c, #91351f);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 10px 22px rgba(145,53,31,.18);
+    }
+
+    .panel-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      padding: 18px;
+      border-radius: 18px;
+      background: #fffbf5;
+      border: 1px solid rgba(118, 84, 48, .12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.48);
+    }
+
+    .card h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .card p,
+    .card li,
+    .panel p {
+      margin: 0;
+      color: #4f3d2f;
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .card + .card { margin-top: 0; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(214,177,106,.16);
+      color: #7b5c32;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .links {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .practice-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+    }
+
+    .practice-tags span {
+      padding: 7px 9px;
+      border: 1px solid rgba(116, 86, 52, .14);
+      border-radius: 999px;
+      background: #f5ead6;
+      color: #654b37;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .maker-name {
+      margin-top: 3px !important;
+      color: #82674f !important;
+      font-size: 12px !important;
+      letter-spacing: .08em;
+    }
+
+    .maker-name + p { margin-top: 10px; }
+
+    .link-btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #1e1711;
+      color: #fff5e7;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .link-btn.alt {
+      background: #efe1c7;
+      color: #4e3927;
+    }
+
+    .specs {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .spec {
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,248,236,.9);
+      border: 1px solid rgba(118,84,48,.12);
+      color: #463425;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .spec strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #8a6c50;
+    }
+
+    @media (max-width: 1020px) {
+      .home {
+        grid-template-columns: minmax(190px, .7fr) minmax(330px, 1fr) minmax(130px, .42fr);
+        gap: 28px;
+      }
+
+      .intro h1 { font-size: clamp(42px, 6vw, 62px); }
+    }
+
+    @media (max-width: 920px) {
+      .modal-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+        overflow: hidden;
+      }
+      .fortune-side {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .grid,
+      .specs {
+        grid-template-columns: 1fr;
+      }
+      .content-side {
+        height: 100%;
+        max-height: none;
+        overflow: hidden;
+      }
+      .panel-wrap {
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app {
+        padding: 70px 18px 20px;
+        overflow-x: clip;
+        overflow-y: visible;
+      }
+
+      .site-mark {
+        top: 20px;
+        left: 20px;
+      }
+
+      .site-note {
+        top: 20px;
+        right: 20px;
+      }
+
+      .language-switcher {
+        top: 39px;
+        right: 17px;
+      }
+
+      .home {
+        min-height: calc(100svh - 90px);
+        display: block;
+      }
+
+      .intro {
+        padding-top: 16px;
+        text-align: center;
+      }
+
+      .eyebrow { margin-bottom: 10px; }
+
+      .intro h1 {
+        max-width: none;
+        font-size: clamp(34px, 11vw, 48px);
+        line-height: .95;
+      }
+
+      html[lang="ja"] .intro h1 {
+        font-size: clamp(31px, 9.5vw, 43px);
+        line-height: 1.05;
+      }
+
+      .intro h1 span { margin-top: 8px; }
+      .machine-stage {
+        height: min(67svh, 135vw, 680px);
+        margin: 16px auto 0;
+      }
+
+      .modal {
+        height: 100dvh;
+        padding:
+          max(8px, env(safe-area-inset-top))
+          max(8px, env(safe-area-inset-right))
+          max(8px, env(safe-area-inset-bottom))
+          max(8px, env(safe-area-inset-left));
+        place-items: stretch;
+        overflow: hidden;
+      }
+      .modal-card {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        border-radius: 20px;
+      }
+      .fortune-side {
+        display: block;
+        padding: 12px 16px;
+      }
+      .fortune-side .capsule-title { display: block; }
+      .fortune-side .capsule-title p { margin-top: 4px; }
+      .capsule-stage {
+        display: grid;
+        width: 100%;
+        min-height: 126px;
+        aspect-ratio: auto;
+        margin: 4px 0 0;
+        transition: min-height .45s ease;
+      }
+      .capsule-stage.open { min-height: 218px; }
+      .capsule-stage .ball-shell {
+        width: 118px;
+        height: 118px;
+      }
+      .capsule-stage .ball-half { display: block; }
+      .fortune-slip {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 100%;
+        min-height: 0;
+        padding: 12px 16px;
+        opacity: 0;
+        transform: translate(-50%, -34%) scale(.78);
+        box-shadow: none;
+      }
+      .capsule-stage.open .fortune-slip {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 100%;
+        min-height: 0;
+        padding: 12px 16px;
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: none;
+      }
+      .capsule-stage.open .ball-half { opacity: .18; }
+      .fortune-rank { font-size: 32px; }
+      .fortune-copy { margin-top: 8px; }
+      .fortune-mini {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 16px;
+      }
+      .content-side { padding: 18px 16px 20px; }
+    }
+
+    @media (max-width: 420px) {
+      .site-mark span { display: none; }
+      .site-mark strong,
+      .site-note strong { font-size: 9px; }
+      .machine-stage { margin-top: 10px; }
+      .tab-btn {
+        padding-inline: 6px;
+        font-size: 11px;
+        letter-spacing: .03em;
+      }
+    }
+
+    @media (max-width: 760px) and (max-height: 620px) {
+      .fortune-side { padding: 8px; }
+      .fortune-side .capsule-title p { display: none; }
+      .capsule-stage { min-height: 94px; }
+      .capsule-stage.open { min-height: 184px; }
+      .capsule-stage .ball-shell {
+        width: 86px;
+        height: 86px;
+      }
+      .fortune-slip,
+      .capsule-stage.open .fortune-slip { padding: 9px 12px; }
+      .fortune-rank { font-size: 27px; }
+      .fortune-copy {
+        margin-top: 5px;
+        line-height: 1.35;
+      }
+      .fortune-mini {
+        margin-top: 7px;
+        gap: 6px 12px;
+      }
+      .content-side { padding-block: 12px; }
+      .content-top { margin-bottom: 9px; }
+      .tabs { margin-bottom: 10px; }
+    }
+
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <div class="site-mark">
+      <a href="https://pochaojisan.base.shop/" target="_blank" rel="noreferrer"><strong data-i18n="site.name">Pocha Ojisan</strong></a>
+      <span data-i18n="site.role">Artist</span>
+    </div>
+
+    <div class="site-note" aria-hidden="true">
+      <span data-i18n="site.tagline">Your neighborhood jack-of-all-trades.</span>
+    </div>
+
+    <nav class="language-switcher" aria-label="Language / 言語">
+      <button class="language-btn" type="button" data-language="en" lang="en" aria-pressed="true">EN</button>
+      <button class="language-btn" type="button" data-language="ja" lang="ja" aria-pressed="false">日本語</button>
+    </nav>
+
+    <section class="home" aria-labelledby="pageTitle">
+      <header class="intro">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Wooden capsule omikuji</p>
+        <h1 id="pageTitle" data-i18n-html="hero.title">Turn for luck.<span>And explore my work</span></h1>
+      </header>
+
+      <div class="machine-stage" id="machineStage">
+        <img class="machine-image" src="assets/front_transparent.png" alt="Pocha Ojisan wooden capsule machine" data-i18n-alt="media.machineAlt" />
+        <img class="machine-clean" src="assets/front_clean_plate_transparent.png" alt="" aria-hidden="true" />
+        <img class="knob-sprite" id="knobSprite" src="assets/knob_interactive.png" alt="" aria-hidden="true" />
+        <video class="machine-video" id="gachaVideo" preload="auto" playsinline aria-label="The wooden capsule machine dispensing a capsule" data-i18n-aria-label="media.videoLabel">
+          <source src="assets/pocha_ojisan_knob_gacha_animation_v3_alpha.webm?v=140" type="video/webm; codecs=vp9" />
+          <source src="assets/pocha_ojisan_knob_gacha_animation_v3.mp4?v=140" type="video/mp4" />
+        </video>
+        <button class="knob-button" id="knob" type="button" aria-label="Click or turn the knob to draw your fortune" data-i18n-aria-label="controls.draw"></button>
+        <button class="capsule-button" id="capsuleButton" type="button" aria-label="Click the capsule to open your fortune" data-i18n-aria-label="controls.openCapsule"></button>
+      </div>
+    </section>
+  </main>
+  <div class="backdrop" id="backdrop"></div>
+
+  <section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="resultTitle" aria-hidden="true" inert>
+    <div class="modal-card">
+      <aside class="fortune-side">
+        <div class="capsule-title">
+          <h2 data-i18n="result.capsule">Fortune capsule</h2>
+          <p id="capsuleInstruction" data-i18n="result.openPrompt">Click the capsule to reveal your fortune.</p>
+        </div>
+
+        <div class="capsule-stage" id="capsuleStage">
+          <button class="ball-shell" id="openBall" type="button" aria-expanded="false" aria-controls="fortuneSlip" aria-label="Open the capsule to reveal your fortune" data-i18n-aria-label="controls.openModalCapsule">
+            <span class="ball-half ball-top"></span>
+            <span class="ball-half ball-bottom"></span>
+          </button>
+          <div class="fortune-slip" id="fortuneSlip" tabindex="-1" aria-hidden="true">
+              <h3 class="fortune-rank" id="fortuneRank">大吉</h3>
+              <div class="fortune-romaji" id="fortuneRomaji">Daikichi</div>
+              <p class="fortune-copy" id="fortuneCopy">Very good luck. A favorable moment to take one confident step forward.</p>
+              <div class="fortune-mini">
+                <div><span data-i18n="fortune.theme">Theme</span><strong id="fortuneTheme">New beginnings</strong></div>
+                <div><span data-i18n="fortune.item">Lucky item</span><strong id="fortuneItem">A small notebook</strong></div>
+                <div><span data-i18n="fortune.color">Lucky color</span><strong id="fortuneColor">Sakura pink</strong></div>
+                <div><span data-i18n="fortune.direction">Direction</span><strong id="fortuneDirection">East</strong></div>
+              </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <section class="content-side">
+        <div class="content-top">
+          <div>
+            <h3 id="resultTitle">Pocha OJISAN</h3>
+            <p data-i18n="result.intro">Browse my work or get in touch.</p>
+          </div>
+          <button class="close-btn" id="closeBtn" aria-label="Close" data-i18n-aria-label="controls.close">×</button>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Sections" data-i18n-aria-label="tabs.label">
+          <button class="tab-btn active" data-tab="shop" data-i18n="tabs.shop">Shop</button>
+          <button class="tab-btn" data-tab="about" data-i18n="tabs.about">About me</button>
+          <button class="tab-btn" data-tab="contact" data-i18n="tabs.contact">Contact</button>
+        </div>
+
+        <div class="panel-wrap">
+          <div class="panel active" id="panel-shop">
+            <div class="grid">
+              <article class="card">
+                <div class="pill" data-i18n="shop.mainLabel">Main shop</div>
+                <h4 data-i18n="shop.baseTitle">BASE shop</h4>
+                <p data-i18n="shop.baseCopy">Shop my wooden capsule machine, branch spoons, forks, and other handmade pieces.</p>
+                <div class="links">
+                  <a class="link-btn" href="https://pochaojisan.base.shop/" target="_blank" rel="noreferrer" data-i18n="shop.openBase">Open BASE shop</a>
+                  <a class="link-btn alt" href="https://pochaojisan.base.shop/items/88086537" target="_blank" rel="noreferrer" data-i18n="shop.machineListing">Machine listing</a>
+                </div>
+              </article>
+
+              <article class="card">
+                <div class="pill" data-i18n="shop.marketLabel">Marketplace</div>
+                <h4 data-i18n="shop.creemaTitle">Creema gallery</h4>
+                <p data-i18n="shop.creemaCopy">Browse my available and past work on Creema.</p>
+                <div class="links">
+                  <a class="link-btn" href="https://www.creema.jp/c/pocha-ojisan" target="_blank" rel="noreferrer" data-i18n="shop.openCreema">Open Creema</a>
+                </div>
+              </article>
+            </div>
+
+            <article class="card" style="margin-top:14px;">
+              <div class="pill" data-i18n="shop.featuredLabel">Featured object</div>
+              <h4 data-i18n="shop.machineTitle">Wooden capsule machine</h4>
+              <p data-i18n="shop.machineCopy">Turn the handle for a satisfying click and a capsule—no coins needed. Lift the lid to refill.</p>
+              <div class="specs">
+                <div class="spec"><strong data-i18n="shop.price">Price</strong><span>¥15,800</span></div>
+                <div class="spec"><strong data-i18n="shop.capacity">Capacity</strong><span data-i18n="shop.capacityValue">About 40 capsules</span></div>
+                <div class="spec"><strong data-i18n="shop.size">Size</strong><span data-i18n="shop.sizeValue">Approx. H 40.5 cm × W 21 cm × D 26 cm</span></div>
+                <div class="spec"><strong data-i18n="shop.capsuleSize">Capsule size</strong><span>50 mm</span></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="panel" id="panel-about">
+            <article class="card">
+              <div class="pill" data-i18n="about.label">Artist</div>
+              <h4 data-i18n="about.publicName">pochaおじさん</h4>
+              <p class="maker-name" data-i18n="about.realName">Takashi Kitaura</p>
+              <p data-i18n="about.copy">Your neighborhood jack-of-all-trades.</p>
+              <div class="practice-tags">
+                <span data-i18n="about.events">Events &amp; spaces</span>
+                <span data-i18n="about.signs">Signs &amp; fabrication</span>
+                <span data-i18n="about.food">Food &amp; pop-ups</span>
+                <span data-i18n="about.goods">Goods &amp; apparel</span>
+              </div>
+              <div class="links">
+                <a class="link-btn" href="https://www.instagram.com/pocha_ojisan/" target="_blank" rel="noreferrer">Instagram</a>
+                <a class="link-btn alt" href="https://www.instagram.com/mangetsu_maruche/" target="_blank" rel="noreferrer">満月マルシェ</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="panel" id="panel-contact">
+            <article class="card">
+              <div class="pill" data-i18n="contact.label">Contact</div>
+              <h4 data-i18n="contact.title">Get in touch</h4>
+              <p data-i18n="contact.copy">Questions about a piece or an order? Send me a message here.</p>
+              <div class="links">
+                <a class="link-btn" href="https://pochaojisan.base.shop/inquiry" target="_blank" rel="noreferrer" data-i18n="contact.base">BASE contact</a>
+                <a class="link-btn alt" href="https://www.instagram.com/pocha_ojisan/" target="_blank" rel="noreferrer">Instagram DM</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    const translations = {
+      en: {
+        'meta.title': 'Pocha Ojisan — Artist & Neighborhood Maker',
+        'meta.description': 'Pocha Ojisan: event planning, sign painting, interior carpentry, event setup, signs, food, and original apparel.',
+        'site.name': 'Pocha Ojisan',
+        'site.role': 'Artist',
+        'site.tagline': 'Your neighborhood jack-of-all-trades.',
+        'hero.eyebrow': 'Wooden capsule omikuji',
+        'hero.title': 'Turn for luck.<span>And explore my work</span>',
+        'media.machineAlt': 'Pocha Ojisan wooden capsule machine',
+        'media.videoLabel': 'The wooden capsule machine dispensing a capsule',
+        'controls.draw': 'Click or turn the knob to draw your fortune',
+        'controls.openCapsule': 'Click the capsule to open your fortune',
+        'controls.openModalCapsule': 'Open the capsule to reveal your fortune',
+        'controls.close': 'Close',
+        'result.opened': 'Opened capsule',
+        'result.capsule': 'Fortune capsule',
+        'result.openPrompt': 'Click the capsule to reveal your fortune.',
+        'result.intro': 'Browse my work or get in touch.',
+        'fortune.theme': 'Theme',
+        'fortune.item': 'Lucky item',
+        'fortune.color': 'Lucky color',
+        'fortune.direction': 'Direction',
+        'tabs.label': 'Sections',
+        'tabs.shop': 'Shop',
+        'tabs.about': 'About me',
+        'tabs.contact': 'Contact',
+        'shop.mainLabel': 'Main shop',
+        'shop.baseTitle': 'BASE shop',
+        'shop.baseCopy': 'Shop my wooden capsule machine, branch spoons, forks, and other handmade pieces.',
+        'shop.openBase': 'Open BASE shop',
+        'shop.machineListing': 'Machine listing',
+        'shop.marketLabel': 'Marketplace',
+        'shop.creemaTitle': 'Creema gallery',
+        'shop.creemaCopy': 'Browse my available and past work on Creema.',
+        'shop.openCreema': 'Open Creema',
+        'shop.featuredLabel': 'Featured object',
+        'shop.machineTitle': 'Wooden capsule machine',
+        'shop.machineCopy': 'Turn the handle for a satisfying click and a capsule—no coins needed. Lift the lid to refill.',
+        'shop.price': 'Price',
+        'shop.capacity': 'Capacity',
+        'shop.capacityValue': 'About 40 capsules',
+        'shop.size': 'Size',
+        'shop.sizeValue': 'Approx. H 40.5 cm × W 21 cm × D 26 cm',
+        'shop.capsuleSize': 'Capsule size',
+        'about.label': 'Artist',
+        'about.publicName': 'pochaおじさん',
+        'about.realName': 'Takashi Kitaura',
+        'about.copy': 'Your neighborhood jack-of-all-trades.',
+        'about.events': 'Events & spaces',
+        'about.signs': 'Signs & fabrication',
+        'about.food': 'Food & pop-ups',
+        'about.goods': 'Goods & apparel',
+        'about.openLitlink': 'Open lit.link',
+        'contact.label': 'Contact',
+        'contact.title': 'Get in touch',
+        'contact.copy': 'Questions about a piece or an order? Send me a message here.',
+        'contact.base': 'BASE contact'
+      },
+      ja: {
+        'meta.title': 'pochaおじさん — Artist・あなたの街の何でも屋さん',
+        'meta.description': '看板、内装、イベント、フード、アパレル、木工作品など、pochaおじさんのものづくり。',
+        'site.name': 'pochaおじさん',
+        'site.role': 'アーティスト',
+        'site.tagline': 'あなたの街の何でも屋さん。',
+        'hero.eyebrow': '木製カプセルおみくじ',
+        'hero.title': '運を回そう。<span>そして、作品を見る</span>',
+        'media.machineAlt': 'Pochaおじさんの木製カプセルトイマシン',
+        'media.videoLabel': '木製カプセルマシンからカプセルが出てくるアニメーション',
+        'controls.draw': 'クリックまたはつまみを回しておみくじを引く',
+        'controls.openCapsule': 'カプセルを押しておみくじを開く',
+        'controls.openModalCapsule': 'カプセルを開いておみくじを見る',
+        'controls.close': '閉じる',
+        'result.opened': 'カプセルが開きました',
+        'result.capsule': 'おみくじカプセル',
+        'result.openPrompt': 'カプセルを押して、おみくじを開いてください。',
+        'result.intro': '作品を見る、またはお問い合わせはこちらから。',
+        'fortune.theme': 'テーマ',
+        'fortune.item': 'ラッキーアイテム',
+        'fortune.color': 'ラッキーカラー',
+        'fortune.direction': '方角',
+        'tabs.label': 'セクション',
+        'tabs.shop': 'ショップ',
+        'tabs.about': '自己紹介',
+        'tabs.contact': 'お問い合わせ',
+        'shop.mainLabel': 'メインショップ',
+        'shop.baseTitle': 'BASEショップ',
+        'shop.baseCopy': '木製カプセルトイマシン、枝のスプーンやフォークなど、手作りの作品を販売しています。',
+        'shop.openBase': 'BASEショップを見る',
+        'shop.machineListing': '商品ページ',
+        'shop.marketLabel': 'マーケット',
+        'shop.creemaTitle': 'Creemaギャラリー',
+        'shop.creemaCopy': 'Creemaで販売中の作品と、これまでの作品をご覧いただけます。',
+        'shop.openCreema': 'Creemaを見る',
+        'shop.featuredLabel': '注目の作品',
+        'shop.machineTitle': '木製カプセルトイマシン',
+        'shop.machineCopy': 'ハンドルを回すと、心地よい音とともにカプセルが出てきます。コインは不要。上のふたから補充できます。',
+        'shop.price': '価格',
+        'shop.capacity': '収納数',
+        'shop.capacityValue': '約40カプセル',
+        'shop.size': 'サイズ',
+        'shop.sizeValue': '約 高さ40.5 cm × 幅21 cm × 奥行26 cm',
+        'shop.capsuleSize': 'カプセルサイズ',
+        'about.label': 'アーティスト',
+        'about.publicName': 'pochaおじさん',
+        'about.realName': 'キタウラ タカシ',
+        'about.copy': 'あなたの街の何でも屋さん。',
+        'about.events': 'イベント・空間',
+        'about.signs': '看板・加工',
+        'about.food': 'フード・出店',
+        'about.goods': 'グッズ・アパレル',
+        'about.openLitlink': 'lit.linkを見る',
+        'contact.label': 'お問い合わせ',
+        'contact.title': 'お問い合わせ',
+        'contact.copy': '作品やご注文についてのご質問はこちらからどうぞ。',
+        'contact.base': 'BASEから問い合わせ'
+      }
+    };
+
+    const fortunes = [
+      {
+        rank: '大吉', romaji: 'Daikichi', capsule: ['#f77f82', '#ffe56f'],
+        en: {
+          copy: 'Very good luck. A favorable moment to take one confident step forward.',
+          theme: 'New beginnings', item: 'A small notebook', color: 'Sakura pink', direction: 'East',
+          long: 'Your timing is unusually good. Start the thing you have been postponing and keep your first step simple.',
+          advice: 'Good luck favors steady motion. Avoid overthinking and let action create clarity.'
+        },
+        ja: {
+          copy: '大吉。自信を持って一歩踏み出すのにぴったりの時です。',
+          theme: '新しい始まり', item: '小さなノート', color: '桜色', direction: '東',
+          long: '運の流れはとても良好です。後回しにしていたことを、まずは小さな一歩から始めてみましょう。',
+          advice: '考えすぎず、動き続けることで幸運が味方します。行動の中から答えを見つけて。'
+        }
+      },
+      {
+        rank: '中吉', romaji: 'Chūkichi', capsule: ['#52b6ff', '#9be469'],
+        en: {
+          copy: 'Moderately good luck. Steady effort brings a clean result.',
+          theme: 'Consistency', item: 'A favorite pen', color: 'Deep blue', direction: 'North',
+          long: 'This is a solid fortune. Nothing dramatic is required. Continue what already works and trim what distracts you.',
+          advice: 'Quiet progress is still progress. Small improvements compound faster than bold but scattered effort.'
+        },
+        ja: {
+          copy: '中吉。着実な努力が、きれいな結果につながります。',
+          theme: '継続', item: 'お気に入りのペン', color: '深い青', direction: '北',
+          long: '堅実な運勢です。大きな変化は必要ありません。うまくいっていることを続け、気が散るものを少し減らしましょう。',
+          advice: '静かな前進も立派な前進です。小さな改善の積み重ねが、やがて大きな力になります。'
+        }
+      },
+      {
+        rank: '小吉', romaji: 'Shōkichi', capsule: ['#ffe46f', '#79dd8d'],
+        en: {
+          copy: 'Small good luck. A modest day with a bright opening.',
+          theme: 'Small joys', item: 'A cup of tea', color: 'Warm yellow', direction: 'Southwest',
+          long: 'Good signs appear in ordinary places. Pay attention to the conversation, idea, or invitation that seems minor at first.',
+          advice: 'Do not force a breakthrough. Let the day reward your patience and attention to detail.'
+        },
+        ja: {
+          copy: '小吉。穏やかな一日の中に、明るいきっかけがあります。',
+          theme: '小さな喜び', item: '一杯のお茶', color: 'あたたかな黄色', direction: '南西',
+          long: '良い兆しは何気ないところに現れます。最初は小さく思える会話やアイデア、誘いに目を向けてみてください。',
+          advice: '無理に突破口を作らなくても大丈夫。丁寧さと辛抱強さが、今日の幸運を運んできます。'
+        }
+      },
+      {
+        rank: '末吉', romaji: 'Suekichi', capsule: ['#f2d4aa', '#f7f2e7'],
+        en: {
+          copy: 'Future good luck. Better results come later than expected.',
+          theme: 'Patience', item: 'A folded note', color: 'Cream white', direction: 'West',
+          long: 'The path is open, but timing matters. Prepare well and wait for the right hour rather than pushing too early.',
+          advice: 'Your effort is not wasted. It is simply ripening in the background.'
+        },
+        ja: {
+          copy: '末吉。良い結果は、思っているより少しあとにやってきます。',
+          theme: '辛抱', item: '折りたたんだメモ', color: 'クリーム色', direction: '西',
+          long: '道は開いていますが、時機が大切です。急いで押し進めるより、しっかり準備して良い時を待ちましょう。',
+          advice: '努力は無駄になっていません。見えないところで、ゆっくり実りつつあります。'
+        }
+      },
+      {
+        rank: '吉', romaji: 'Kichi', capsule: ['#7ad86f', '#62c8ff'],
+        en: {
+          copy: 'Good luck. A balanced fortune with room to grow.',
+          theme: 'Balance', item: 'A keychain', color: 'Leaf green', direction: 'Southeast',
+          long: 'This is a supportive fortune. Favor practical choices, clear words, and one well-kept promise.',
+          advice: 'Good fortune responds to order. Keep your day tidy and your intention direct.'
+        },
+        ja: {
+          copy: '吉。バランスが良く、これからの伸びしろがある運勢です。',
+          theme: '調和', item: 'キーホルダー', color: '若葉色', direction: '南東',
+          long: 'あなたを支えてくれる運勢です。現実的な選択、わかりやすい言葉、そして一つの約束を大切に。',
+          advice: '整った場所に幸運は訪れます。身の回りを整え、意思をまっすぐ伝えましょう。'
+        }
+      },
+      {
+        rank: '凶', romaji: 'Kyō', capsule: ['#a6a0af', '#ef927d'],
+        en: {
+          copy: 'Unfavorable luck. Slow down and simplify.',
+          theme: 'Restraint', item: 'An umbrella', color: 'Charcoal gray', direction: 'Stay centered',
+          long: 'This is not a disaster fortune. It advises caution, less noise, and fewer unnecessary commitments.',
+          advice: 'Do less, but do it well. When the pace becomes calmer, luck turns with it.'
+        },
+        ja: {
+          copy: '凶。今日は歩みを緩め、物事をシンプルに。',
+          theme: '節制', item: '傘', color: '炭色', direction: '今いる場所',
+          long: '災いを告げるものではありません。慎重に、余計な情報や無理な約束を減らすよう勧める運勢です。',
+          advice: 'することを減らし、一つひとつ丁寧に。ペースが落ち着けば、運もゆっくり好転します。'
+        }
+      },
+      {
+        rank: '半吉', romaji: 'Hankichi', capsule: ['#d7864d', '#f4c77f'],
+        en: {
+          copy: 'Half-good luck. Quiet confidence carries you farther than force.',
+          theme: 'Quiet confidence', item: 'A wooden button', color: 'Copper', direction: 'Northeast'
+        },
+        ja: {
+          copy: '半吉。力むより、静かな自信が遠くまで運んでくれます。',
+          theme: '静かな自信', item: '木のボタン', color: '銅色', direction: '北東'
+        }
+      },
+      {
+        rank: '大吉', romaji: 'Daikichi', capsule: ['#ef4f4f', '#ffd8d8'],
+        en: {
+          copy: 'Excellent luck. A welcome surprise arrives when you leave room for it.',
+          theme: 'Serendipity', item: 'A red thread', color: 'Vermilion', direction: 'South'
+        },
+        ja: {
+          copy: '大吉。余白をつくると、うれしい偶然が舞い込みます。',
+          theme: '思いがけない幸運', item: '赤い糸', color: '朱色', direction: '南'
+        }
+      },
+      {
+        rank: '中吉', romaji: 'Chūkichi', capsule: ['#63b9e8', '#e8f6ff'],
+        en: {
+          copy: 'Good progress. A helpful connection makes the next step easier.',
+          theme: 'Connection', item: 'A postcard', color: 'Sky blue', direction: 'Northwest'
+        },
+        ja: {
+          copy: '中吉。よいご縁が、次の一歩を軽くしてくれます。',
+          theme: 'ご縁', item: '絵はがき', color: '空色', direction: '北西'
+        }
+      },
+      {
+        rank: '吉', romaji: 'Kichi', capsule: ['#638653', '#dce8c8'],
+        en: {
+          copy: 'Good luck gathers around familiar places and simple routines.',
+          theme: 'Home', item: 'A smooth pebble', color: 'Moss green', direction: 'Homeward'
+        },
+        ja: {
+          copy: '吉。いつもの場所と素朴な習慣に、幸運が集まります。',
+          theme: '居場所', item: '丸い小石', color: '苔色', direction: '家の方角'
+        }
+      },
+      {
+        rank: '小吉', romaji: 'Shōkichi', capsule: ['#ff9c3d', '#fff0a6'],
+        en: {
+          copy: 'Small good luck. A playful idea is worth following today.',
+          theme: 'Curiosity', item: 'A tiny bell', color: 'Tangerine', direction: 'Upward'
+        },
+        ja: {
+          copy: '小吉。今日は、遊び心のあるアイデアを追ってみて。',
+          theme: '好奇心', item: '小さな鈴', color: '蜜柑色', direction: '上へ'
+        }
+      },
+      {
+        rank: '末吉', romaji: 'Suekichi', capsule: ['#4e62ad', '#cbd2f2'],
+        en: {
+          copy: 'Future good luck. What begins slowly will become dependable.',
+          theme: 'Preparation', item: 'A cloth pouch', color: 'Indigo', direction: 'Downstream'
+        },
+        ja: {
+          copy: '末吉。ゆっくり始まることが、やがて確かな力になります。',
+          theme: '備え', item: '布の巾着', color: '藍色', direction: '川下'
+        }
+      },
+      {
+        rank: '大吉', romaji: 'Daikichi', capsule: ['#f2b531', '#fff2bd'],
+        en: {
+          copy: 'Excellent luck. Your creative work finds the right audience.',
+          theme: 'Creativity', item: 'A sharp pencil', color: 'Gold', direction: 'Toward the sun'
+        },
+        ja: {
+          copy: '大吉。あなたのものづくりが、ふさわしい人に届きます。',
+          theme: '創造力', item: '削りたての鉛筆', color: '金色', direction: '太陽の方角'
+        }
+      },
+      {
+        rank: '中吉', romaji: 'Chūkichi', capsule: ['#9b82d1', '#eadffc'],
+        en: {
+          copy: 'Good progress. Clear words resolve something that felt tangled.',
+          theme: 'Communication', item: 'A blue envelope', color: 'Lavender', direction: 'Toward a friend'
+        },
+        ja: {
+          copy: '中吉。まっすぐな言葉が、絡まっていたことをほどきます。',
+          theme: '対話', item: '青い封筒', color: '藤色', direction: '友人の方角'
+        }
+      },
+      {
+        rank: '吉', romaji: 'Kichi', capsule: ['#9a6749', '#e8c5a4'],
+        en: {
+          copy: 'Good luck. A practical choice creates more freedom than expected.',
+          theme: 'Resourcefulness', item: 'A spool of thread', color: 'Chestnut', direction: 'Nearby'
+        },
+        ja: {
+          copy: '吉。現実的な選択が、思った以上の自由を生みます。',
+          theme: '工夫', item: '糸巻き', color: '栗色', direction: '近く'
+        }
+      },
+      {
+        rank: '小吉', romaji: 'Shōkichi', capsule: ['#f27f78', '#ffd5bd'],
+        en: {
+          copy: 'Small good luck. A small kindness returns in an unexpected form.',
+          theme: 'Kindness', item: 'A wrapped sweet', color: 'Coral', direction: 'Across the street'
+        },
+        ja: {
+          copy: '小吉。小さな親切が、思いがけない形で返ってきます。',
+          theme: '思いやり', item: '包み菓子', color: '珊瑚色', direction: '道の向こう'
+        }
+      },
+      {
+        rank: '末吉', romaji: 'Suekichi', capsule: ['#6ec7aa', '#d8fff3'],
+        en: {
+          copy: 'Future good luck. Rest is part of the work, not time lost.',
+          theme: 'Renewal', item: 'A hand towel', color: 'Mint', direction: 'By the water'
+        },
+        ja: {
+          copy: '末吉。休むことも仕事のうち。失う時間ではありません。',
+          theme: '回復', item: '手ぬぐい', color: '薄荷色', direction: '水辺'
+        }
+      },
+      {
+        rank: '凶', romaji: 'Kyō', capsule: ['#89909d', '#e8edf2'],
+        en: {
+          copy: 'Unfavorable luck. One step back reveals the better route.',
+          theme: 'Course correction', item: 'A compass', color: 'Silver', direction: 'Back one step'
+        },
+        ja: {
+          copy: '凶。一歩戻ることで、よりよい道が見えてきます。',
+          theme: '軌道修正', item: '方位磁針', color: '銀色', direction: '一歩後ろ'
+        }
+      }
+    ];
+
+    const app = document.getElementById('app');
+    const knob = document.getElementById('knob');
+    const knobSprite = document.getElementById('knobSprite');
+    const capsuleButton = document.getElementById('capsuleButton');
+    const gachaVideo = document.getElementById('gachaVideo');
+    const backdrop = document.getElementById('backdrop');
+    const modal = document.getElementById('modal');
+    const capsuleStage = document.getElementById('capsuleStage');
+    const openBall = document.getElementById('openBall');
+    const fortuneSlip = document.getElementById('fortuneSlip');
+    const capsuleInstruction = document.getElementById('capsuleInstruction');
+    const closeBtn = document.getElementById('closeBtn');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.panel');
+    const languageBtns = document.querySelectorAll('.language-btn');
+
+    if (window.location.protocol === 'file:') {
+      gachaVideo.classList.add('embedded-alpha-fallback');
+    }
+
+    const out = {
+      rank: document.getElementById('fortuneRank'),
+      romaji: document.getElementById('fortuneRomaji'),
+      copy: document.getElementById('fortuneCopy'),
+      theme: document.getElementById('fortuneTheme'),
+      item: document.getElementById('fortuneItem'),
+      color: document.getElementById('fortuneColor'),
+      direction: document.getElementById('fortuneDirection')
+    };
+
+    const supportedLanguages = ['en', 'ja'];
+    let currentLanguage = getSavedLanguage() || detectBrowserLanguage();
+    let currentFortune = fortunes[0];
+    let busy = false;
+    let finishTimer = null;
+    let capsuleFocusTimer = null;
+    let resultTab = 'shop';
+    let knobDragging = false;
+    let lastKnobAngle = 0;
+    let knobRotation = 0;
+    let clockwiseTravel = 0;
+    let totalDragTravel = 0;
+    let suppressKnobClick = false;
+
+    const TURN_THRESHOLD = 320;
+    const CAPSULE_DROP_START = 2.22;
+    const CAPSULE_SETTLE_TIME = 3.9;
+    const CAPSULE_READY_DELAY = .25;
+
+    function getSavedLanguage() {
+      try {
+        const saved = window.localStorage.getItem('pocha-language');
+        return supportedLanguages.includes(saved) ? saved : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function detectBrowserLanguage() {
+      const browserLanguages = navigator.languages?.length
+        ? navigator.languages
+        : [navigator.language || 'en'];
+
+      for (const locale of browserLanguages) {
+        const language = String(locale).toLowerCase().split('-')[0];
+        if (supportedLanguages.includes(language)) return language;
+      }
+      return 'en';
+    }
+
+    function t(key) {
+      return translations[currentLanguage]?.[key] ?? translations.en[key] ?? key;
+    }
+
+    function setLanguage(language, persist = true) {
+      currentLanguage = supportedLanguages.includes(language) ? language : 'en';
+      document.documentElement.lang = currentLanguage;
+      document.title = t('meta.title');
+      document.querySelector('meta[name="description"]').setAttribute('content', t('meta.description'));
+
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        element.textContent = t(element.dataset.i18n);
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(element => {
+        element.innerHTML = t(element.dataset.i18nHtml);
+      });
+      document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+        element.setAttribute('aria-label', t(element.dataset.i18nAriaLabel));
+      });
+      document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+        element.setAttribute('alt', t(element.dataset.i18nAlt));
+      });
+
+      languageBtns.forEach(button => {
+        const active = button.dataset.language === currentLanguage;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+
+      if (persist) {
+        try {
+          window.localStorage.setItem('pocha-language', currentLanguage);
+        } catch {
+          // The selected language still applies when storage is unavailable.
+        }
+      }
+
+      renderFortune(currentFortune);
+    }
+
+    function getKnobAngle(event) {
+      const rect = knob.getBoundingClientRect();
+      const x = event.clientX - (rect.left + rect.width / 2);
+      const y = event.clientY - (rect.top + rect.height / 2);
+      return Math.atan2(y, x) * 180 / Math.PI;
+    }
+
+    function normalizeAngleDelta(delta) {
+      while (delta > 180) delta -= 360;
+      while (delta < -180) delta += 360;
+      return delta;
+    }
+
+    function setInteractiveKnobRotation(rotation) {
+      knobRotation = rotation;
+      knobSprite.style.setProperty('--knob-rotation', `${knobRotation}deg`);
+    }
+
+    function resetManualTurn(suppressClick = false) {
+      knobDragging = false;
+      app.classList.remove('is-turning');
+      setInteractiveKnobRotation(0);
+
+      if (suppressClick) {
+        suppressKnobClick = true;
+        window.setTimeout(() => {
+          suppressKnobClick = false;
+        }, 500);
+      }
+    }
+
+    function beginManualTurn(event) {
+      if (busy || event.button !== 0) return;
+      knobDragging = true;
+      clockwiseTravel = 0;
+      totalDragTravel = 0;
+      suppressKnobClick = false;
+      lastKnobAngle = getKnobAngle(event);
+      setInteractiveKnobRotation(0);
+      app.classList.add('is-turning');
+      knob.setPointerCapture?.(event.pointerId);
+    }
+
+    function continueManualTurn(event) {
+      if (!knobDragging || busy) return;
+      const angle = getKnobAngle(event);
+      const delta = normalizeAngleDelta(angle - lastKnobAngle);
+      lastKnobAngle = angle;
+      totalDragTravel += Math.abs(delta);
+
+      if (delta > 0) {
+        clockwiseTravel += delta;
+      } else {
+        clockwiseTravel = Math.max(0, clockwiseTravel + delta * .35);
+      }
+
+      setInteractiveKnobRotation(knobRotation + delta);
+      event.preventDefault();
+
+      if (clockwiseTravel >= TURN_THRESHOLD) {
+        knobDragging = false;
+        suppressKnobClick = true;
+        app.classList.remove('is-turning');
+        setInteractiveKnobRotation(360);
+        dispense('shop', CAPSULE_DROP_START);
+      }
+    }
+
+    function endManualTurn(event) {
+      if (!knobDragging) return;
+      const dragged = totalDragTravel > 10;
+      try {
+        knob.releasePointerCapture?.(event.pointerId);
+      } catch {
+        // Pointer capture may already be released by the browser.
+      }
+      resetManualTurn(dragged);
+    }
+
+    function pickFortune() {
+      const chooseDifferent = getValue => {
+        const previousValue = getValue(currentFortune);
+        const choices = fortunes.filter(fortune => getValue(fortune) !== previousValue);
+        return choices[Math.floor(Math.random() * choices.length)];
+      };
+
+      const base = chooseDifferent(fortune => fortune.rank);
+      const theme = chooseDifferent(fortune => fortune.en.theme);
+      const item = chooseDifferent(fortune => fortune.en.item);
+      const color = chooseDifferent(fortune => fortune.en.color);
+      const direction = chooseDifferent(fortune => fortune.en.direction);
+      const capsule = chooseDifferent(fortune => fortune.capsule.join('|'));
+
+      return {
+        rank: base.rank,
+        romaji: base.romaji,
+        capsule: capsule.capsule,
+        en: {
+          copy: base.en.copy,
+          theme: theme.en.theme,
+          item: item.en.item,
+          color: color.en.color,
+          direction: direction.en.direction
+        },
+        ja: {
+          copy: base.ja.copy,
+          theme: theme.ja.theme,
+          item: item.ja.item,
+          color: color.ja.color,
+          direction: direction.ja.direction
+        }
+      };
+    }
+
+    function applyCapsuleColors(colors) {
+      document.querySelectorAll('.ball-half').forEach(el => {
+        el.style.setProperty('--ball-a', colors[0]);
+        el.style.setProperty('--ball-b', colors[1]);
+      });
+    }
+
+    function renderFortune(f) {
+      const localized = f[currentLanguage] || f.en;
+      currentFortune = f;
+      out.rank.textContent = f.rank;
+      out.romaji.textContent = f.romaji;
+      out.copy.textContent = localized.copy;
+      out.theme.textContent = localized.theme;
+      out.item.textContent = localized.item;
+      out.color.textContent = localized.color;
+      out.direction.textContent = localized.direction;
+      applyCapsuleColors(f.capsule);
+    }
+
+    function setActiveTab(name) {
+      tabBtns.forEach(btn => {
+        const active = btn.dataset.tab === name;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', String(active));
+      });
+      panels.forEach(panel => {
+        const active = panel.id === `panel-${name}`;
+        panel.classList.toggle('active', active);
+        panel.hidden = !active;
+      });
+    }
+
+    function setCapsuleOpenState(isOpen) {
+      window.clearTimeout(capsuleFocusTimer);
+      capsuleStage.classList.toggle('open', isOpen);
+      openBall.disabled = isOpen;
+      openBall.setAttribute('aria-expanded', String(isOpen));
+      fortuneSlip.setAttribute('aria-hidden', String(!isOpen));
+      capsuleInstruction.dataset.i18n = isOpen ? 'result.opened' : 'result.openPrompt';
+      capsuleInstruction.textContent = t(capsuleInstruction.dataset.i18n);
+
+      if (isOpen) {
+        capsuleFocusTimer = window.setTimeout(() => {
+          if (document.body.classList.contains('modal-open')) {
+            fortuneSlip.focus({ preventScroll: true });
+          }
+        }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 700);
+      }
+    }
+
+    function openModal(tab = 'shop') {
+      window.clearTimeout(finishTimer);
+      setCapsuleOpenState(false);
+      document.body.classList.add('modal-open');
+      modal.inert = false;
+      modal.setAttribute('aria-hidden', 'false');
+      setActiveTab(tab);
+      window.setTimeout(() => openBall.focus({ preventScroll: true }), 120);
+    }
+
+    function resetMachine(restoreFocus = true) {
+      window.clearTimeout(finishTimer);
+      gachaVideo.pause();
+      gachaVideo.currentTime = 0;
+      app.classList.remove('is-playing', 'is-turning', 'capsule-ready');
+      knobDragging = false;
+      suppressKnobClick = false;
+      setInteractiveKnobRotation(0);
+      busy = false;
+      if (restoreFocus) knob.focus();
+    }
+
+    function closeModal(restoreFocus = true) {
+      document.body.classList.remove('modal-open');
+      modal.inert = true;
+      modal.setAttribute('aria-hidden', 'true');
+      setCapsuleOpenState(false);
+      resetMachine(restoreFocus);
+    }
+
+    function finishAnimation() {
+      if (!app.classList.contains('is-playing') || document.body.classList.contains('modal-open')) return;
+      window.clearTimeout(finishTimer);
+      app.classList.add('capsule-ready');
+      window.setTimeout(() => capsuleButton.focus({ preventScroll: true }), 100);
+    }
+
+    function scheduleCapsuleReady() {
+      const capsuleReadyTime = CAPSULE_SETTLE_TIME + CAPSULE_READY_DELAY;
+      if (gachaVideo.currentTime >= capsuleReadyTime) {
+        finishAnimation();
+        return;
+      }
+      finishTimer = window.setTimeout(scheduleCapsuleReady, 16);
+    }
+
+    function dispense(tab = 'shop', animationStart = 0) {
+      if (busy) return;
+      busy = true;
+      resultTab = tab;
+      app.classList.remove('is-turning', 'capsule-ready');
+      setInteractiveKnobRotation(0);
+      app.classList.add('is-playing');
+
+      const fortune = pickFortune();
+      renderFortune(fortune);
+
+      gachaVideo.currentTime = animationStart;
+      const playback = gachaVideo.play();
+      if (playback) {
+        playback
+          .then(scheduleCapsuleReady)
+          .catch(() => resetMachine());
+      } else {
+        scheduleCapsuleReady();
+      }
+    }
+
+    knob.addEventListener('pointerdown', beginManualTurn);
+    knob.addEventListener('pointermove', continueManualTurn);
+    knob.addEventListener('pointerup', endManualTurn);
+    knob.addEventListener('pointercancel', event => {
+      if (knobDragging) resetManualTurn(true);
+    });
+
+    knob.addEventListener('click', () => {
+      if (suppressKnobClick) {
+        suppressKnobClick = false;
+        return;
+      }
+      dispense('shop');
+    });
+
+    capsuleButton.addEventListener('click', () => {
+      if (app.classList.contains('capsule-ready')) openModal(resultTab);
+    });
+
+    openBall.addEventListener('click', () => setCapsuleOpenState(true));
+
+    // Also reveal the control if playback ends before the ready timer fires.
+    gachaVideo.addEventListener('ended', finishAnimation);
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+    modal.addEventListener('click', event => {
+      if (event.target === modal) closeModal();
+    });
+    window.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && document.body.classList.contains('modal-open')) closeModal();
+    });
+
+    tabBtns.forEach(btn => btn.addEventListener('click', () => setActiveTab(btn.dataset.tab)));
+    languageBtns.forEach(button => {
+      button.addEventListener('click', () => setLanguage(button.dataset.language));
+    });
+
+    setLanguage(currentLanguage, false);
+    setActiveTab('shop');
+  </script>
+</body>
+</html>
