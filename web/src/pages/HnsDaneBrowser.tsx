@@ -5,9 +5,9 @@ import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
 const PRIVACY_URL = '/work/hns-dane-browser/privacy'
-const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android'
-const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android/issues'
-const PLAY_PACKAGE = 'com.handshake.browser'
+const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser'
+const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser/issues'
+const PLAY_PACKAGE = 'com.denuoweb.hnsdane'
 
 const pageCopy = {
   en: {

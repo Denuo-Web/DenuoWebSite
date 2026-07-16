@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
-const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android/issues'
-const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser-android'
+const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser/issues'
+const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser'
 
 const privacyCopy = {
   en: {
