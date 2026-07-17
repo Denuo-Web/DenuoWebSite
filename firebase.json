@@ -29,6 +29,21 @@
         "type": 301
       },
       {
+        "source": "/work/hns-browser/privacy/**",
+        "destination": "/work/hns-dane-browser/privacy",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser/privacy",
+        "destination": "/work/hns-dane-browser/privacy",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser/privacy/**",
+        "destination": "/work/hns-dane-browser/privacy",
+        "type": 301
+      },
+      {
         "source": "/hns-dane-browser",
         "destination": "/work/hns-dane-browser",
         "type": 301

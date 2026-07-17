@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HNS DANE Browser Privacy Policy | Denuo Web, LLC</title>
+  <meta name="description" content="Privacy policy for the Android and iOS versions of HNS DANE Browser by Denuo Web, LLC.">
+  <link rel="canonical" href="https://denuoweb.com/work/hns-dane-browser/privacy">
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; }
+    body { margin: 0; background: #f7f7fb; color: #161616; }
+    main { max-width: 880px; margin: 0 auto; padding: 48px 20px; }
+    article { background: #fff; border: 1px solid #ddddea; border-radius: 18px; padding: 32px; box-shadow: 0 18px 45px rgba(20, 20, 50, .08); }
+    h1 { margin-top: 0; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.05; }
+    h2 { margin-top: 2rem; }
+    a { color: #2452a9; }
+    .eyebrow { color: #3f4f9f; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+    .meta { color: #555; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10111a; color: #f4f4f8; }
+      article { background: #171924; border-color: #303346; box-shadow: none; }
+      a { color: #91b4ff; }
+      .meta { color: #b6b8c8; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <article>
+    <p class="eyebrow">Denuo Web, LLC</p>
+    <h1>HNS DANE Browser Privacy Policy</h1>
+    <p class="meta">Last updated: July 17, 2026</p>
+    <p>HNS DANE Browser is published by Denuo Web, LLC. For privacy questions or deletion requests, email <a href="mailto:info@denuoweb.com">info@denuoweb.com</a> or use the developer contact listed in the app's store listing. Do not post personal information to the public project issue tracker.</p>
+
+    <h2>Summary</h2>
+    <p>HNS DANE Browser is a Handshake-first browser for local HNS proofs, authoritative DNS, an HNS P2P DNS relay, RFC 8484 DoH transport, DNSSEC, and DANE diagnostics. The app does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Donations are optional and do not unlock app functionality.</p>
+    <p>The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.</p>
+
+    <h2>Data stored locally</h2>
+    <p>The app may store the following data on the device:</p>
+    <ul>
+      <li>Browsing history and navigation state: page URLs, page titles, visit times, or the current session's back-forward list, depending on the platform.</li>
+      <li>Website data: cookies and other storage managed by Android WebView or Apple WebKit.</li>
+      <li>Downloads: files saved at your request and platform-specific local records needed to complete or present those downloads. Android records may include the URL, file name, MIME type, DownloadManager ID, and queued time; iOS saves completed files in the app's local Documents/Downloads directory until you export or remove the app.</li>
+      <li>HNS data: synced headers, peer records (including manually added relay-peer IP endpoints), verified resource values, resolver cache, and resolver diagnostics.</li>
+      <li>Settings: homepage, cookie preference, HNS P2P DNS relay and legacy DoH fallback preferences, Strict HNS mode, and related app preferences.</li>
+    </ul>
+    <p>This local data is used only to provide browser functionality, diagnostics, and HNS resolution. It is not sold. It is not sent to a Denuo Web analytics or advertising service.</p>
+
+    <h2>Network requests</h2>
+    <p>To provide browser functionality, HNS DANE Browser may connect to:</p>
+    <ul>
+      <li>Websites and web services that you choose to open.</li>
+      <li>Handshake peers and DNS seed hosts for header sync, peer discovery, and proof retrieval.</li>
+      <li>Relay-capable Handshake peers for recursive HNS DNS queries after local proof validation and authoritative DNS attempts fail. Android new installs enable this experimental path by default; iOS leaves it disabled by default. A manual relay peer must be entered as an IP-literal endpoint and is stored only after its live HSD handshake advertises the relay capability.</li>
+      <li>Authoritative DNS nameservers for delegated HNS names.</li>
+      <li>Proof-bootstrapped or RFC 9461-discovered RFC 8484 authoritative DoH endpoints for delegated HNS names.</li>
+      <li>Security or reputation services exposed by the platform web engine. In particular, an installed Android WebView provider may check URLs with its Safe Browsing service and apply its own privacy policy. Apple WebKit and the operating system may apply their own browser-security protections. HNS DANE Browser does not operate those platform services.</li>
+      <li>The non-routable <code>192.0.2.1</code> TEST-NET DNS sentinel after delegated DNS failure; a matching reply confirms transparent outbound port 53 interception, while no reply is reported only as not detected.</li>
+      <li>Cloudflare's DNS-over-HTTPS service at <code>cloudflare-dns.com</code> (bootstrapped through the documented <code>1.1.1.1</code> addresses) for ordinary ICANN DNS resolution.</li>
+      <li>The legacy HNS DNS-over-HTTPS compatibility resolver at <code>zorro.hnsdoh.com</code> when compatibility mode is enabled and local or direct delegated resolution fails.</li>
+      <li>Platform download services and the destination you choose when you download or export a file.</li>
+    </ul>
+    <p>These network endpoints may receive technical information that is normal for network communication, such as your IP address, the requested host or URL, protocol metadata, and any data you submit to websites. Each DNS resolver may receive your IP address, queried DNS name and record type, timing, and protocol metadata. Cloudflare and the operator of <code>zorro.hnsdoh.com</code> control their own resolver logging, retention, and privacy practices; Denuo Web does not operate or control those services.</p>
+    <p>In particular, an HNS relay peer can observe the queried DNS name and record type together with your P2P connection and network address. An ordinary Handshake TCP connection is not query-confidential; encrypted peer transport should be preferred where available. The relay response is still validated locally through the app's Handshake proof, DNSSEC, TLSA, and DANE checks, and the peer's DNS authenticated-data bit is not trusted.</p>
+    <p>The legacy third-party HNS DNS-over-HTTPS compatibility fallback is independently enabled by default on new installs and remains available after the P2P relay path fails. Strict HNS mode disables that third-party fallback. Relay and legacy fallback controls are available in the app's runtime settings.</p>
+    <p>HTTPS, DNSSEC, and DANE are used where applicable. If you intentionally open a cleartext <code>http://</code> site, that site connection is not encrypted by HTTPS.</p>
+
+    <h2>Cookies and website data</h2>
+    <p>Websites may set cookies or use platform web-engine storage. Android provides settings controls to block third-party cookies and delete cookies plus WebView origin storage. The initial iOS release uses a persistent WebKit profile; its website data remains local to the app and is removed when the app is uninstalled. Websites are responsible for their own privacy practices.</p>
+
+    <h2>Data sharing</h2>
+    <p>Denuo Web does not sell personal or sensitive user data. HNS DANE Browser shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file.</p>
+
+    <h2>Retention and deletion</h2>
+    <p>Local browser data remains on the device until you clear it using an available platform or app control, or uninstall the app. Android provides controls for clearing cookies and WebView origin storage, browsing history, download records, gateway diagnostics, and the HNS resolver cache; Android system settings can also clear all app storage. The initial iOS release keeps its navigation list in the current app session, provides a resolver-cache control, and removes its app-local storage and WebKit profile when the app is uninstalled. Files you export to another location are then controlled by that destination.</p>
+    <p>HNS DANE Browser does not create developer-operated user accounts, so there is no app account deletion flow.</p>
+
+    <h2>Children</h2>
+    <p>HNS DANE Browser is not directed to children. Because it is a general-purpose browser, websites opened by users may contain third-party content outside Denuo Web's control.</p>
+
+    <h2>Changes</h2>
+    <p>This policy may be updated as the app changes. Material privacy changes should be reflected on this page, in the in-app privacy text, Google Play's Data safety form, and Apple's App Privacy answers as applicable.</p>
+
+    <p><a href="/work/hns-dane-browser">HNS DANE Browser overview</a> · <a href="https://github.com/Denuo-Web/hns-dane-browser">Source code</a></p>
+  </article>
+</main>
+</body>
+</html>

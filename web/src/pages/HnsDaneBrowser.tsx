@@ -7,17 +7,19 @@ import type { MarketingPageProps } from './marketingPageProps'
 const PRIVACY_URL = '/work/hns-dane-browser/privacy'
 const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser'
 const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser/issues'
-const PLAY_PACKAGE = 'com.denuoweb.hnsdane'
+const ANDROID_PACKAGE = 'com.denuoweb.hnsdane'
+const IOS_BUNDLE_ID = 'com.denuoweb.hnsdane.ios'
 
 const pageCopy = {
   en: {
     eyebrow: 'Denuo Web product',
     title: 'HNS DANE Browser',
-    lead: 'An experimental Android browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
+    lead: 'An open-source Android and iOS browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
     source: 'Source code',
     privacy: 'Privacy policy',
     support: 'Support / issues',
-    packageLabel: 'Android package',
+    androidPackageLabel: 'Android package',
+    iosBundleLabel: 'iOS bundle ID',
     badges: ['No ads', 'No developer account system', 'Donations unlock no features'],
     features: [
       {
@@ -38,31 +40,34 @@ const pageCopy = {
       'HNS DANE Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.',
     localHeading: 'Stored locally',
     localData: [
-      'Browsing history: page URLs, page titles, and visit times.',
-      'Website data: cookies and WebView-managed site storage.',
-      'Download records: URL, file name, MIME type, Android DownloadManager ID, and queued time.',
+      'Browsing history and navigation state: persistent history on Android or the current session\'s back-forward list on iOS.',
+      'Website data: cookies and other storage managed by Android WebView or Apple WebKit.',
+      'Downloads: files saved at your request and platform-specific records used to complete or present them.',
       'HNS data: synced headers, peer records, verified resource values, resolver cache, and diagnostics.',
-      'Settings: homepage, cookie preference, Strict HNS mode, and related preferences.',
+      'Settings: homepage, cookie preference, relay and legacy fallback preferences, Strict HNS mode, and related preferences.',
     ],
     networkHeading: 'Network requests',
     networkData: [
       'Websites and web services that you choose to open.',
       'Handshake peers and DNS seed hosts for header sync, peer discovery, and proof retrieval.',
-      'Authoritative DNS nameservers for delegated HNS names.',
-      'The configured HNS DNS-over-HTTPS compatibility resolver when compatibility mode is enabled and local or direct delegated resolution fails.',
-      'Android DownloadManager destinations when you choose to download a file.',
+      'Relay-capable Handshake peers for recursive HNS DNS queries when enabled.',
+      'Authoritative DNS nameservers and authoritative DoH endpoints for delegated HNS names.',
+      'Cloudflare DNS-over-HTTPS at cloudflare-dns.com for ordinary ICANN DNS resolution.',
+      'The legacy HNS compatibility resolver at zorro.hnsdoh.com when enabled and earlier HNS resolution paths fail.',
+      'Platform download services and the destination you choose when you download or export a file.',
     ],
     privacyNote:
-      'Users can clear cookies, browsing history, download records, resolver cache, or all app data through Android settings. Strict HNS mode disables the third-party HNS DoH compatibility fallback.',
+      'Privacy controls differ by platform. Android provides controls for clearing local browser data. The initial iOS release provides resolver-cache clearing and removes app-local data and its WebKit profile when uninstalled. Strict HNS mode disables the third-party HNS DoH compatibility fallback.',
   },
   ja: {
     eyebrow: 'Denuo Web プロダクト',
     title: 'HNS DANE Browser',
-    lead: 'Handshake名、DNSSEC、DANE検証、リゾルバ診断のための実験的Androidブラウザです。',
+    lead: 'Handshake名、DNSSEC、DANE検証、リゾルバ診断に対応する、Android・iOS向けのオープンソースブラウザです。',
     source: 'ソースコード',
     privacy: 'プライバシーポリシー',
     support: 'サポート / 課題報告',
-    packageLabel: 'Androidパッケージ',
+    androidPackageLabel: 'Androidパッケージ',
+    iosBundleLabel: 'iOSバンドルID',
     badges: ['広告なし', '開発者運営のアカウントなし', '寄付による機能解放なし'],
     features: [
       {
@@ -83,22 +88,24 @@ const pageCopy = {
       'HNS DANE Browserには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。ブラウザデータは端末内に保存され、サイトの表示とHNS解決データの更新に必要な通信のみを行います。',
     localHeading: '端末内に保存するデータ',
     localData: [
-      '閲覧履歴：ページURL、ページタイトル、閲覧日時。',
-      'ウェブサイトデータ：CookieとWebViewが管理するサイトストレージ。',
-      'ダウンロード記録：URL、ファイル名、MIMEタイプ、Android DownloadManager ID、登録日時。',
+      '閲覧履歴とナビゲーション状態：Androidでは保存された履歴、iOSでは現在のセッションの「戻る・進む」リスト。',
+      'ウェブサイトデータ：Android WebViewまたはApple WebKitが管理するCookieなどのストレージ。',
+      'ダウンロード：利用者の操作で保存したファイルと、その処理や表示に必要なプラットフォーム固有の記録。',
       'HNSデータ：同期済みヘッダー、ピア情報、検証済みリソース値、リゾルバキャッシュ、診断情報。',
-      '設定：ホームページ、Cookie設定、厳格HNSモード、関連するアプリ設定。',
+      '設定：ホームページ、Cookie設定、リレーと従来フォールバックの設定、厳格HNSモード、関連するアプリ設定。',
     ],
     networkHeading: 'ネットワーク通信',
     networkData: [
       '利用者が開くことを選んだウェブサイトとウェブサービス。',
       'ヘッダー同期、ピア探索、証明取得に使うHandshakeピアとDNSシードホスト。',
-      '委任されたHNS名の権威DNSネームサーバー。',
-      '互換モードが有効で、ローカルまたは委任先での直接解決に失敗した場合に使う、設定済みHNS DNS-over-HTTPS互換リゾルバ。',
-      '利用者がファイルをダウンロードするときのAndroid DownloadManager送信先。',
+      '有効な場合に再帰的HNS DNSクエリを処理する、リレー機能を持つHandshakeピア。',
+      '委任されたHNS名の権威DNSネームサーバーと権威DoHエンドポイント。',
+      '通常のICANN DNS解決に使用するcloudflare-dns.comのCloudflare DNS-over-HTTPS。',
+      '有効な場合に、それ以前のHNS解決経路が失敗した後で使用するzorro.hnsdoh.comの従来HNS互換リゾルバ。',
+      'ファイルをダウンロードまたは書き出すときのプラットフォームのダウンロードサービスと利用者が選んだ保存先。',
     ],
     privacyNote:
-      'Cookie、閲覧履歴、ダウンロード記録、リゾルバキャッシュはアプリ内で削除でき、Android設定から全アプリデータを消去できます。厳格HNSモードでは第三者HNS DoH互換フォールバックが無効になります。',
+      'プライバシー管理機能はプラットフォームによって異なります。Androidではローカルのブラウザデータを消去できます。初期iOS版ではリゾルバキャッシュを消去でき、アンインストールするとアプリ内データとWebKitプロファイルが削除されます。厳格HNSモードでは第三者HNS DoH互換フォールバックが無効になります。',
   },
 } as const
 
@@ -143,7 +150,8 @@ const HnsDaneBrowserPage = ({
               </Button>
             </Flex>
             <Flex gap="2" wrap="wrap">
-              <Badge color="indigo">{page.packageLabel}: {PLAY_PACKAGE}</Badge>
+              <Badge color="indigo">{page.androidPackageLabel}: {ANDROID_PACKAGE}</Badge>
+              <Badge color="indigo">{page.iosBundleLabel}: {IOS_BUNDLE_ID}</Badge>
               {page.badges.map((badge) => <Badge key={badge} variant="soft">{badge}</Badge>)}
             </Flex>
           </Flex>
