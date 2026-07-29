@@ -1,6 +1,7 @@
 {
   "name": "denuo-api",
   "version": "0.1.0",
+  "private": true,
   "description": "Cloud Run API for Denuo Web contact capture and admin helpers",
   "main": "src/index.js",
   "type": "module",
