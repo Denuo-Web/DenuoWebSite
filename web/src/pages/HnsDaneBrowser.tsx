@@ -5,8 +5,8 @@ import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
 const PRIVACY_URL = '/work/hns-dane-browser/privacy'
-const SOURCE_URL = 'https://github.com/Denuo-Web/hns-dane-browser'
-const SUPPORT_URL = 'https://github.com/Denuo-Web/hns-dane-browser/issues'
+const SOURCE_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile'
+const SUPPORT_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile/issues'
 const ANDROID_PACKAGE = 'com.denuoweb.hnsdane'
 const IOS_BUNDLE_ID = 'com.denuoweb.hnsdane.ios'
 
@@ -20,7 +20,7 @@ const pageCopy = {
     support: 'Support / issues',
     androidPackageLabel: 'Android package',
     iosBundleLabel: 'iOS bundle ID',
-    badges: ['No ads', 'No developer account system', 'Donations unlock no features'],
+    badges: ['No ads', 'No developer account system', 'Android donations unlock no features; iOS has no payments'],
     features: [
       {
         title: 'Local HNS proof path',
@@ -28,36 +28,36 @@ const pageCopy = {
       },
       {
         title: 'DNSSEC and DANE diagnostics',
-        body: 'Shows resolver trace, HNS proof details, TLSA state, DANE result, and compatibility fallback reason.',
+        body: 'Shows resolver trace, HNS proof details, TLSA state, DANE result, and the selected resolution path or failure reason.',
       },
       {
-        title: 'Strict HNS mode',
-        body: 'Lets users disable third-party HNS DoH fallback and fail closed when direct local/delegated resolution fails.',
+        title: 'Fail-closed HNS security',
+        body: 'HNS resolution always fails closed when local proof, DNSSEC, TLSA, or DANE validation cannot establish a secure result; it never falls back to HNS WebPKI.',
       },
     ],
     privacyHeading: 'Privacy summary',
     privacySummary:
-      'HNS DANE Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.',
+      'HNS DANE Browser does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Android may show an optional external donation link that unlocks no functionality; iOS has no donation or payment flow. The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.',
     localHeading: 'Stored locally',
     localData: [
-      'Browsing history and navigation state: persistent history on Android or the current session\'s back-forward list on iOS.',
+      'Browsing history and navigation state: page URLs, page titles, visit times, or the current session\'s back-forward list, depending on the platform.',
       'Website data: cookies and other storage managed by Android WebView or Apple WebKit.',
       'Downloads: files saved at your request and platform-specific records used to complete or present them.',
       'HNS data: synced headers, peer records, verified resource values, resolver cache, and diagnostics.',
-      'Settings: homepage, cookie preference, relay and legacy fallback preferences, Strict HNS mode, and related preferences.',
+      'Settings: homepage, cookie preference, optional requester-only HNS P2P DNS relay, separately configured recursive HNS DoH recovery URL, and related preferences. Relay consumption and recursive recovery are independently off by default and require separate explicit choices.',
     ],
     networkHeading: 'Network requests',
     networkData: [
       'Websites and web services that you choose to open.',
       'Handshake peers and DNS seed hosts for header sync, peer discovery, and proof retrieval.',
-      'Relay-capable Handshake peers for recursive HNS DNS queries when enabled.',
-      'Authoritative DNS nameservers and authoritative DoH endpoints for delegated HNS names.',
+      'Relay-capable Handshake peers for recursive HNS DNS queries only after you explicitly enable requester-only consumption; the browser does not become an output node.',
+      'Authoritative DNS nameservers and proof-bootstrapped or RFC 9461-discovered authoritative DoH endpoints for delegated HNS names.',
+      'A recursive HNS DoH endpoint entered explicitly by you, only after direct authoritative DNS, owner-published authoritative DoH, and any independently enabled P2P requester path fail because DNS transport is unavailable or intercepted. The setting is blank and off by default.',
       'Cloudflare DNS-over-HTTPS at cloudflare-dns.com for ordinary ICANN DNS resolution.',
-      'The legacy HNS compatibility resolver at zorro.hnsdoh.com when enabled and earlier HNS resolution paths fail.',
       'Platform download services and the destination you choose when you download or export a file.',
     ],
     privacyNote:
-      'Privacy controls differ by platform. Android provides controls for clearing local browser data. The initial iOS release provides resolver-cache clearing and removes app-local data and its WebKit profile when uninstalled. Strict HNS mode disables the third-party HNS DoH compatibility fallback.',
+      'Android can clear cookies and WebView origin storage, history, download records, gateway diagnostics, and the HNS resolver cache. iOS can clear cookies and WebKit website data, history, download-list records, locally stored gateway diagnostics, and the HNS resolver cache. Clearing the iOS download list does not delete downloaded files; app-local files remain until the app is uninstalled.',
   },
   ja: {
     eyebrow: 'Denuo Web プロダクト',
@@ -68,7 +68,7 @@ const pageCopy = {
     support: 'サポート / 課題報告',
     androidPackageLabel: 'Androidパッケージ',
     iosBundleLabel: 'iOSバンドルID',
-    badges: ['広告なし', '開発者運営のアカウントなし', '寄付による機能解放なし'],
+    badges: ['広告なし', '開発者運営のアカウントなし', 'Androidの寄付で機能解放なし・iOSに支払い機能なし'],
     features: [
       {
         title: 'ローカルHNS証明経路',
@@ -76,36 +76,36 @@ const pageCopy = {
       },
       {
         title: 'DNSSECとDANEの診断',
-        body: 'リゾルバの追跡、HNS証明の詳細、TLSA状態、DANE結果、互換フォールバックの理由を表示します。',
+        body: 'リゾルバの追跡、HNS証明の詳細、TLSA状態、DANE結果、選択された解決経路または失敗理由を表示します。',
       },
       {
-        title: '厳格HNSモード',
-        body: '第三者HNS DoHフォールバックを無効にし、ローカルまたは委任先での直接解決に失敗した場合は接続を停止できます。',
+        title: 'フェイルクローズのHNSセキュリティ',
+        body: 'ローカル証明、DNSSEC、TLSA、DANEの検証で安全な結果を確立できない場合、HNS解決は常に接続を停止し、HNSでWebPKIにフォールバックすることはありません。',
       },
     ],
     privacyHeading: 'プライバシー概要',
     privacySummary:
-      'HNS DANE Browserには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。ブラウザデータは端末内に保存され、サイトの表示とHNS解決データの更新に必要な通信のみを行います。',
+      'HNS DANE Browserには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。Androidでは機能を解放しない任意の外部寄付リンクを表示する場合がありますが、iOSには寄付や支払いの機能がありません。ブラウザデータは端末内に保存され、サイトの表示とHNS解決データの更新に必要な通信のみを行います。',
     localHeading: '端末内に保存するデータ',
     localData: [
-      '閲覧履歴とナビゲーション状態：Androidでは保存された履歴、iOSでは現在のセッションの「戻る・進む」リスト。',
+      '閲覧履歴とナビゲーション状態：プラットフォームに応じて、ページURL、ページタイトル、訪問時刻、または現在のセッションの「戻る・進む」リスト。',
       'ウェブサイトデータ：Android WebViewまたはApple WebKitが管理するCookieなどのストレージ。',
       'ダウンロード：利用者の操作で保存したファイルと、その処理や表示に必要なプラットフォーム固有の記録。',
       'HNSデータ：同期済みヘッダー、ピア情報、検証済みリソース値、リゾルバキャッシュ、診断情報。',
-      '設定：ホームページ、Cookie設定、リレーと従来フォールバックの設定、厳格HNSモード、関連するアプリ設定。',
+      '設定：ホームページ、Cookie設定、任意のリクエスター専用HNS P2P DNSリレー、別途設定する再帰的HNS DoH復旧URL、関連するアプリ設定。リレー利用と再帰的復旧はそれぞれ初期状態で無効であり、個別に明示的な選択が必要です。',
     ],
     networkHeading: 'ネットワーク通信',
     networkData: [
       '利用者が開くことを選んだウェブサイトとウェブサービス。',
       'ヘッダー同期、ピア探索、証明取得に使うHandshakeピアとDNSシードホスト。',
-      '有効な場合に再帰的HNS DNSクエリを処理する、リレー機能を持つHandshakeピア。',
-      '委任されたHNS名の権威DNSネームサーバーと権威DoHエンドポイント。',
+      '利用者がリクエスター専用の利用を明示的に有効にした場合に限り、再帰的HNS DNSクエリを処理するリレー機能付きHandshakeピア。ブラウザが出力ノードになることはありません。',
+      '委任されたHNS名の権威DNSネームサーバーと、証明からブートストラップまたはRFC 9461で検出された権威DoHエンドポイント。',
+      '利用者が明示的に入力した再帰的HNS DoHエンドポイント。DNS通信が利用不能または傍受され、直接の権威DNS、所有者が公開した権威DoH、個別に有効化したP2Pリクエスター経路が失敗した後に限り使用します。この設定は初期状態では空欄で無効です。',
       '通常のICANN DNS解決に使用するcloudflare-dns.comのCloudflare DNS-over-HTTPS。',
-      '有効な場合に、それ以前のHNS解決経路が失敗した後で使用するzorro.hnsdoh.comの従来HNS互換リゾルバ。',
       'ファイルをダウンロードまたは書き出すときのプラットフォームのダウンロードサービスと利用者が選んだ保存先。',
     ],
     privacyNote:
-      'プライバシー管理機能はプラットフォームによって異なります。Androidではローカルのブラウザデータを消去できます。初期iOS版ではリゾルバキャッシュを消去でき、アンインストールするとアプリ内データとWebKitプロファイルが削除されます。厳格HNSモードでは第三者HNS DoH互換フォールバックが無効になります。',
+      'Androidでは、CookieとWebViewのオリジンストレージ、履歴、ダウンロード記録、ゲートウェイ診断、HNSリゾルバキャッシュを消去できます。iOSでは、CookieとWebKitのウェブサイトデータ、履歴、ダウンロード一覧の記録、端末内のゲートウェイ診断、HNSリゾルバキャッシュを消去できます。iOSでダウンロード一覧を消去してもダウンロード済みファイルは削除されず、アプリ内のファイルはアンインストールするまで残ります。',
   },
 } as const
 
