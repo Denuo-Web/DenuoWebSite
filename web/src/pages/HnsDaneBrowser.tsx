@@ -7,6 +7,8 @@ import type { MarketingPageProps } from './marketingPageProps'
 const PRIVACY_URL = '/work/hns-dane-browser/privacy'
 const SOURCE_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile'
 const SUPPORT_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile/issues'
+const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.denuoweb.hnsdane'
+const APPLE_APP_STORE_URL = 'https://apps.apple.com/us/app/hns-dane-browser/id6791914326'
 const ANDROID_PACKAGE = 'com.denuoweb.hnsdane'
 const IOS_BUNDLE_ID = 'com.denuoweb.hnsdane.ios'
 
@@ -15,6 +17,8 @@ const pageCopy = {
     eyebrow: 'Denuo Web product',
     title: 'HNS DANE Browser',
     lead: 'An open-source Android and iOS browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
+    googlePlay: 'Get it on Google Play',
+    appleAppStore: 'Download on the App Store',
     source: 'Source code',
     privacy: 'Privacy policy',
     support: 'Support / issues',
@@ -63,6 +67,8 @@ const pageCopy = {
     eyebrow: 'Denuo Web プロダクト',
     title: 'HNS DANE Browser',
     lead: 'Handshake名、DNSSEC、DANE検証、リゾルバ診断に対応する、Android・iOS向けのオープンソースブラウザです。',
+    googlePlay: 'Google Playで入手',
+    appleAppStore: 'App Storeからダウンロード',
     source: 'ソースコード',
     privacy: 'プライバシーポリシー',
     support: 'サポート / 課題報告',
@@ -140,6 +146,12 @@ const HnsDaneBrowserPage = ({
             </Flex>
             <Flex gap="3" wrap="wrap">
               <Button asChild size="3">
+                <RadixLink href={GOOGLE_PLAY_URL} target="_blank" rel="noreferrer">{page.googlePlay}</RadixLink>
+              </Button>
+              <Button asChild size="3">
+                <RadixLink href={APPLE_APP_STORE_URL} target="_blank" rel="noreferrer">{page.appleAppStore}</RadixLink>
+              </Button>
+              <Button asChild size="3" variant="soft">
                 <RadixLink href={SOURCE_URL} target="_blank" rel="noreferrer">{page.source}</RadixLink>
               </Button>
               <Button asChild size="3" variant="soft">
