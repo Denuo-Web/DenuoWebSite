@@ -10,13 +10,13 @@ const SOURCE_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile'
 
 const privacyCopy = {
   en: {
-    updated: 'Last updated: 2026-07-26',
+    updated: 'Last updated: 2026-08-10',
     title: 'HNS DANE Browser Privacy Policy',
     intro: 'HNS DANE Browser is published by Denuo Web, LLC. For privacy questions or deletion requests, email info@denuoweb.com or use the developer contact listed in the app\'s store listing. Do not post personal information to the public project issue tracker.',
     summaryTitle: 'Summary',
     summary: [
-      'HNS DANE Browser is a Handshake-first browser for local HNS proofs, authoritative DNS, optional requester-only HNS P2P DNS relay consumption, optional user-configured recursive HNS DoH recovery, DNSSEC, and DANE diagnostics. The app does not include advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The Android edition may show an optional external donation link that does not unlock functionality; the iOS app has no donation or payment flow.',
-      'The app stores browser data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.',
+      'HNS DANE Browser is a Handshake-first browser for local HNS proofs, authoritative DNS, optional requester-only HNS P2P DNS relay consumption, optional user-configured recursive HNS DoH recovery, DNSSEC, and DANE diagnostics. The currently published store binaries are wallet-free. The 0.5.8 candidate, once distributed, adds native controls to create or restore one device-local non-value HNS account identity and to open, unlock, or lock that local wallet. It does not show balances, receive or send funds, manage names, provide website-provider access, participate in HNSA or HNSR service roles, settle trades, provide exchange features, or expose P2P marketplaces. The requester-only P2P DNS relay is separate from HNSR and does not make the device a relay endpoint or output node. The app has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The Android edition may show an optional external donation link that does not unlock functionality; the iOS app has no donation or payment flow.',
+      'The app stores browser and native wallet data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.',
     ],
     localTitle: 'Data stored locally',
     localData: [
@@ -25,9 +25,10 @@ const privacyCopy = {
       'Downloads: files saved at your request and platform-specific local records needed to complete or present those downloads. Android records may include the URL, file name, MIME type, DownloadManager ID, and queued time; iOS saves completed files in the app\'s local Documents/Downloads directory until you export or remove the app.',
       'HNS data: synced headers, peer records (including manually added relay-peer IP endpoints), verified resource values, resolver cache, and resolver diagnostics.',
       'Settings: homepage, cookie preference, optional HNS P2P DNS relay requester, optional user-configured recursive HNS DoH recovery URL, and related app preferences. Relay consumption and recursive recovery are independently off by default and require separate explicit choices. Upgrades erase the historical resolver key and never copy it into the new recovery setting or treat it as relay consent.',
+      '0.5.8 candidate native wallet data: a network-scoped encrypted wallet database, one non-value HNS account identity, and the key material needed to reopen it. Android keeps the database under app-private no-backup storage and wraps its 32-byte database key with Android Keystore. iOS uses an app-private, backup-excluded database with complete file protection and a ThisDeviceOnly Keychain item requiring user presence. A newly generated recovery phrase is shown once for offline backup; restore input and the one-time display are cleared when the wallet screen leaves its protected lifecycle. If the screen closes before that display is confirmed, the app wipes its unconfirmed database-key buffer and deletes the incomplete wallet database. Swift/UIKit-managed text on iOS cannot be claimed to be deterministically zeroized, although app-owned mutable buffers are wiped.',
     ],
     useTitle: 'How local data is used',
-    useText: 'Local data is used only to provide browser functionality, diagnostics, and HNS resolution. It is not sold. It is not sent to a Denuo Web analytics or advertising service.',
+    useText: 'Local data is used only to provide browser functionality, native wallet controls, diagnostics, and HNS resolution. It is not sold. It is not sent to a Denuo Web analytics or advertising service.',
     networkTitle: 'Network requests',
     networkData: [
       'Websites and web services that you choose to open.',
@@ -40,6 +41,7 @@ const privacyCopy = {
       'The non-routable 192.0.2.1 TEST-NET DNS sentinel after delegated DNS failure; a matching reply confirms transparent outbound port 53 interception, while no reply is reported only as not detected.',
       'Cloudflare\'s DNS-over-HTTPS service at cloudflare-dns.com (bootstrapped through the documented 1.1.1.1 addresses) for ordinary internet DNS resolution.',
       'Platform download services and the destination you choose when you download or export a file.',
+      'The 0.5.8 candidate native wallet controller does not synchronize a balance, send a transaction, contact a website wallet provider, settle a trade, or make a wallet-specific network request. Its account controls are device-local.',
     ],
     securityTitle: 'Network data and security',
     security: [
@@ -50,10 +52,11 @@ const privacyCopy = {
     cookiesTitle: 'Cookies and website data',
     cookies: 'Websites may set cookies or use platform web-engine storage. Android provides settings controls to block third-party cookies and delete cookies plus WebView origin storage. iOS uses a persistent WebKit profile and provides a settings action that deletes its cookies and website data. Remaining website data is removed when the app is uninstalled. Websites are responsible for their own privacy practices.',
     sharingTitle: 'Data sharing',
-    sharing: 'Denuo Web does not sell personal or sensitive user data. HNS DANE Browser shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file.',
+    sharing: 'Denuo Web does not sell personal or sensitive user data. HNS DANE Browser shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file. The 0.5.8 candidate does not send native wallet databases, recovery phrases, device-bound database keys, or account identities to Denuo Web, websites, analytics services, or a wallet provider.',
     retentionTitle: 'Retention and deletion',
     retention: [
       'Local browser data remains on the device until you clear it using an available platform or app control, or uninstall the app. Android provides controls for clearing cookies and WebView origin storage, browsing history, download records, gateway diagnostics, and the HNS resolver cache; Android system settings can also clear all app storage. iOS provides controls for clearing cookies and WebKit website data, browsing history, download-list records, locally stored gateway diagnostics, and the HNS resolver cache. Clearing the iOS download list does not delete the downloaded files themselves; those app-local files remain until the app is uninstalled. Files you export to another location are then controlled by that destination.',
+      'In the 0.5.8 candidate, an unconfirmed newly created wallet is automatically removed when its protected recovery screen closes: the app wipes its unconfirmed database-key buffer and deletes the incomplete database. There is no in-app delete control for a confirmed native wallet. On Android, clearing all app storage or uninstalling the app removes its private wallet database and wrapped-key records. On iOS, uninstalling removes the app-container database; the operating system may retain the ThisDeviceOnly Keychain item under normal Keychain semantics. If the database is absent when the wallet screen is later opened, the app reconciles and deletes that orphaned item. Save the recovery phrase before clearing storage or uninstalling, because the app cannot show it again and cannot recover the wallet for you.',
       'HNS DANE Browser does not create developer-operated user accounts, so there is no app account deletion flow.',
     ],
     childrenTitle: 'Children',
@@ -65,13 +68,13 @@ const privacyCopy = {
     source: 'Source code',
   },
   ja: {
-    updated: '最終更新日：2026年7月26日',
+    updated: '最終更新日：2026年8月10日',
     title: 'HNS DANE Browser プライバシーポリシー',
     intro: 'HNS DANE BrowserはDenuo Web, LLCが公開しています。プライバシーに関する質問や削除依頼は、info@denuoweb.comまたはアプリストアに記載された開発者の連絡先をご利用ください。公開の課題管理には個人情報を投稿しないでください。',
     summaryTitle: '概要',
     summary: [
-      'HNS DANE Browserは、ローカルHNS証明、権威DNS、任意のリクエスター専用HNS P2P DNSリレー、任意の利用者設定型再帰HNS DoHリカバリー、DNSSEC、DANE診断に対応するHandshake優先ブラウザです。広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。Android版には機能を解放しない任意の外部寄付リンクが表示される場合がありますが、iOS版に寄付や支払いの機能はありません。',
-      'ブラウザデータは端末内に保存され、サイトの表示とHNS解決データの更新に必要なネットワーク通信を行います。',
+      'HNS DANE Browserは、ローカルHNS証明、権威DNS、任意のリクエスター専用HNS P2P DNSリレー、任意の利用者設定型再帰HNS DoHリカバリー、DNSSEC、DANE診断に対応するHandshake優先ブラウザです。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.8候補は、公開後に端末内だけで使う1つの非送金型HNSアカウント識別子を作成または復元し、そのローカルウォレットを開く、ロック解除する、ロックするためのネイティブ操作を追加します。残高表示、資金の受取・送金、名前管理、ウェブサイトへのウォレット接続、HNSAまたはHNSRのサービス役割、取引決済、交換機能、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別の機能であり、端末をリレーエンドポイントまたは出力ノードにしません。広告SDK、解析SDK、開発者運営のアカウント、有料機能解放もありません。Android版には機能を解放しない任意の外部寄付リンクが表示される場合がありますが、iOS版に寄付や支払いの機能はありません。',
+      'ブラウザデータとネイティブウォレットデータは端末内に保存され、サイトの表示とHNS解決データの更新に必要なネットワーク通信を行います。',
     ],
     localTitle: '端末内に保存するデータ',
     localData: [
@@ -80,9 +83,10 @@ const privacyCopy = {
       'ダウンロード：利用者の操作で保存したファイルと、その処理や表示に必要なプラットフォーム固有のローカル記録。AndroidではURL、ファイル名、MIMEタイプ、DownloadManager ID、登録日時が含まれる場合があります。iOSでは、書き出すかアプリを削除するまで、完了したファイルをアプリ内のDocuments/Downloadsディレクトリに保存します。',
       'HNSデータ：同期済みヘッダー、ピア情報（手動で追加したリレーピアのIPエンドポイントを含む）、検証済みリソース値、リゾルバキャッシュ、リゾルバ診断情報。',
       '設定：ホームページ、Cookie設定、任意のHNS P2P DNSリレー・リクエスター、任意の利用者設定型再帰HNS DoHリカバリーURL、関連するアプリ設定。リレー利用と再帰リカバリーは個別に初期無効で、それぞれ明示的な選択が必要です。アップグレード時は過去のリゾルバ設定を削除し、新しいリカバリー設定やリレー利用への同意として引き継ぎません。',
+      '0.5.8候補のネイティブウォレットデータ：ネットワーク別の暗号化ウォレットデータベース、1つの非送金型HNSアカウント識別子、および再度開くために必要な鍵素材。Androidではデータベースをアプリ専用のバックアップ対象外領域に保存し、32バイトのデータベース鍵をAndroid Keystoreでラップします。iOSでは完全なファイル保護を適用したアプリ専用・バックアップ対象外データベースと、利用者の認証を必要とするThisDeviceOnly Keychain項目を使用します。新規生成したリカバリーフレーズはオフライン保管用に一度だけ表示され、復元入力と一度限りの表示はウォレット画面が保護されたライフサイクルを離れると消去されます。その表示を確認する前に画面を閉じた場合、アプリは未確認のデータベース鍵バッファーを消去し、不完全なウォレットデータベースを削除します。アプリが所有する可変バッファーは消去しますが、iOSのSwift/UIKitが管理するテキストを決定的にゼロ化できるとは表明しません。',
     ],
     useTitle: '端末内データの利用目的',
-    useText: '端末内データは、ブラウザ機能、診断、HNS名前解決の提供にのみ使用します。販売せず、Denuo Webの解析・広告サービスへ送信することもありません。',
+    useText: '端末内データは、ブラウザ機能、ネイティブウォレット操作、診断、HNS名前解決の提供にのみ使用します。販売せず、Denuo Webの解析・広告サービスへ送信することもありません。',
     networkTitle: 'ネットワーク通信',
     networkData: [
       '利用者が開くことを選んだウェブサイトとウェブサービス。',
@@ -95,6 +99,7 @@ const privacyCopy = {
       '委任DNSの失敗後に接続する、ルーティング不能な192.0.2.1 TEST-NET DNSセンチネル。一致する応答があれば外向きポート53の透過的な介入を確認し、応答がなければ「検出されず」とのみ表示します。',
       '通常のインターネットDNS解決に使用する、cloudflare-dns.comのCloudflare DNS-over-HTTPSサービス（公開されている1.1.1.1アドレスを介して接続を開始します）。',
       'ファイルをダウンロードまたは書き出すときのプラットフォームのダウンロードサービスと利用者が選んだ保存先。',
+      '0.5.8候補のネイティブウォレット操作は、残高同期、取引送信、ウェブサイトのウォレットプロバイダーへの接続、取引決済、ウォレット固有のネットワーク要求を行いません。アカウント操作は端末内だけで行われます。',
     ],
     securityTitle: 'ネットワークデータと安全性',
     security: [
@@ -105,10 +110,11 @@ const privacyCopy = {
     cookiesTitle: 'Cookieとウェブサイトデータ',
     cookies: 'ウェブサイトはCookieを設定し、プラットフォームのウェブエンジンのストレージを使用する場合があります。Androidでは、第三者Cookieを遮断し、CookieとWebViewのオリジンストレージを削除する設定があります。iOSは永続的なWebKitプロファイルを使用し、Cookieとウェブサイトデータを削除する設定アクションを提供します。残りのウェブサイトデータはアプリをアンインストールすると削除されます。各ウェブサイトは、それぞれのプライバシー方針に責任を負います。',
     sharingTitle: 'データの共有',
-    sharing: 'Denuo Webは個人データまたは機密性の高い利用者データを販売しません。HNS DANE Browserがデータを共有するのは、サイト表示、HNSデータ同期、名前解決、ファイルダウンロードなど、利用者が要求したブラウザ機能に必要な場合のみです。',
+    sharing: 'Denuo Webは個人データまたは機密性の高い利用者データを販売しません。HNS DANE Browserがデータを共有するのは、サイト表示、HNSデータ同期、名前解決、ファイルダウンロードなど、利用者が要求したブラウザ機能に必要な場合のみです。0.5.8候補は、ネイティブウォレットのデータベース、リカバリーフレーズ、端末に結び付いたデータベース鍵、アカウント識別子をDenuo Web、ウェブサイト、解析サービス、ウォレットプロバイダーへ送信しません。',
     retentionTitle: '保存期間と削除',
     retention: [
       '端末内のブラウザデータは、利用可能なプラットフォームまたはアプリの機能で消去するか、アプリをアンインストールするまで残ります。AndroidではCookieとWebViewのオリジンストレージ、閲覧履歴、ダウンロード記録、ゲートウェイ診断、HNSリゾルバキャッシュを消去でき、Androidのシステム設定から全アプリストレージを消去することもできます。iOSではCookieとWebKitウェブサイトデータ、閲覧履歴、ダウンロード一覧の記録、端末内のゲートウェイ診断、HNSリゾルバキャッシュを消去できます。iOSのダウンロード一覧を消去しても、ダウンロード済みファイルそのものは削除されません。アプリ内のファイルはアンインストールするまで残ります。別の場所に書き出したファイルは、その保存先の管理下に移ります。',
+      '0.5.8候補では、未確認の新規ウォレットは保護されたリカバリー画面を閉じると自動的に削除されます。アプリは未確認のデータベース鍵バッファーを消去し、不完全なデータベースを削除します。確認済みのネイティブウォレットをアプリ内で削除する操作はありません。Androidでは、すべてのアプリストレージを消去するかアプリをアンインストールすると、専用ウォレットデータベースとラップ済み鍵の記録が削除されます。iOSではアンインストールによりアプリコンテナ内のデータベースが削除されますが、通常のKeychainの動作によりThisDeviceOnly項目がオペレーティングシステムに残る場合があります。後でウォレット画面を開いたときにデータベースが存在しなければ、アプリはその孤立した項目を照合して削除します。アプリはリカバリーフレーズを再表示できず、利用者に代わってウォレットを復元することもできないため、ストレージ消去またはアンインストールの前に必ず保存してください。',
       'HNS DANE Browserは開発者運営の利用者アカウントを作成しないため、アプリアカウントの削除手順はありません。',
     ],
     childrenTitle: '子どもの利用',
