@@ -41,7 +41,7 @@ const pageCopy = {
     ],
     privacyHeading: 'Privacy summary',
     privacySummary:
-      'HNS DANE Browser has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Currently published store binaries are wallet-free. The 0.5.8 candidate adds native controls for one device-local non-value HNS account identity without balances, transfers, names, website-provider access, HNSA/HNSR service roles, settlement, exchange, or P2P marketplaces. Its requester-only P2P DNS relay is separate from HNSR and does not make the device an output node. Android may show an optional external donation link that unlocks no functionality; iOS has no donation or payment flow.',
+      'HNS DANE Browser has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Currently published store binaries are wallet-free. The 0.5.9 candidate adds native lifecycle controls for one device-local non-value HNS account identity and visible read-only balance, receive, history, tracked-name, and status rows. It provisions no scoped credential or indexed wallet backend, so those rows remain unavailable and make no wallet-specific network request. Transfers, name import/actions, website-provider access, HNSA/HNSR service roles, settlement, exchange, and P2P marketplaces remain unavailable. Its requester-only P2P DNS relay is separate from HNSR and does not make the device an output node. Android may show an optional external donation link that unlocks no functionality; iOS has no donation or payment flow.',
     localHeading: 'Stored locally',
     localData: [
       'Browsing history and navigation state: page URLs, page titles, visit times, or the current session\'s back-forward list, depending on the platform.',
@@ -49,7 +49,7 @@ const pageCopy = {
       'Downloads: files saved at your request and platform-specific records used to complete or present them.',
       'HNS data: synced headers, peer records, verified resource values, resolver cache, and diagnostics.',
       'Settings: homepage, cookie preference, optional requester-only HNS P2P DNS relay, separately configured recursive HNS DoH recovery URL, and related preferences. Relay consumption and recursive recovery are independently off by default and require separate explicit choices.',
-      '0.5.8 candidate native wallet data: a network-scoped encrypted database, one non-value HNS account identity, and a device-bound database key. A generated recovery phrase is shown only once for offline backup; leaving before confirmation wipes the pending key and deletes the incomplete database.',
+      '0.5.9 candidate native wallet data: a network-scoped encrypted database, one non-value HNS account identity, and a device-bound database key. A generated recovery phrase is shown only once for offline backup; leaving before confirmation wipes the pending key and deletes the incomplete database. No wallet-backend credential is stored in this candidate.',
     ],
     networkHeading: 'Network requests',
     networkData: [
@@ -62,7 +62,7 @@ const pageCopy = {
       'Platform download services and the destination you choose when you download or export a file.',
     ],
     privacyNote:
-      'Android can clear cookies and WebView origin storage, history, download records, gateway diagnostics, and the HNS resolver cache. iOS can clear cookies and WebKit website data, history, download-list records, locally stored gateway diagnostics, and the HNS resolver cache; clearing the list does not delete downloaded files. The 0.5.8 candidate has no in-app delete control for a confirmed wallet. Clear all Android app storage or uninstall the app to remove Android wallet data; uninstalling iOS removes its app-container database, and a later wallet-screen open reconciles an orphaned ThisDeviceOnly Keychain item. Save the one-time recovery phrase first.',
+      'Android can clear cookies and WebView origin storage, history, download records, gateway diagnostics, and the HNS resolver cache. iOS can clear cookies and WebKit website data, history, download-list records, locally stored gateway diagnostics, and the HNS resolver cache; clearing the list does not delete downloaded files. The 0.5.9 candidate has no in-app delete control for a confirmed wallet. Clear all Android app storage or uninstall the app to remove Android wallet data; uninstalling iOS removes its app-container database, and a later wallet-screen open reconciles an orphaned ThisDeviceOnly Keychain item. Save the one-time recovery phrase first.',
   },
   ja: {
     eyebrow: 'Denuo Web プロダクト',
@@ -92,7 +92,7 @@ const pageCopy = {
     ],
     privacyHeading: 'プライバシー概要',
     privacySummary:
-      'HNS DANE Browserには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.8候補は端末内の1つの非送金型HNSアカウント識別子を管理するネイティブ操作を追加しますが、残高、送受金、名前管理、ウェブサイトへのウォレット接続、HNSA/HNSRのサービス役割、決済、交換、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別で、端末を出力ノードにしません。Androidでは機能を解放しない任意の外部寄付リンクを表示する場合がありますが、iOSには寄付や支払いの機能がありません。',
+      'HNS DANE Browserには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.9候補は端末内の1つの非送金型HNSアカウント識別子を管理するネイティブ操作と、残高、受取先、取引履歴、追跡名、状態の読み取り専用欄を追加します。ただしスコープ付き認証情報やインデックス対応ウォレットバックエンドは設定されないため、これらの欄は利用不可のままで、ウォレット固有のネットワーク要求も行いません。送金、名前の取り込み・操作、ウェブサイトへのウォレット接続、HNSA/HNSRのサービス役割、決済、交換、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別で、端末を出力ノードにしません。Androidでは機能を解放しない任意の外部寄付リンクを表示する場合がありますが、iOSには寄付や支払いの機能がありません。',
     localHeading: '端末内に保存するデータ',
     localData: [
       '閲覧履歴とナビゲーション状態：プラットフォームに応じて、ページURL、ページタイトル、訪問時刻、または現在のセッションの「戻る・進む」リスト。',
@@ -100,7 +100,7 @@ const pageCopy = {
       'ダウンロード：利用者の操作で保存したファイルと、その処理や表示に必要なプラットフォーム固有の記録。',
       'HNSデータ：同期済みヘッダー、ピア情報、検証済みリソース値、リゾルバキャッシュ、診断情報。',
       '設定：ホームページ、Cookie設定、任意のリクエスター専用HNS P2P DNSリレー、別途設定する再帰的HNS DoH復旧URL、関連するアプリ設定。リレー利用と再帰的復旧はそれぞれ初期状態で無効であり、個別に明示的な選択が必要です。',
-      '0.5.8候補のネイティブウォレットデータ：ネットワーク別の暗号化データベース、1つの非送金型HNSアカウント識別子、端末に結び付いたデータベース鍵。新規生成したリカバリーフレーズはオフライン保管用に一度だけ表示され、確認前に画面を離れると未確認の鍵を消去して不完全なデータベースを削除します。',
+      '0.5.9候補のネイティブウォレットデータ：ネットワーク別の暗号化データベース、1つの非送金型HNSアカウント識別子、端末に結び付いたデータベース鍵。新規生成したリカバリーフレーズはオフライン保管用に一度だけ表示され、確認前に画面を離れると未確認の鍵を消去して不完全なデータベースを削除します。この候補はウォレットバックエンド認証情報を保存しません。',
     ],
     networkHeading: 'ネットワーク通信',
     networkData: [
@@ -113,7 +113,7 @@ const pageCopy = {
       'ファイルをダウンロードまたは書き出すときのプラットフォームのダウンロードサービスと利用者が選んだ保存先。',
     ],
     privacyNote:
-      'AndroidではCookieとWebViewのオリジンストレージ、履歴、ダウンロード記録、ゲートウェイ診断、HNSリゾルバキャッシュを消去できます。iOSではCookieとWebKitウェブサイトデータ、履歴、ダウンロード一覧、ゲートウェイ診断、HNSリゾルバキャッシュを消去できますが、一覧を消去してもダウンロード済みファイルは削除されません。0.5.8候補には確認済みウォレットをアプリ内で削除する操作がありません。Androidでは全アプリストレージの消去またはアンインストールでウォレットデータを削除します。iOSではアンインストールでアプリコンテナ内データベースを削除し、後でウォレット画面を開くと孤立したThisDeviceOnly Keychain項目を照合して削除します。その前に一度だけ表示されるリカバリーフレーズを保存してください。',
+      'AndroidではCookieとWebViewのオリジンストレージ、履歴、ダウンロード記録、ゲートウェイ診断、HNSリゾルバキャッシュを消去できます。iOSではCookieとWebKitウェブサイトデータ、履歴、ダウンロード一覧、ゲートウェイ診断、HNSリゾルバキャッシュを消去できますが、一覧を消去してもダウンロード済みファイルは削除されません。0.5.9候補には確認済みウォレットをアプリ内で削除する操作がありません。Androidでは全アプリストレージの消去またはアンインストールでウォレットデータを削除します。iOSではアンインストールでアプリコンテナ内データベースを削除し、後でウォレット画面を開くと孤立したThisDeviceOnly Keychain項目を照合して削除します。その前に一度だけ表示されるリカバリーフレーズを保存してください。',
   },
 } as const
 
