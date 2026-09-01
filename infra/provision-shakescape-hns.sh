@@ -22,7 +22,7 @@ readonly stamp
 readonly backup_dir="/var/backups/shakescape-hns/${stamp}"
 
 for command in awk dig dnssec-dsfromkey dnssec-keygen dnssec-signzone dnssec-verify \
-  grep named-checkconf named-checkzone nginx openssl python3 rndc systemctl; do
+  grep named-checkconf named-checkzone nginx openssl python3 rndc systemctl timeout; do
   command -v "${command}" >/dev/null 2>&1 || {
     echo "required command is unavailable: ${command}" >&2
     exit 2
@@ -356,10 +356,27 @@ systemctl reload nginx
 systemctl enable --now shakescape-dnssec-sign.timer
 
 dig @127.0.0.1 shakescape. SOA +dnssec +short | grep -Fq 'ns1.shakescape.'
-openssl s_client -connect 127.0.0.1:443 -servername shakescape </dev/null 2>/dev/null |
-  openssl x509 -noout -ext subjectAltName | grep -Fq 'DNS:shakescape'
-openssl s_client -connect "${internal_ipv4}:8443" -servername shakescape </dev/null 2>/dev/null |
-  openssl x509 -noout -ext subjectAltName | grep -Fq 'DNS:shakescape'
+
+wait_for_shakescape_certificate() {
+  local endpoint="$1"
+  local _attempt
+  for _attempt in {1..10}; do
+    if timeout 5 openssl s_client \
+      -connect "${endpoint}" \
+      -servername shakescape \
+      </dev/null 2>/dev/null |
+      openssl x509 -noout -ext subjectAltName 2>/dev/null |
+      grep -Fq 'DNS:shakescape'; then
+      return 0
+    fi
+    sleep 1
+  done
+  echo "shakescape certificate did not become available at ${endpoint}" >&2
+  return 1
+}
+
+wait_for_shakescape_certificate '127.0.0.1:443'
+wait_for_shakescape_certificate "${internal_ipv4}:8443"
 
 ksk_files=()
 while IFS= read -r key_file; do
