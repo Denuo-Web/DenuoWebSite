@@ -192,12 +192,27 @@ insert_once(
     "    listen-on port 9443 tls denuoweb-hns-doh-tls http denuoweb-doh { 127.0.0.1; };\n",
     "    listen-on port 9444 tls shakescape-hns-doh-tls http denuoweb-doh { 127.0.0.1; };\n",
 )
-insert_once(
-    "/etc/nginx/nginx.conf",
-    "shakescape.        127.0.0.1:9444;",
-    "        denuoweb.         127.0.0.1:9443;\n",
-    "        shakescape        127.0.0.1:9444;\n"
-    "        shakescape.       127.0.0.1:9444;\n",
+nginx_path = Path("/etc/nginx/nginx.conf")
+nginx_text = nginx_path.read_text()
+nginx_lines = [
+    line for line in nginx_text.splitlines(keepends=True)
+    if not (
+        line.strip().startswith("shakescape ")
+        or line.strip().startswith("shakescape. ")
+    )
+]
+nginx_text = "".join(nginx_lines)
+nginx_anchor = "        denuoweb.         127.0.0.1:9443;\n"
+if nginx_text.count(nginx_anchor) != 1:
+    raise SystemExit("expected exactly one denuoweb DoH map anchor")
+nginx_path.write_text(
+    nginx_text.replace(
+        nginx_anchor,
+        nginx_anchor
+        + "        shakescape        127.0.0.1:9444;\n"
+        + "        shakescape.       127.0.0.1:9444;\n",
+        1,
+    )
 )
 PY
 
