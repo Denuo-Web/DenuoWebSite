@@ -5,47 +5,122 @@
     "redirects": [
       {
         "source": "/hns-browser",
-        "destination": "/work/hns-dane-browser",
+        "destination": "/work/shakescape",
         "type": 301
       },
       {
         "source": "/hns-browser/privacy",
-        "destination": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
         "type": 301
       },
       {
         "source": "/hns-browser/privacy/**",
-        "destination": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
         "type": 301
       },
       {
         "source": "/work/hns-browser",
-        "destination": "/work/hns-dane-browser",
+        "destination": "/work/shakescape",
         "type": 301
       },
       {
         "source": "/work/hns-browser/privacy",
-        "destination": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
         "type": 301
       },
       {
         "source": "/work/hns-browser/privacy/**",
-        "destination": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
         "type": 301
       },
       {
         "source": "/hns-dane-browser/privacy",
-        "destination": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
         "type": 301
       },
       {
         "source": "/hns-dane-browser/privacy/**",
-        "destination": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
         "type": 301
       },
       {
         "source": "/hns-dane-browser",
-        "destination": "/work/hns-dane-browser",
+        "destination": "/work/shakescape",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser-extension/privacy",
+        "destination": "/work/shakescape-extension/privacy",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser-extension/privacy/**",
+        "destination": "/work/shakescape-extension/privacy",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser-extension/legal",
+        "destination": "/work/shakescape-extension/legal",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser-extension/legal/**",
+        "destination": "/work/shakescape-extension/legal",
+        "type": 301
+      },
+      {
+        "source": "/hns-dane-browser-extension",
+        "destination": "/work/shakescape-extension",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-dane-browser",
+        "destination": "/work/shakescape",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-dane-browser/privacy",
+        "destination": "/work/shakescape/privacy",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-dane-browser-extension",
+        "destination": "/work/shakescape-extension",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-dane-browser-extension/privacy",
+        "destination": "/work/shakescape-extension/privacy",
+        "type": 301
+      },
+      {
+        "source": "/work/hns-dane-browser-extension/legal",
+        "destination": "/work/shakescape-extension/legal",
+        "type": 301
+      },
+      {
+        "source": "/shakescape",
+        "destination": "/work/shakescape",
+        "type": 301
+      },
+      {
+        "source": "/shakescape/privacy",
+        "destination": "/work/shakescape/privacy",
+        "type": 301
+      },
+      {
+        "source": "/shakescape-extension",
+        "destination": "/work/shakescape-extension",
+        "type": 301
+      },
+      {
+        "source": "/shakescape-extension/privacy",
+        "destination": "/work/shakescape-extension/privacy",
+        "type": 301
+      },
+      {
+        "source": "/shakescape-extension/legal",
+        "destination": "/work/shakescape-extension/legal",
         "type": 301
       }
     ],

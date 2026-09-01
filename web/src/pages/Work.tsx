@@ -59,23 +59,47 @@ const localizedOfferCopy = {
   },
 } as const
 
-const localizedHnsDaneBrowserWorkCard = {
-  en: {
-    status: 'Denuo Web product',
-    badge: 'Open-source Android and iOS app',
-    title: 'HNS DANE Browser',
-    summary: 'Open-source mobile browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
-    impact: 'Publishes the product overview, privacy surface, and source link as part of Denuo Web work.',
-    outcomes: ['Local HNS proof path', 'DNSSEC and DANE diagnostics'],
-  },
-  ja: {
-    status: 'Denuo Web プロダクト',
-    badge: 'Android・iOS向けオープンソースアプリ',
-    title: 'HNS DANE Browser',
-    summary: 'Handshake名、DNSSEC、DANE検証、リゾルバ診断に対応するオープンソースのモバイルブラウザ。',
-    impact: 'プロダクト概要、プライバシー情報、ソースリンクを Denuo Web の実績として公開しています。',
-    outcomes: ['ローカル HNS 証明パス', 'DNSSEC と DANE の診断'],
-  },
+const localizedProductWorkCards = {
+  en: [
+    {
+      slug: 'shakescape',
+      status: 'Denuo Web product',
+      badge: 'Open-source Android and iOS app',
+      title: 'Shakescape',
+      summary: 'Open-source mobile browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
+      impact: 'Publishes the mobile product overview, privacy surface, and source link as part of Denuo Web work.',
+      outcomes: ['Local HNS proof path', 'DNSSEC and DANE diagnostics'],
+    },
+    {
+      slug: 'shakescape-extension',
+      status: 'Denuo Web product',
+      badge: 'Source-available desktop Chromium extension',
+      title: 'Shakescape Extension',
+      summary: 'Desktop Chromium extension and local Rust runtime for authenticated HNS/ICANN classification and DANE.',
+      impact: 'Publishes a separate desktop product, privacy policy, license, terms, source, and native Setup boundary.',
+      outcomes: ['Linux, macOS, and Windows Setup', 'Fail-closed DNSSEC and DANE path'],
+    },
+  ],
+  ja: [
+    {
+      slug: 'shakescape',
+      status: 'Denuo Web プロダクト',
+      badge: 'Android・iOS向けオープンソースアプリ',
+      title: 'Shakescape',
+      summary: 'Handshake名、DNSSEC、DANE検証、リゾルバ診断に対応するオープンソースのモバイルブラウザ。',
+      impact: 'モバイル製品の概要、プライバシー情報、ソースリンクをDenuo Webの実績として公開しています。',
+      outcomes: ['ローカル HNS 証明パス', 'DNSSEC と DANE の診断'],
+    },
+    {
+      slug: 'shakescape-extension',
+      status: 'Denuo Web プロダクト',
+      badge: 'デスクトップChromium向けソース公開型拡張機能',
+      title: 'Shakescape Extension',
+      summary: '認証済みHNS／ICANN分類とDANEに対応するデスクトップChromium拡張機能とローカルRustランタイム。',
+      impact: 'デスクトップ製品、プライバシーポリシー、ライセンス、利用規約、ソース、ネイティブSetup境界を個別に公開します。',
+      outcomes: ['Linux・macOS・Windows向けSetup', 'フェイルクローズのDNSSEC・DANE経路'],
+    },
+  ],
 } as const
 
 const offerDefinitions: Record<'en' | 'ja', OfferDefinition[]> = {
@@ -202,7 +226,7 @@ const WorkPage = ({
   const offerCopy = localizedOfferCopy[language]
   const offers = offerDefinitions[language]
   const offerByKey = new Map(offers.map((offer) => [offer.key, offer]))
-  const hnsDaneBrowserWorkCard = localizedHnsDaneBrowserWorkCard[language]
+  const productWorkCards = localizedProductWorkCards[language]
   const offerGroups = offers.map((offer) => ({
     ...offer,
     caseStudies: work.caseStudies.filter(
@@ -290,33 +314,35 @@ const WorkPage = ({
                     </Card>
                   )
                 })}
-                <Card key="hns-dane-browser" asChild size="3" variant="surface">
-                  <Link to="/work/hns-dane-browser">
-                    <Flex direction="column" gap="2">
-                      <Flex gap="2" wrap="wrap">
-                        <Badge variant="soft">{hnsDaneBrowserWorkCard.status}</Badge>
-                        <Badge color="indigo">{hnsDaneBrowserWorkCard.badge}</Badge>
+                {productWorkCards.map((product) => (
+                  <Card key={product.slug} asChild size="3" variant="surface">
+                    <Link to={`/work/${product.slug}`}>
+                      <Flex direction="column" gap="2">
+                        <Flex gap="2" wrap="wrap">
+                          <Badge variant="soft">{product.status}</Badge>
+                          <Badge color="indigo">{product.badge}</Badge>
+                        </Flex>
+                        <Heading size="4">{product.title}</Heading>
+                        <Text color="gray">{product.summary}</Text>
+                        <Text size="2" color="gray">
+                          {product.impact}
+                        </Text>
+                        <Box asChild pl="3" m="0">
+                          <ul>
+                            {product.outcomes.map((outcome) => (
+                              <li key={outcome}>
+                                <Text size="2">{outcome}</Text>
+                              </li>
+                            ))}
+                          </ul>
+                        </Box>
+                        <Text size="2" color="gray">
+                          {workCopy.openDetailsLabel}
+                        </Text>
                       </Flex>
-                      <Heading size="4">{hnsDaneBrowserWorkCard.title}</Heading>
-                      <Text color="gray">{hnsDaneBrowserWorkCard.summary}</Text>
-                      <Text size="2" color="gray">
-                        {hnsDaneBrowserWorkCard.impact}
-                      </Text>
-                      <Box asChild pl="3" m="0">
-                        <ul>
-                          {hnsDaneBrowserWorkCard.outcomes.map((outcome) => (
-                            <li key={outcome}>
-                              <Text size="2">{outcome}</Text>
-                            </li>
-                          ))}
-                        </ul>
-                      </Box>
-                      <Text size="2" color="gray">
-                        {workCopy.openDetailsLabel}
-                      </Text>
-                    </Flex>
-                  </Link>
-                </Card>
+                    </Link>
+                  </Card>
+                ))}
               </Grid>
             </Flex>
           </section>

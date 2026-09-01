@@ -11,11 +11,11 @@ const SOURCE_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile'
 const privacyCopy = {
   en: {
     updated: 'Last updated: 2026-08-10',
-    title: 'HNS DANE Browser Privacy Policy',
-    intro: 'HNS DANE Browser is published by Denuo Web, LLC. For privacy questions or deletion requests, email info@denuoweb.com or use the developer contact listed in the app\'s store listing. Do not post personal information to the public project issue tracker.',
+    title: 'Shakescape Privacy Policy',
+    intro: 'Shakescape is published by Denuo Web, LLC. For privacy questions or deletion requests, email info@denuoweb.com or use the developer contact listed in the app\'s store listing. Do not post personal information to the public project issue tracker.',
     summaryTitle: 'Summary',
     summary: [
-      'HNS DANE Browser is a Handshake-first browser for local HNS proofs, authoritative DNS, optional requester-only HNS P2P DNS relay consumption, optional user-configured recursive HNS DoH recovery, DNSSEC, and DANE diagnostics. The currently published store binaries are wallet-free. The 0.5.9 candidate, once distributed, adds native controls to create or restore one device-local non-value HNS account identity and to open, unlock, or lock that local wallet, plus visible read-only rows for balance, receive target, transaction history, tracked names, and module status. It does not provision the required scoped loopback credential or indexed wallet backend, so those rows remain unavailable and make no wallet-specific network request. It cannot send funds, import or manage names, provide website-provider access, participate in HNSA or HNSR service roles, settle trades, provide exchange features, or expose P2P marketplaces. The requester-only P2P DNS relay is separate from HNSR and does not make the device a relay endpoint or output node. The app has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The Android edition may show an optional external donation link that does not unlock functionality; the iOS app has no donation or payment flow.',
+      'Shakescape is a Handshake-first browser for local HNS proofs, authoritative DNS, optional requester-only HNS P2P DNS relay consumption, optional user-configured recursive HNS DoH recovery, DNSSEC, and DANE diagnostics. The currently published store binaries are wallet-free. The 0.5.9 candidate, once distributed, adds native controls to create or restore one device-local non-value HNS account identity and to open, unlock, or lock that local wallet, plus visible read-only rows for balance, receive target, transaction history, tracked names, and module status. It does not provision the required scoped loopback credential or indexed wallet backend, so those rows remain unavailable and make no wallet-specific network request. It cannot send funds, import or manage names, provide website-provider access, participate in HNSA or HNSR service roles, settle trades, provide exchange features, or expose P2P marketplaces. The requester-only P2P DNS relay is separate from HNSR and does not make the device a relay endpoint or output node. The app has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. The Android edition may show an optional external donation link that does not unlock functionality; the iOS app has no donation or payment flow.',
       'The app stores browser and native wallet data locally on the device and sends network requests needed to load sites and keep HNS resolution data current.',
     ],
     localTitle: 'Data stored locally',
@@ -37,7 +37,7 @@ const privacyCopy = {
       'Authoritative DNS nameservers for delegated HNS names.',
       'Proof-bootstrapped or RFC 9461-discovered RFC 8484 authoritative DoH endpoints for delegated HNS names.',
       'A recursive HNS DNS-over-HTTPS endpoint entered explicitly by the user, but only after direct authoritative DNS, owner-published proof-anchored authoritative DoH, and any independently enabled P2P requester path fail because port 53 is intercepted or DNS transport is unavailable. Leaving the setting blank makes no request to such a service. https://hnsdoh.com/dns-query is an example only; it is never prefilled, selected automatically, or contacted unless the user enters it.',
-      'Security or reputation services exposed by the platform web engine. In particular, an installed Android WebView provider may check URLs with its Safe Browsing service and apply its own privacy policy. Apple WebKit and the operating system may apply their own browser-security protections. HNS DANE Browser does not operate those platform services.',
+      'Security or reputation services exposed by the platform web engine. In particular, an installed Android WebView provider may check URLs with its Safe Browsing service and apply its own privacy policy. Apple WebKit and the operating system may apply their own browser-security protections. Shakescape does not operate those platform services.',
       'The non-routable 192.0.2.1 TEST-NET DNS sentinel after delegated DNS failure; a matching reply confirms transparent outbound port 53 interception, while no reply is reported only as not detected.',
       'Cloudflare\'s DNS-over-HTTPS service at cloudflare-dns.com (bootstrapped through the documented 1.1.1.1 addresses) for ordinary internet DNS resolution.',
       'Platform download services and the destination you choose when you download or export a file.',
@@ -52,28 +52,28 @@ const privacyCopy = {
     cookiesTitle: 'Cookies and website data',
     cookies: 'Websites may set cookies or use platform web-engine storage. Android provides settings controls to block third-party cookies and delete cookies plus WebView origin storage. iOS uses a persistent WebKit profile and provides a settings action that deletes its cookies and website data. Remaining website data is removed when the app is uninstalled. Websites are responsible for their own privacy practices.',
     sharingTitle: 'Data sharing',
-    sharing: 'Denuo Web does not sell personal or sensitive user data. HNS DANE Browser shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file. The 0.5.9 candidate does not send native wallet databases, recovery phrases, device-bound database keys, account identities, or wallet read data to Denuo Web, websites, analytics services, or a wallet provider.',
+    sharing: 'Denuo Web does not sell personal or sensitive user data. Shakescape shares data only as necessary for user-requested browser functionality, such as loading a website, syncing HNS data, resolving a name, or downloading a file. The 0.5.9 candidate does not send native wallet databases, recovery phrases, device-bound database keys, account identities, or wallet read data to Denuo Web, websites, analytics services, or a wallet provider.',
     retentionTitle: 'Retention and deletion',
     retention: [
       'Local browser data remains on the device until you clear it using an available platform or app control, or uninstall the app. Android provides controls for clearing cookies and WebView origin storage, browsing history, download records, gateway diagnostics, and the HNS resolver cache; Android system settings can also clear all app storage. iOS provides controls for clearing cookies and WebKit website data, browsing history, download-list records, locally stored gateway diagnostics, and the HNS resolver cache. Clearing the iOS download list does not delete the downloaded files themselves; those app-local files remain until the app is uninstalled. Files you export to another location are then controlled by that destination.',
       'In the 0.5.9 candidate, an unconfirmed newly created wallet is automatically removed when its protected recovery screen closes: the app wipes its unconfirmed database-key buffer and deletes the incomplete database. There is no in-app delete control for a confirmed native wallet. On Android, clearing all app storage or uninstalling the app removes its private wallet database and wrapped-key records. On iOS, uninstalling removes the app-container database; the operating system may retain the ThisDeviceOnly Keychain item under normal Keychain semantics. If the database is absent when the wallet screen is later opened, the app reconciles and deletes that orphaned item. Save the recovery phrase before clearing storage or uninstalling, because the app cannot show it again and cannot recover the wallet for you.',
-      'HNS DANE Browser does not create developer-operated user accounts, so there is no app account deletion flow.',
+      'Shakescape does not create developer-operated user accounts, so there is no app account deletion flow.',
     ],
     childrenTitle: 'Children',
-    children: "HNS DANE Browser is not directed to children. Because it is a general-purpose browser, websites opened by users may contain third-party content outside Denuo Web's control.",
+    children: "Shakescape is not directed to children. Because it is a general-purpose browser, websites opened by users may contain third-party content outside Denuo Web's control.",
     changesTitle: 'Changes',
     changes: 'This policy may be updated as the app changes. Material privacy changes should be reflected on this page, in the in-app privacy text, Google Play\'s Data safety form, and Apple\'s App Privacy answers as applicable.',
-    overview: 'HNS DANE Browser overview',
+    overview: 'Shakescape overview',
     support: 'Support / issues',
     source: 'Source code',
   },
   ja: {
     updated: '最終更新日：2026年8月10日',
-    title: 'HNS DANE Browser プライバシーポリシー',
-    intro: 'HNS DANE BrowserはDenuo Web, LLCが公開しています。プライバシーに関する質問や削除依頼は、info@denuoweb.comまたはアプリストアに記載された開発者の連絡先をご利用ください。公開の課題管理には個人情報を投稿しないでください。',
+    title: 'Shakescape プライバシーポリシー',
+    intro: 'ShakescapeはDenuo Web, LLCが公開しています。プライバシーに関する質問や削除依頼は、info@denuoweb.comまたはアプリストアに記載された開発者の連絡先をご利用ください。公開の課題管理には個人情報を投稿しないでください。',
     summaryTitle: '概要',
     summary: [
-      'HNS DANE Browserは、ローカルHNS証明、権威DNS、任意のリクエスター専用HNS P2P DNSリレー、任意の利用者設定型再帰HNS DoHリカバリー、DNSSEC、DANE診断に対応するHandshake優先ブラウザです。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.9候補は、公開後に端末内だけで使う1つの非送金型HNSアカウント識別子を作成または復元し、そのローカルウォレットを開く、ロック解除する、ロックするためのネイティブ操作に加えて、残高、受取先、取引履歴、追跡名、モジュール状態の読み取り専用欄を表示します。ただし、必要なスコープ付きループバック認証情報とインデックス対応ウォレットバックエンドは組み込まれていないため、これらの欄は利用不可のままで、ウォレット固有のネットワーク要求も行いません。送金、名前の取り込み・操作、ウェブサイトへのウォレット接続、HNSAまたはHNSRのサービス役割、取引決済、交換機能、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別の機能であり、端末をリレーエンドポイントまたは出力ノードにしません。広告SDK、解析SDK、開発者運営のアカウント、有料機能解放もありません。Android版には機能を解放しない任意の外部寄付リンクが表示される場合がありますが、iOS版に寄付や支払いの機能はありません。',
+      'Shakescapeは、ローカルHNS証明、権威DNS、任意のリクエスター専用HNS P2P DNSリレー、任意の利用者設定型再帰HNS DoHリカバリー、DNSSEC、DANE診断に対応するHandshake優先ブラウザです。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.9候補は、公開後に端末内だけで使う1つの非送金型HNSアカウント識別子を作成または復元し、そのローカルウォレットを開く、ロック解除する、ロックするためのネイティブ操作に加えて、残高、受取先、取引履歴、追跡名、モジュール状態の読み取り専用欄を表示します。ただし、必要なスコープ付きループバック認証情報とインデックス対応ウォレットバックエンドは組み込まれていないため、これらの欄は利用不可のままで、ウォレット固有のネットワーク要求も行いません。送金、名前の取り込み・操作、ウェブサイトへのウォレット接続、HNSAまたはHNSRのサービス役割、取引決済、交換機能、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別の機能であり、端末をリレーエンドポイントまたは出力ノードにしません。広告SDK、解析SDK、開発者運営のアカウント、有料機能解放もありません。Android版には機能を解放しない任意の外部寄付リンクが表示される場合がありますが、iOS版に寄付や支払いの機能はありません。',
       'ブラウザデータとネイティブウォレットデータは端末内に保存され、サイトの表示とHNS解決データの更新に必要なネットワーク通信を行います。',
     ],
     localTitle: '端末内に保存するデータ',
@@ -95,7 +95,7 @@ const privacyCopy = {
       '委任されたHNS名の権威DNSネームサーバー。',
       '証明から起動するかRFC 9461で検出した、委任されたHNS名のRFC 8484権威DoHエンドポイント。',
       '利用者が明示的に入力した再帰HNS DNS-over-HTTPSエンドポイント。ただし、直接の権威DNS、所有者公開の証明固定型権威DoH、個別に有効化したP2Pリクエスターのすべてが、ポート53の介入またはDNS転送不能によって失敗した後に限ります。設定が空欄なら、この種のサービスへ要求しません。https://hnsdoh.com/dns-query は例にすぎず、利用者が入力しない限り事前入力、自動選択、接続されません。',
-      'プラットフォームのウェブエンジンが提供するセキュリティまたはレピュテーションサービス。特に、インストールされたAndroid WebViewプロバイダーはSafe BrowsingサービスでURLを確認し、独自のプライバシーポリシーを適用する場合があります。Apple WebKitとオペレーティングシステムも独自のブラウザセキュリティ保護を適用する場合があります。HNS DANE Browserはこれらのプラットフォームサービスを運営していません。',
+      'プラットフォームのウェブエンジンが提供するセキュリティまたはレピュテーションサービス。特に、インストールされたAndroid WebViewプロバイダーはSafe BrowsingサービスでURLを確認し、独自のプライバシーポリシーを適用する場合があります。Apple WebKitとオペレーティングシステムも独自のブラウザセキュリティ保護を適用する場合があります。Shakescapeはこれらのプラットフォームサービスを運営していません。',
       '委任DNSの失敗後に接続する、ルーティング不能な192.0.2.1 TEST-NET DNSセンチネル。一致する応答があれば外向きポート53の透過的な介入を確認し、応答がなければ「検出されず」とのみ表示します。',
       '通常のインターネットDNS解決に使用する、cloudflare-dns.comのCloudflare DNS-over-HTTPSサービス（公開されている1.1.1.1アドレスを介して接続を開始します）。',
       'ファイルをダウンロードまたは書き出すときのプラットフォームのダウンロードサービスと利用者が選んだ保存先。',
@@ -110,18 +110,18 @@ const privacyCopy = {
     cookiesTitle: 'Cookieとウェブサイトデータ',
     cookies: 'ウェブサイトはCookieを設定し、プラットフォームのウェブエンジンのストレージを使用する場合があります。Androidでは、第三者Cookieを遮断し、CookieとWebViewのオリジンストレージを削除する設定があります。iOSは永続的なWebKitプロファイルを使用し、Cookieとウェブサイトデータを削除する設定アクションを提供します。残りのウェブサイトデータはアプリをアンインストールすると削除されます。各ウェブサイトは、それぞれのプライバシー方針に責任を負います。',
     sharingTitle: 'データの共有',
-    sharing: 'Denuo Webは個人データまたは機密性の高い利用者データを販売しません。HNS DANE Browserがデータを共有するのは、サイト表示、HNSデータ同期、名前解決、ファイルダウンロードなど、利用者が要求したブラウザ機能に必要な場合のみです。0.5.9候補は、ネイティブウォレットのデータベース、リカバリーフレーズ、端末に結び付いたデータベース鍵、アカウント識別子、ウォレット読み取りデータをDenuo Web、ウェブサイト、解析サービス、ウォレットプロバイダーへ送信しません。',
+    sharing: 'Denuo Webは個人データまたは機密性の高い利用者データを販売しません。Shakescapeがデータを共有するのは、サイト表示、HNSデータ同期、名前解決、ファイルダウンロードなど、利用者が要求したブラウザ機能に必要な場合のみです。0.5.9候補は、ネイティブウォレットのデータベース、リカバリーフレーズ、端末に結び付いたデータベース鍵、アカウント識別子、ウォレット読み取りデータをDenuo Web、ウェブサイト、解析サービス、ウォレットプロバイダーへ送信しません。',
     retentionTitle: '保存期間と削除',
     retention: [
       '端末内のブラウザデータは、利用可能なプラットフォームまたはアプリの機能で消去するか、アプリをアンインストールするまで残ります。AndroidではCookieとWebViewのオリジンストレージ、閲覧履歴、ダウンロード記録、ゲートウェイ診断、HNSリゾルバキャッシュを消去でき、Androidのシステム設定から全アプリストレージを消去することもできます。iOSではCookieとWebKitウェブサイトデータ、閲覧履歴、ダウンロード一覧の記録、端末内のゲートウェイ診断、HNSリゾルバキャッシュを消去できます。iOSのダウンロード一覧を消去しても、ダウンロード済みファイルそのものは削除されません。アプリ内のファイルはアンインストールするまで残ります。別の場所に書き出したファイルは、その保存先の管理下に移ります。',
       '0.5.9候補では、未確認の新規ウォレットは保護されたリカバリー画面を閉じると自動的に削除されます。アプリは未確認のデータベース鍵バッファーを消去し、不完全なデータベースを削除します。確認済みのネイティブウォレットをアプリ内で削除する操作はありません。Androidでは、すべてのアプリストレージを消去するかアプリをアンインストールすると、専用ウォレットデータベースとラップ済み鍵の記録が削除されます。iOSではアンインストールによりアプリコンテナ内のデータベースが削除されますが、通常のKeychainの動作によりThisDeviceOnly項目がオペレーティングシステムに残る場合があります。後でウォレット画面を開いたときにデータベースが存在しなければ、アプリはその孤立した項目を照合して削除します。アプリはリカバリーフレーズを再表示できず、利用者に代わってウォレットを復元することもできないため、ストレージ消去またはアンインストールの前に必ず保存してください。',
-      'HNS DANE Browserは開発者運営の利用者アカウントを作成しないため、アプリアカウントの削除手順はありません。',
+      'Shakescapeは開発者運営の利用者アカウントを作成しないため、アプリアカウントの削除手順はありません。',
     ],
     childrenTitle: '子どもの利用',
-    children: 'HNS DANE Browserは子どもを対象としていません。汎用ブラウザであるため、利用者が開くウェブサイトにはDenuo Webが管理しない第三者コンテンツが含まれる場合があります。',
+    children: 'Shakescapeは子どもを対象としていません。汎用ブラウザであるため、利用者が開くウェブサイトにはDenuo Webが管理しない第三者コンテンツが含まれる場合があります。',
     changesTitle: '変更',
     changes: 'アプリの変更に伴い、本ポリシーを更新する場合があります。重要なプライバシー変更は、このページ、アプリ内のプライバシー表示、Google Playのデータセーフティ欄、AppleのApp Privacy回答に該当する範囲で反映します。',
-    overview: 'HNS DANE Browserの概要',
+    overview: 'Shakescapeの概要',
     support: 'サポート / 課題報告',
     source: 'ソースコード',
   },
@@ -168,7 +168,7 @@ const HnsDaneBrowserPrivacyPage = ({
           <PolicyParagraphs title={page.changesTitle} paragraphs={[page.changes]} />
 
           <Flex gap="3" wrap="wrap">
-            <Button asChild><Link to="/work/hns-dane-browser">{page.overview}</Link></Button>
+            <Button asChild><Link to="/work/shakescape">{page.overview}</Link></Button>
             <Button asChild variant="soft">
               <RadixLink href={SUPPORT_URL} target="_blank" rel="noreferrer">{page.support}</RadixLink>
             </Button>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shakescape Extension Privacy Policy | Denuo Web, LLC</title>
+  <meta name="description" content="Privacy policy for the Shakescape Chromium extension, native host, and Setup application by Denuo Web, LLC.">
+  <link rel="canonical" href="https://denuoweb.com/work/shakescape-extension/privacy">
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.6; }
+    body { margin: 0; background: #f7f7fb; color: #161616; }
+    main { max-width: 880px; margin: 0 auto; padding: 48px 20px; }
+    article { background: #fff; border: 1px solid #ddddea; border-radius: 18px; padding: 32px; box-shadow: 0 18px 45px rgba(20, 20, 50, .08); }
+    h1 { margin-top: 0; font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.05; }
+    h2 { margin-top: 2rem; }
+    a { color: #2452a9; }
+    .eyebrow { color: #3f4f9f; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+    .meta { color: #555; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #10111a; color: #f4f4f8; }
+      article { background: #171924; border-color: #303346; box-shadow: none; }
+      a { color: #91b4ff; }
+      .meta { color: #b6b8c8; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <article>
+    <p class="eyebrow">Shakescape Extension · Denuo Web, LLC</p>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Last updated: August 13, 2026</p>
+    <p>Shakescape Extension is published by Denuo Web, LLC. Privacy and support questions can be sent to <a href="mailto:info@denuoweb.com">info@denuoweb.com</a>. Do not post personal information to the public issue tracker.</p>
+
+    <h2>Summary</h2>
+    <p>The extension, local Rust native host, and Setup application do not operate a telemetry, analytics, advertising, developer-account, or browsing-history service. Denuo Web does not sell personal or sensitive data. Optional donations do not unlock features or change how browsing data is handled.</p>
+    <p>The product keeps the state needed to provide its security feature on the user's computer and makes network requests needed to resolve names and load websites. Those local and network boundaries are described below.</p>
+
+    <h2>Data stored locally</h2>
+    <ul>
+      <li>Extension settings, the optional MeshMine public-statistics endpoint, the explicit requester-only P2P DNS-relay choice, the independently configured recursive HNS DoH URL, and the last header-sync attempt time used for retry limiting.</li>
+      <li>Native-host registration, Setup receipts or in-progress ownership transactions, installation markers, selected trust-store path, selected browser compatibility flavors, and the exact registered extension IDs.</li>
+      <li>A per-install local CA key and certificate, current proxy/runtime generations and credentials, and the local files needed to operate the authenticated loopback proxy.</li>
+      <li>Handshake headers, peer state, verified proof and resource cache, namespace bindings, and bounded resolver state.</li>
+      <li>A bounded in-memory or browser-session security-result window used by the popup, waiting page, and diagnostics. It can include exact HTTP(S) targets, tab/document identifiers, selected host and port, generation values, and sanitized security receipts, but not page bodies, cookies, request or response headers, or raw certificate bytes.</li>
+    </ul>
+
+    <h2>Network disclosure</h2>
+    <ul>
+      <li>Websites receive the ordinary connection and request data needed to serve pages, including the network address, requested URL, headers, cookies, and content the user submits. Denuo Web does not proxy that traffic through a developer-operated browsing service.</li>
+      <li>ICANN resolution and TLSA discovery use built-in validating Cloudflare DNS-over-HTTPS at <code>cloudflare-dns.com</code>. Cloudflare can observe queried names and record types, request timing, protocol metadata, and the caller's network address, and controls its own logging and retention.</li>
+      <li>HNS header and proof synchronization connects to Handshake peers and seed hosts. If the user explicitly enables the requester-only P2P DNS relay, a selected relay peer can observe the relayed qname, qtype, request timing, and source connection. Ordinary Handshake TCP does not provide query confidentiality.</li>
+      <li>After local proof validation, direct delegated authoritative DNS and proof-anchored owner-published authoritative DoH endpoints can observe the HNS qname, qtype, request timing, and source connection needed to answer the query. Their replies remain subject to local HNS DNSSEC, TLSA, and DANE validation.</li>
+      <li>The recursive HNS DoH recovery field is blank by default. If the user enters and applies an endpoint, its operator can observe the HNS qnames and qtypes, timing, and source address when that recovery path is selected. Replies remain subject to local HNS proof, DNSSEC, TLSA, and DANE validation.</li>
+      <li>If the user enters a MeshMine public-statistics endpoint, the extension sends a credential-free, no-referrer request directly to that operator. The operator can observe ordinary transport metadata. The response is bounded, displayed as unverified, and is not sent to Denuo Web.</li>
+    </ul>
+
+    <h2>Session and diagnostic data</h2>
+    <p>The raw internal resolution trace is not sent through native messaging because it can contain URLs or certificate material. Browser-visible responses receive sanitized, bounded protocol state rather than page bodies or private internal metadata.</p>
+    <p>To bind a Rust security receipt to the correct active document, the extension can keep a bounded set of exact URLs and Chromium tab/document identifiers in <code>chrome.storage.session</code>. That browser-managed state stays local and is cleared when the browser session ends. A local waiting page can also keep one exact credential-free GET target in its URL fragment and <code>sessionStorage</code> to prevent an automatic resume loop. Fragments are not transmitted in HTTP requests, POST requests are never queued or replayed, and temporary worker-memory targets expire after at most one minute.</p>
+
+    <h2>Use, sharing, and retention</h2>
+    <p>Local data is used only to install, operate, verify, repair, diagnose, or remove the extension and its native component. Denuo Web receives no installation receipt, synced browsing history, local CA key, runtime credential, configured recovery URL, or MeshMine endpoint.</p>
+    <p>Normal logs omit full qnames, URLs, headers, bodies, raw DNS messages, and stable browser identifiers. Temporary diagnostic state is bounded and cleared when its lifecycle, runtime, or authority changes.</p>
+    <p>Users can clear the recursive resolver, disable the P2P requester, replace or clear the MeshMine endpoint, remove the extension, or run Complete Uninstall. Complete Uninstall removes this product's user-level native-host registrations, exact per-install trust anchor, native executable, CA key material, marker, chain/cache state, and runtime data. Chromium removes extension-managed storage according to the browser's extension-removal behavior. There is no developer-operated account or server-side profile to delete.</p>
+
+    <h2>Scope and changes</h2>
+    <p>This policy covers the Chromium extension, its local native host, and Shakescape Setup. The separate Android and iOS product has <a href="/work/shakescape/privacy">its own privacy policy</a>.</p>
+    <p>This policy may change as the product changes. Material changes will be reflected on this page and in applicable browser-store privacy declarations. The source repository retains the detailed technical policy and release boundaries used to keep those disclosures aligned with the software.</p>
+
+    <p><a href="/work/shakescape-extension">Extension overview</a> · <a href="/work/shakescape-extension/legal">License &amp; terms</a> · <a href="https://github.com/handshake-rs/hns-dane-browser-extension/blob/main/docs/privacy-policy.md">Policy in source</a> · <a href="https://github.com/handshake-rs/hns-dane-browser-extension/issues">Support</a></p>
+  </article>
+</main>
+</body>
+</html>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import MarketingShell from '../components/marketing/MarketingShell'
 import type { MarketingPageProps } from './marketingPageProps'
 
-const PRIVACY_URL = '/work/hns-dane-browser/privacy'
+const PRIVACY_URL = '/work/shakescape/privacy'
 const SOURCE_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile'
 const SUPPORT_URL = 'https://github.com/handshake-rs/hns-dane-browser-mobile/issues'
 const GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?id=com.denuoweb.hnsdane'
@@ -15,7 +15,7 @@ const IOS_BUNDLE_ID = 'com.denuoweb.hnsdane.ios'
 const pageCopy = {
   en: {
     eyebrow: 'Denuo Web product',
-    title: 'HNS DANE Browser',
+    title: 'Shakescape',
     lead: 'An open-source Android and iOS browser for Handshake names, DNSSEC, DANE validation, and resolver diagnostics.',
     googlePlay: 'Get it on Google Play',
     appleAppStore: 'Download on the App Store',
@@ -41,7 +41,7 @@ const pageCopy = {
     ],
     privacyHeading: 'Privacy summary',
     privacySummary:
-      'HNS DANE Browser has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Currently published store binaries are wallet-free. The 0.5.9 candidate adds native lifecycle controls for one device-local non-value HNS account identity and visible read-only balance, receive, history, tracked-name, and status rows. It provisions no scoped credential or indexed wallet backend, so those rows remain unavailable and make no wallet-specific network request. Transfers, name import/actions, website-provider access, HNSA/HNSR service roles, settlement, exchange, and P2P marketplaces remain unavailable. Its requester-only P2P DNS relay is separate from HNSR and does not make the device an output node. Android may show an optional external donation link that unlocks no functionality; iOS has no donation or payment flow.',
+      'Shakescape has no advertising SDKs, analytics SDKs, developer-operated accounts, or paid feature unlocks. Currently published store binaries are wallet-free. The 0.5.9 candidate adds native lifecycle controls for one device-local non-value HNS account identity and visible read-only balance, receive, history, tracked-name, and status rows. It provisions no scoped credential or indexed wallet backend, so those rows remain unavailable and make no wallet-specific network request. Transfers, name import/actions, website-provider access, HNSA/HNSR service roles, settlement, exchange, and P2P marketplaces remain unavailable. Its requester-only P2P DNS relay is separate from HNSR and does not make the device an output node. Android may show an optional external donation link that unlocks no functionality; iOS has no donation or payment flow.',
     localHeading: 'Stored locally',
     localData: [
       'Browsing history and navigation state: page URLs, page titles, visit times, or the current session\'s back-forward list, depending on the platform.',
@@ -66,7 +66,7 @@ const pageCopy = {
   },
   ja: {
     eyebrow: 'Denuo Web プロダクト',
-    title: 'HNS DANE Browser',
+    title: 'Shakescape',
     lead: 'Handshake名、DNSSEC、DANE検証、リゾルバ診断に対応する、Android・iOS向けのオープンソースブラウザです。',
     googlePlay: 'Google Playで入手',
     appleAppStore: 'App Storeからダウンロード',
@@ -92,7 +92,7 @@ const pageCopy = {
     ],
     privacyHeading: 'プライバシー概要',
     privacySummary:
-      'HNS DANE Browserには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.9候補は端末内の1つの非送金型HNSアカウント識別子を管理するネイティブ操作と、残高、受取先、取引履歴、追跡名、状態の読み取り専用欄を追加します。ただしスコープ付き認証情報やインデックス対応ウォレットバックエンドは設定されないため、これらの欄は利用不可のままで、ウォレット固有のネットワーク要求も行いません。送金、名前の取り込み・操作、ウェブサイトへのウォレット接続、HNSA/HNSRのサービス役割、決済、交換、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別で、端末を出力ノードにしません。Androidでは機能を解放しない任意の外部寄付リンクを表示する場合がありますが、iOSには寄付や支払いの機能がありません。',
+      'Shakescapeには、広告SDK、解析SDK、開発者運営のアカウント、有料機能解放はありません。現在ストアで公開されているバイナリにはウォレット機能がありません。0.5.9候補は端末内の1つの非送金型HNSアカウント識別子を管理するネイティブ操作と、残高、受取先、取引履歴、追跡名、状態の読み取り専用欄を追加します。ただしスコープ付き認証情報やインデックス対応ウォレットバックエンドは設定されないため、これらの欄は利用不可のままで、ウォレット固有のネットワーク要求も行いません。送金、名前の取り込み・操作、ウェブサイトへのウォレット接続、HNSA/HNSRのサービス役割、決済、交換、P2Pマーケットプレイスは提供しません。リクエスター専用P2P DNSリレーはHNSRとは別で、端末を出力ノードにしません。Androidでは機能を解放しない任意の外部寄付リンクを表示する場合がありますが、iOSには寄付や支払いの機能がありません。',
     localHeading: '端末内に保存するデータ',
     localData: [
       '閲覧履歴とナビゲーション状態：プラットフォームに応じて、ページURL、ページタイトル、訪問時刻、または現在のセッションの「戻る・進む」リスト。',
