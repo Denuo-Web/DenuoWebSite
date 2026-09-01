@@ -213,7 +213,7 @@ server {
 
 server {
     listen 443 ssl;
-    listen 443 quic reuseport;
+    listen 443 quic;
     http2 on;
     server_name shakescape shakescape. www.shakescape www.shakescape.;
 
