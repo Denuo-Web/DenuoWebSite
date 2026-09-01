@@ -21,8 +21,8 @@ stamp="$(date -u +%Y%m%dT%H%M%SZ)"
 readonly stamp
 readonly backup_dir="/var/backups/shakescape-hns/${stamp}"
 
-for command in dig dnssec-dsfromkey dnssec-keygen dnssec-signzone dnssec-verify \
-  grep named-checkconf named-checkzone nginx openssl python3 rndc systemctl xxd; do
+for command in awk dig dnssec-dsfromkey dnssec-keygen dnssec-signzone dnssec-verify \
+  grep named-checkconf named-checkzone nginx openssl python3 rndc systemctl; do
   command -v "${command}" >/dev/null 2>&1 || {
     echo "required command is unavailable: ${command}" >&2
     exit 2
@@ -76,7 +76,7 @@ install -o root -g bind -m 0640 "${hns_key}" /etc/bind/doh/shakescape.key
 spki_sha256="$({
   openssl x509 -in "${hns_cert}" -pubkey -noout |
     openssl pkey -pubin -outform DER
-} | openssl dgst -sha256 -binary | xxd -p -c 256)"
+} | openssl dgst -sha256 | awk '{print $2}')"
 [[ "${spki_sha256}" =~ ^[0-9a-f]{64}$ ]] || {
   echo "failed to derive the shakescape SPKI SHA-256 pin" >&2
   exit 1
