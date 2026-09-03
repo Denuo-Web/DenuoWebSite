@@ -21,6 +21,8 @@ Current public positioning: Denuo Web is Jaron Rosenau's independent software-de
 - `.env.example` – Sample values for CI/CD secrets (set in GitHub, not committed)
 - `web/src/i18n/` – Localization strings (EN/JA) used by the UI toggles
 - `infra/terraform/` – Scaffold to enable APIs, create deploy service account, Artifact Registry, and push GitHub secrets
+- `infra/provision-shakescape-hns.sh` – Idempotent host-side provisioning for the
+  live `shakescape.` Handshake authority, DNSSEC, DANE/DoH, and HTTPS transport
 
 ## Frontend (Firebase Hosting)
 1. Copy `web/.env.example` to `web/.env` and fill your Firebase web app values.
@@ -46,7 +48,7 @@ The admin dashboard writes to Firestore `siteContent/public` (plus work sub-docu
 1. Install deps: `cd api && npm install`.
 2. Local run (requires application default or `FIREBASE_SERVICE_ACCOUNT` env): `npm run dev`.
 3. Optional Stripe invoicing: set `STRIPE_SECRET_KEY` to enable `/billing/invoice` (admin-only).
-3. Deploy to Cloud Run (example):
+4. Deploy to Cloud Run (example):
    ```bash
    gcloud builds submit api --tag gcr.io/$PROJECT_ID/denuo-api
    gcloud run deploy denuo-api \
@@ -110,6 +112,24 @@ Set these repo secrets before enabling CI/CD (Terraform will populate them by de
 
 ## Firebase Hosting rewrite
 Requests to `/api/**` are proxied to the Cloud Run service `denuo-api` in `us-central1` via the `firebase.json` rewrite. Update `serviceId`/`region` if you change the Cloud Run deployment.
+
+## Shakescape public surfaces and HNS authority
+
+The SPA publishes canonical mobile pages at `/work/shakescape` and
+`/work/shakescape/privacy`, plus extension overview, privacy, and legal pages
+under `/work/shakescape-extension`. Legacy HNS Browser paths redirect to those
+routes, and static policy mirrors under `web/public/` retain stable URLs for app
+and extension store review.
+
+`infra/provision-shakescape-hns.sh` provisions the separate live
+`shakescape.` Handshake authority on the existing Denuo host after the Web2
+site is live. It creates and signs the zone, derives TLSA data from the generated
+certificate, adds authoritative DNS and encrypted DoH listeners, installs the
+HTTPS/HTTP3 site, shares the existing QUIC listener, and verifies readiness.
+Run it as root on `denuoweb-vm`; review its fixed public/internal addresses and
+host assumptions before use. The script backs up touched host configuration,
+but its generated DNSSEC and TLS private keys remain operational secrets and
+must not be committed.
 
 ## Quick start (minimal local preview)
 1. `npm install` in both `web/` and `api/`.
