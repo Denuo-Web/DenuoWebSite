@@ -1,6 +1,8 @@
 # Denuo Web frontend (Vite + Firebase)
 
-A React/Vite SPA for Denuo Web, LLC with Firebase Auth + Firestore-backed content and an admin dashboard.
+A React/Vite SPA for Denuo Web, LLC with Firebase Auth, Firestore-backed content,
+an admin dashboard, and dedicated public product surfaces for Shakescape mobile
+and Shakescape Extension.
 
 ## Setup
 1. Copy `.env.example` to `.env` and fill your Firebase web config values.
@@ -22,6 +24,20 @@ A React/Vite SPA for Denuo Web, LLC with Firebase Auth + Firestore-backed conten
 - Styling uses Space Grotesk/Archivo fonts with glassmorphism cards and accent gradients; responsive on mobile/desktop.
 - Radix UI Themes powers the light/dark toggle (persisted) and IconButtons used for controls.
 - Language toggle (EN/JA) is driven by `src/i18n/uiCopy.ts`; labels fall back to English when translations are missing.
+
+## Public product routes
+
+- `/work/shakescape` and `/work/shakescape/privacy` publish the mobile product
+  overview and privacy policy.
+- `/work/shakescape-extension`, `/work/shakescape-extension/privacy`, and
+  `/work/shakescape-extension/legal` publish the Chromium product overview,
+  privacy policy, and license/terms.
+- Older `/hns-browser`, `/hns-dane-browser`, and
+  `/hns-dane-browser-extension` paths remain redirects to the canonical
+  Shakescape routes; keep new links on the canonical paths.
+- Static policy mirrors under `public/` preserve stable store-review URLs when
+  the SPA router is unavailable. When policy copy changes, reconcile both the
+  React page and its static mirror in the same change.
 
 ## Localization tips
 - Keep UI strings in `src/i18n/uiCopy.ts`; avoid duplicating labels in components.
