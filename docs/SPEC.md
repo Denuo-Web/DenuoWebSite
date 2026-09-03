@@ -7,7 +7,8 @@
 
 ## Stack
 - Frontend: React + Vite (TypeScript), Firebase Auth + Firestore, deployed to Firebase Hosting.
-- Backend: Express API on Google Cloud Run (`/health`, `/contact`, `/admin/status`).
+- Backend: Express API on Google Cloud Run (`/health`, `/contact`,
+  `/admin/status`, `/billing/invoice`).
 - Billing: Stripe invoicing endpoint for admin use.
 - CI/CD: GitHub Actions (`deploy-hosting.yml`, `deploy-cloudrun.yml`).
 - Local dev: Firebase Emulator Suite (auth:9099, firestore:8080, hosting:5000) toggled via `VITE_USE_FIREBASE_EMULATORS`.
@@ -28,6 +29,14 @@
   - Case studies are read from Firestore `siteContent/public/work/{slug}` documents.
   - Status + warnings when Firebase config is missing; save button disabled until authenticated.
   - Billing form to issue Stripe invoices (admin-only; posts to `/billing/invoice`).
+- Shakescape mobile (`/work/shakescape`)
+  - Product overview and source link for the Android/iOS browser.
+  - Dedicated privacy policy at `/work/shakescape/privacy`.
+- Shakescape Extension (`/work/shakescape-extension`)
+  - Separate Chromium extension and native Setup product overview.
+  - Dedicated privacy and license/terms pages under the same route.
+  - Legacy HNS Browser and HNS DANE Browser URLs redirect to the canonical
+    Shakescape routes; static policy mirrors preserve store-facing URLs.
 - Global toggles
   - Light/dark appearance powered by Radix UI Themes.
   - Language switcher EN/JA for UI chrome; English fallback for missing strings.
@@ -78,6 +87,10 @@
 - GitHub Actions secrets needed: `FIREBASE_SERVICE_ACCOUNT`, `FIREBASE_PROJECT_ID`, `GCP_SERVICE_ACCOUNT_KEY`, `GCP_PROJECT_ID`, `GCP_REGION`.
 - Stripe secret `STRIPE_SECRET_KEY` required for invoicing API.
 - Terraform scaffold at `infra/terraform` enables APIs, creates deploy SA + Artifact Registry, and pushes GitHub secrets (DNS not automated for Squarespace).
+- The live `shakescape.` Handshake authority is provisioned outside Terraform
+  by `infra/provision-shakescape-hns.sh` on the existing production host. Its
+  signed zone, TLSA/DoH service, HTTP/3 site, and generated private keys are
+  operational state rather than Firestore content or Terraform resources.
 
 ## Contact API behavior
 - `POST /contact` validates and normalizes `name`, `email`, `message`; optional `project`, `captchaToken`, and honeypot `website`.
