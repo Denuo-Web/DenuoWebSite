@@ -45,7 +45,23 @@ Follow these steps to get Denuo Web online with Firebase Hosting + Cloud Run, ad
 ## 7) DNS
 - Squarespace DNS cannot be Terraform-managed; add Firebase Hosting/Cloud Run records manually there. If you want full automation, move DNS to Cloudflare/Route53/Google Cloud DNS and manage records via Terraform.
 
-## 8) Local dev (optional)
+## 8) Shakescape Handshake authority (production only)
+
+After the conventional `shakescape.com` site is live, review and run
+`infra/provision-shakescape-hns.sh` as root on `denuoweb-vm`. The script is for
+the existing production host: it contains the deployed public and internal IP
+addresses and expects the current BIND, nginx, QUIC, WebSocket, and Denuo DoH
+layout. It provisions the signed `shakescape.` zone, certificate/TLSA records,
+authoritative DNS, encrypted DoH, and HTTPS/HTTP3 service, then waits for reload
+readiness and verifies the result.
+
+Before running it, ensure the script's host assumptions still match production
+and that `/var/www/shakescape` contains the intended site. Preserve the backup
+directory reported by the script and separately protect the generated DNSSEC
+and TLS private keys. This operation is deliberately outside Terraform and is
+not needed for local development.
+
+## 9) Local dev (optional)
 - Zero-config preview: `cd web && npm install && npm run dev` (uses fallback content; auth/API disabled).
 - With live Firebase: set `web/.env` and run `npm run dev`.
 - With emulators: set `VITE_USE_FIREBASE_EMULATORS=true` and run `firebase emulators:start --only auth,firestore`, then `npm run dev`.
@@ -55,4 +71,5 @@ Follow these steps to get Denuo Web online with Firebase Hosting + Cloud Run, ad
 - App content model and UX: `docs/SPEC.md`
 - Firebase/hosting config: `firebase.json`, `firestore.rules`, `web/.env.example`
 - Terraform scaffold: `infra/terraform/README.md`
+- Shakescape HNS authority: `infra/provision-shakescape-hns.sh`
 - API endpoints: `api/README.md`
