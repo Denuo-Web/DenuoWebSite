@@ -2,6 +2,12 @@
 
 > This scaffold assumes an existing GCP/Firebase project. It enables required APIs, provisions a deploy service account, sets up an Artifact Registry repository, and pushes GitHub Actions secrets (GCP/Firebase/Stripe). Squarespace DNS is not Terraform-managed; move DNS to a Terraform-capable provider if you want full automation.
 
+This module also does not manage the live `shakescape.` Handshake authority.
+That host-level BIND, DNSSEC, DANE/DoH, nginx, HTTP/3, and WebSocket setup is
+performed separately by `../provision-shakescape-hns.sh` after the conventional
+site is deployed. Do not import its generated keys or mutable server files into
+Terraform state.
+
 ## Prereqs
 - Terraform >= 1.6
 - `gcloud auth application-default login` with permissions to manage IAM/Service Usage/Artifact Registry
@@ -58,4 +64,7 @@ terraform apply
 ## Notes
 - Firebase Hosting site/app creation is not automated here; run `firebase init hosting` once or create via console/CLI. APIs are enabled for you.
 - Squarespace DNS cannot be Terraform-managed; migrate DNS to Cloudflare/Route53/Google Cloud DNS for full automation and add records for Firebase Hosting/Cloud Run there.
+- The `shakescape.` Handshake zone and encrypted authority are operational host
+  state, not resources in this scaffold; see `../provision-shakescape-hns.sh`
+  and the production step in `../../Start_Here.md`.
 - The deploy service account has broad roles suitable for CI; tighten as needed for production hardening.
