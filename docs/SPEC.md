@@ -35,8 +35,7 @@
 - Shakescape Extension (`/work/shakescape-extension`)
   - Separate Chromium extension and native Setup product overview.
   - Dedicated privacy and license/terms pages under the same route.
-  - Legacy HNS Browser and HNS DANE Browser URLs redirect to the canonical
-    Shakescape routes; static policy mirrors preserve store-facing URLs.
+  - Static policy mirrors provide store-facing privacy and legal URLs.
 - Global toggles
   - Light/dark appearance powered by Radix UI Themes.
   - Language switcher EN/JA for UI chrome; English fallback for missing strings.

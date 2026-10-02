@@ -117,9 +117,8 @@ Requests to `/api/**` are proxied to the Cloud Run service `denuo-api` in `us-ce
 
 The SPA publishes canonical mobile pages at `/work/shakescape` and
 `/work/shakescape/privacy`, plus extension overview, privacy, and legal pages
-under `/work/shakescape-extension`. Legacy HNS Browser paths redirect to those
-routes, and static policy mirrors under `web/public/` retain stable URLs for app
-and extension store review.
+under `/work/shakescape-extension`. Static policy mirrors under `web/public/`
+provide stable URLs for app and extension store review.
 
 `infra/provision-shakescape-hns.sh` provisions the separate live
 `shakescape.` Handshake authority on the existing Denuo host after the Web2

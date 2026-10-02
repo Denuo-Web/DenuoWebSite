@@ -32,10 +32,7 @@ and Shakescape Extension.
 - `/work/shakescape-extension`, `/work/shakescape-extension/privacy`, and
   `/work/shakescape-extension/legal` publish the Chromium product overview,
   privacy policy, and license/terms.
-- Older `/hns-browser`, `/hns-dane-browser`, and
-  `/hns-dane-browser-extension` paths remain redirects to the canonical
-  Shakescape routes; keep new links on the canonical paths.
-- Static policy mirrors under `public/` preserve stable store-review URLs when
+- Static policy mirrors under `public/` provide stable store-review URLs when
   the SPA router is unavailable. When policy copy changes, reconcile both the
   React page and its static mirror in the same change.
 
