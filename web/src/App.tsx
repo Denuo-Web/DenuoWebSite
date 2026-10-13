@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { Button, Theme, type ThemeProps } from '@radix-ui/themes'
 
@@ -6,7 +6,6 @@ import { useSiteContent } from './hooks/useSiteContent'
 import { useLocalizedUiCopy } from './hooks/useLocalizedUiCopy'
 import { localizeSiteContent } from './content/localized'
 import type { Language } from './i18n/uiCopy'
-import AdminPage from './pages/Admin'
 import AboutPage from './pages/About'
 import ContactPage from './pages/Contact'
 import HnsDaneBrowserPage from './pages/HnsDaneBrowser'
@@ -24,6 +23,8 @@ import WorkPage from './pages/Work'
 
 import '@radix-ui/themes/styles.css'
 import './App.css'
+
+const AdminPage = lazy(() => import('./pages/Admin'))
 
 type Appearance = 'light' | 'dark'
 type AccentColor = NonNullable<ThemeProps['accentColor']>
@@ -88,9 +89,9 @@ function App() {
   const { content, loading, error, saveContent } = useSiteContent()
   const location = useLocation()
   const [themeState, setThemeState] = useState<ThemeState>(() => {
-    const stored = typeof window !== 'undefined' ? window.localStorage.getItem(THEME_KEY) : null
-    if (stored) {
-      try {
+    try {
+      const stored = typeof window !== 'undefined' ? window.localStorage.getItem(THEME_KEY) : null
+      if (stored) {
         const parsed = JSON.parse(stored) as Partial<ThemeState>
         return {
           appearance: parsed.appearance === 'light' || parsed.appearance === 'dark' ? parsed.appearance : 'light',
@@ -100,9 +101,9 @@ function App() {
           radius: (parsed.radius as Radius) || 'large',
           scaling: (parsed.scaling as Scaling) || '100%',
         }
-      } catch {
-        // fall through to defaults
       }
+    } catch {
+      // Fall through when storage is unavailable or contains invalid JSON.
     }
     return {
       appearance: 'light',
@@ -119,13 +120,21 @@ function App() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    window.localStorage.setItem(THEME_KEY, JSON.stringify(themeState))
+    try {
+      window.localStorage.setItem(THEME_KEY, JSON.stringify(themeState))
+    } catch {
+      // Keep the selected theme for this session when storage is unavailable.
+    }
     document.documentElement.setAttribute('data-appearance', themeState.appearance)
   }, [themeState])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    window.localStorage.setItem(LANGUAGE_KEY, language)
+    try {
+      window.localStorage.setItem(LANGUAGE_KEY, language)
+    } catch {
+      // Keep the selected language for this session when storage is unavailable.
+    }
     document.documentElement.lang = isAdminRoute ? 'en' : language
   }, [isAdminRoute, language])
 
@@ -278,15 +287,17 @@ function App() {
         <Route
           path="/admin"
           element={
-            <AdminPage
-              content={content}
-              onSave={saveContent}
-              onSaveTranslation={saveTranslation}
-              onOpenThemePanel={openThemePanel}
-              copy={copyByLanguage.en}
-              copyByLanguage={copyByLanguage}
-              translationError={copyError}
-            />
+            <Suspense fallback={<div role="status">Loading admin…</div>}>
+              <AdminPage
+                content={content}
+                onSave={saveContent}
+                onSaveTranslation={saveTranslation}
+                onOpenThemePanel={openThemePanel}
+                copy={copyByLanguage.en}
+                copyByLanguage={copyByLanguage}
+                translationError={copyError}
+              />
+            </Suspense>
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />
