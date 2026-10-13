@@ -6,25 +6,31 @@ import { useSiteContent } from './hooks/useSiteContent'
 import { useLocalizedUiCopy } from './hooks/useLocalizedUiCopy'
 import { localizeSiteContent } from './content/localized'
 import type { Language } from './i18n/uiCopy'
-import AboutPage from './pages/About'
-import ContactPage from './pages/Contact'
-import HnsDaneBrowserPage from './pages/HnsDaneBrowser'
-import HnsDaneBrowserExtensionPage from './pages/HnsDaneBrowserExtension'
-import {
-  HnsDaneBrowserExtensionLegalPage,
-  HnsDaneBrowserExtensionPrivacyPage,
-} from './pages/HnsDaneBrowserExtensionLegal'
-import HnsDaneBrowserPrivacyPage from './pages/HnsDaneBrowserPrivacy'
 import LandingPage from './pages/Landing'
-import ProcessPage from './pages/Process'
-import ServicesPage from './pages/Services'
-import WorkDetailPage from './pages/WorkDetail'
-import WorkPage from './pages/Work'
 
 import '@radix-ui/themes/styles.css'
 import './App.css'
 
 const AdminPage = lazy(() => import('./pages/Admin'))
+const AboutPage = lazy(() => import('./pages/About'))
+const ContactPage = lazy(() => import('./pages/Contact'))
+const HnsDaneBrowserPage = lazy(() => import('./pages/HnsDaneBrowser'))
+const HnsDaneBrowserExtensionPage = lazy(() => import('./pages/HnsDaneBrowserExtension'))
+const HnsDaneBrowserExtensionLegalPage = lazy(() =>
+  import('./pages/HnsDaneBrowserExtensionLegal').then((module) => ({
+    default: module.HnsDaneBrowserExtensionLegalPage,
+  })),
+)
+const HnsDaneBrowserExtensionPrivacyPage = lazy(() =>
+  import('./pages/HnsDaneBrowserExtensionLegal').then((module) => ({
+    default: module.HnsDaneBrowserExtensionPrivacyPage,
+  })),
+)
+const HnsDaneBrowserPrivacyPage = lazy(() => import('./pages/HnsDaneBrowserPrivacy'))
+const ProcessPage = lazy(() => import('./pages/Process'))
+const ServicesPage = lazy(() => import('./pages/Services'))
+const WorkDetailPage = lazy(() => import('./pages/WorkDetail'))
+const WorkPage = lazy(() => import('./pages/Work'))
 
 type Appearance = 'light' | 'dark'
 type AccentColor = NonNullable<ThemeProps['accentColor']>
@@ -240,54 +246,54 @@ function App() {
           </div>
         </div>
       )}
-      <Routes>
-        <Route path="/" element={<LandingPage {...marketingPageProps} />} />
-        <Route path="/services" element={<ServicesPage {...marketingPageProps} />} />
-        <Route path="/work" element={<WorkPage {...marketingPageProps} />} />
-        <Route path="/work/shakescape" element={<HnsDaneBrowserPage {...marketingPageProps} />} />
-        <Route path="/work/shakescape/privacy" element={<HnsDaneBrowserPrivacyPage {...marketingPageProps} />} />
-        <Route path="/work/shakescape-extension" element={<HnsDaneBrowserExtensionPage {...marketingPageProps} />} />
-        <Route
-          path="/work/shakescape-extension/privacy"
-          element={<HnsDaneBrowserExtensionPrivacyPage {...marketingPageProps} />}
-        />
-        <Route
-          path="/work/shakescape-extension/legal"
-          element={<HnsDaneBrowserExtensionLegalPage {...marketingPageProps} />}
-        />
-        <Route path="/shakescape" element={<Navigate to="/work/shakescape" replace />} />
-        <Route path="/shakescape/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
-        <Route path="/shakescape-extension" element={<Navigate to="/work/shakescape-extension" replace />} />
-        <Route path="/shakescape-extension/privacy" element={<Navigate to="/work/shakescape-extension/privacy" replace />} />
-        <Route path="/shakescape-extension/legal" element={<Navigate to="/work/shakescape-extension/legal" replace />} />
-        <Route path="/work/hns-browser" element={<Navigate to="/work/shakescape" replace />} />
-        <Route path="/work/hns-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
-        <Route path="/hns-browser" element={<Navigate to="/work/shakescape" replace />} />
-        <Route path="/hns-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
-        <Route path="/hns-dane-browser" element={<Navigate to="/work/shakescape" replace />} />
-        <Route path="/hns-dane-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
-        <Route path="/work/hns-dane-browser" element={<Navigate to="/work/shakescape" replace />} />
-        <Route path="/work/hns-dane-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
-        <Route path="/hns-dane-browser-extension" element={<Navigate to="/work/shakescape-extension" replace />} />
-        <Route
-          path="/hns-dane-browser-extension/privacy"
-          element={<Navigate to="/work/shakescape-extension/privacy" replace />}
-        />
-        <Route
-          path="/hns-dane-browser-extension/legal"
-          element={<Navigate to="/work/shakescape-extension/legal" replace />}
-        />
-        <Route path="/work/hns-dane-browser-extension" element={<Navigate to="/work/shakescape-extension" replace />} />
-        <Route path="/work/hns-dane-browser-extension/privacy" element={<Navigate to="/work/shakescape-extension/privacy" replace />} />
-        <Route path="/work/hns-dane-browser-extension/legal" element={<Navigate to="/work/shakescape-extension/legal" replace />} />
-        <Route path="/work/:slug" element={<WorkDetailPage {...marketingPageProps} />} />
-        <Route path="/process" element={<ProcessPage {...marketingPageProps} />} />
-        <Route path="/contact" element={<ContactPage {...marketingPageProps} />} />
-        <Route path="/about" element={<AboutPage {...marketingPageProps} />} />
-        <Route
-          path="/admin"
-          element={
-            <Suspense fallback={<div role="status">Loading admin…</div>}>
+      <Suspense fallback={<div role="status">Loading page…</div>}>
+        <Routes>
+          <Route path="/" element={<LandingPage {...marketingPageProps} />} />
+          <Route path="/services" element={<ServicesPage {...marketingPageProps} />} />
+          <Route path="/work" element={<WorkPage {...marketingPageProps} />} />
+          <Route path="/work/shakescape" element={<HnsDaneBrowserPage {...marketingPageProps} />} />
+          <Route path="/work/shakescape/privacy" element={<HnsDaneBrowserPrivacyPage {...marketingPageProps} />} />
+          <Route path="/work/shakescape-extension" element={<HnsDaneBrowserExtensionPage {...marketingPageProps} />} />
+          <Route
+            path="/work/shakescape-extension/privacy"
+            element={<HnsDaneBrowserExtensionPrivacyPage {...marketingPageProps} />}
+          />
+          <Route
+            path="/work/shakescape-extension/legal"
+            element={<HnsDaneBrowserExtensionLegalPage {...marketingPageProps} />}
+          />
+          <Route path="/shakescape" element={<Navigate to="/work/shakescape" replace />} />
+          <Route path="/shakescape/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
+          <Route path="/shakescape-extension" element={<Navigate to="/work/shakescape-extension" replace />} />
+          <Route path="/shakescape-extension/privacy" element={<Navigate to="/work/shakescape-extension/privacy" replace />} />
+          <Route path="/shakescape-extension/legal" element={<Navigate to="/work/shakescape-extension/legal" replace />} />
+          <Route path="/work/hns-browser" element={<Navigate to="/work/shakescape" replace />} />
+          <Route path="/work/hns-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
+          <Route path="/hns-browser" element={<Navigate to="/work/shakescape" replace />} />
+          <Route path="/hns-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
+          <Route path="/hns-dane-browser" element={<Navigate to="/work/shakescape" replace />} />
+          <Route path="/hns-dane-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
+          <Route path="/work/hns-dane-browser" element={<Navigate to="/work/shakescape" replace />} />
+          <Route path="/work/hns-dane-browser/privacy" element={<Navigate to="/work/shakescape/privacy" replace />} />
+          <Route path="/hns-dane-browser-extension" element={<Navigate to="/work/shakescape-extension" replace />} />
+          <Route
+            path="/hns-dane-browser-extension/privacy"
+            element={<Navigate to="/work/shakescape-extension/privacy" replace />}
+          />
+          <Route
+            path="/hns-dane-browser-extension/legal"
+            element={<Navigate to="/work/shakescape-extension/legal" replace />}
+          />
+          <Route path="/work/hns-dane-browser-extension" element={<Navigate to="/work/shakescape-extension" replace />} />
+          <Route path="/work/hns-dane-browser-extension/privacy" element={<Navigate to="/work/shakescape-extension/privacy" replace />} />
+          <Route path="/work/hns-dane-browser-extension/legal" element={<Navigate to="/work/shakescape-extension/legal" replace />} />
+          <Route path="/work/:slug" element={<WorkDetailPage {...marketingPageProps} />} />
+          <Route path="/process" element={<ProcessPage {...marketingPageProps} />} />
+          <Route path="/contact" element={<ContactPage {...marketingPageProps} />} />
+          <Route path="/about" element={<AboutPage {...marketingPageProps} />} />
+          <Route
+            path="/admin"
+            element={
               <AdminPage
                 content={content}
                 onSave={saveContent}
@@ -297,11 +303,11 @@ function App() {
                 copyByLanguage={copyByLanguage}
                 translationError={copyError}
               />
-            </Suspense>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </Theme>
   )
 }
